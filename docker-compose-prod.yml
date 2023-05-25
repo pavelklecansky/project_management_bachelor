@@ -1,0 +1,41 @@
+version: '3'
+services:
+  projectmanagement-db:
+    image: postgres
+    environment:
+      - POSTGRES_DB=project
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+    volumes:
+      - projectmanagement-database-data:/var/lib/postgresql/data
+    ports:
+      - 5432:5432
+
+  projectmanagement-backend:
+    container_name: projectmanagement-backend
+    image: klecansky/projectmanagement-backend:latest
+    environment:
+      - DB_SERVER=projectmanagement-db
+      - POSTGRES_DB=postgres
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - APP_STORAGE_PATH=/appdata
+    ports:
+      - 8080:8080
+    volumes:
+      - projectmanagement-appdata:/appdata
+    links:
+      - projectmanagement-db
+
+
+  projectmanagement-frontend:
+    image: klecansky/projectmanagement-frontend:latest
+    ports:
+      - 80:80
+    depends_on:
+      - projectmanagement-backend
+    links:
+      - projectmanagement-backend
+volumes:
+  projectmanagement-database-data:
+  projectmanagement-appdata:
