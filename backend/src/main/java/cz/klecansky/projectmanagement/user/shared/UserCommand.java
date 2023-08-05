@@ -2,12 +2,11 @@ package cz.klecansky.projectmanagement.user.shared;
 
 import cz.klecansky.projectmanagement.organization.shared.OrganizationCommand;
 import cz.klecansky.projectmanagement.task.shared.TaskCommand;
-import lombok.Data;
-import lombok.ToString;
-
 import java.io.Serializable;
 import java.util.List;
 import java.util.UUID;
+import lombok.Data;
+import lombok.ToString;
 
 @Data
 public class UserCommand implements Serializable {
@@ -23,9 +22,12 @@ public class UserCommand implements Serializable {
     private Boolean emailVerified;
     private String phoneNumber;
     private String note;
+
     @ToString.Exclude
     private List<OrganizationCommand> organizations;
+
     @ToString.Exclude
     private List<TaskCommand> tasks;
+
     private List<Role> roles;
 }

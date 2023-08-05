@@ -5,7 +5,6 @@ import cz.klecansky.projectmanagement.core.exception.NoSuchElementFoundException
 import cz.klecansky.projectmanagement.group.shared.GroupCommand;
 import cz.klecansky.projectmanagement.project.shared.ProjectCommand;
 import cz.klecansky.projectmanagement.user.shared.UserCommand;
-
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;

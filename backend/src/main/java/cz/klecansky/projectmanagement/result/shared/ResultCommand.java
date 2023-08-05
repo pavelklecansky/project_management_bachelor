@@ -1,9 +1,8 @@
 package cz.klecansky.projectmanagement.result.shared;
 
 import cz.klecansky.projectmanagement.outcome.shared.OutcomeCommand;
-import lombok.Data;
-
 import java.util.UUID;
+import lombok.Data;
 
 @Data
 public class ResultCommand {

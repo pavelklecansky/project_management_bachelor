@@ -1,11 +1,9 @@
 package cz.klecansky.projectmanagement.budget.shared;
 
-
 import cz.klecansky.projectmanagement.project.shared.ProjectCommand;
-import lombok.Data;
-
 import java.util.List;
 import java.util.UUID;
+import lombok.Data;
 
 @Data
 public class BudgetCommand {

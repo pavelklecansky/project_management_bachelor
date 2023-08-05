@@ -1,10 +1,9 @@
 package cz.klecansky.projectmanagement.outcome.ui.request;
 
-import lombok.Data;
-
-import javax.validation.constraints.NotNull;
 import java.time.Instant;
 import java.util.UUID;
+import javax.validation.constraints.NotNull;
+import lombok.Data;
 
 @Data
 public class OutcomeRequest {

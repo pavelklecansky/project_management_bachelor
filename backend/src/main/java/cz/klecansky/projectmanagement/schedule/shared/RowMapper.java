@@ -15,7 +15,8 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 public class RowMapper {
 
-    @NonNull ModelMapper modelMapper;
+    @NonNull
+    ModelMapper modelMapper;
 
     public RowEntity rowCommandToRowEntity(RowCommand rowCommand) {
         return modelMapper.map(rowCommand, RowEntity.class);

@@ -2,15 +2,14 @@ package cz.klecansky.projectmanagement.task.ui.request;
 
 import cz.klecansky.projectmanagement.task.shared.Priority;
 import cz.klecansky.projectmanagement.task.shared.Status;
-import lombok.Data;
-import org.springframework.lang.Nullable;
-
+import java.time.Instant;
+import java.util.UUID;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
-import java.time.Instant;
-import java.util.UUID;
+import lombok.Data;
+import org.springframework.lang.Nullable;
 
 @Data
 public class TaskRequest {

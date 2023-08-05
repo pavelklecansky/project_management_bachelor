@@ -16,7 +16,8 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 public class GroupMapper {
 
-    @NonNull ModelMapper modelMapper;
+    @NonNull
+    ModelMapper modelMapper;
 
     public GroupCommand groupRequestToGroupCommand(GroupRequest groupRequest) {
         return modelMapper.map(groupRequest, GroupCommand.class);

@@ -15,7 +15,8 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 public class TaskMapper {
 
-    @NonNull ModelMapper modelMapper;
+    @NonNull
+    ModelMapper modelMapper;
 
     public TaskEntity taskCommandToTaskEntity(TaskCommand taskCommand) {
         return modelMapper.map(taskCommand, TaskEntity.class);

@@ -16,8 +16,8 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 public class UserMapper {
 
-    @NonNull ModelMapper modelMapper;
-
+    @NonNull
+    ModelMapper modelMapper;
 
     public UserCommand userRequestToUserCommand(UserRequest userRequests) {
         return modelMapper.map(userRequests, UserCommand.class);

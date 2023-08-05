@@ -1,5 +1,7 @@
 package cz.klecansky.projectmanagement.user.service;
 
+import static cz.klecansky.projectmanagement.user.EmailConstants.*;
+
 import cz.klecansky.projectmanagement.group.shared.GroupCommand;
 import cz.klecansky.projectmanagement.group.shared.GroupMemberCommand;
 import cz.klecansky.projectmanagement.task.shared.TaskCommand;
@@ -9,6 +11,10 @@ import cz.klecansky.projectmanagement.user.io.entity.UserEntity;
 import cz.klecansky.projectmanagement.user.io.entity.VerificationTokenEntity;
 import cz.klecansky.projectmanagement.user.shared.UserCommand;
 import cz.klecansky.projectmanagement.user.shared.UserMapper;
+import java.time.Instant;
+import java.time.temporal.ChronoUnit;
+import java.util.UUID;
+import javax.mail.internet.MimeMessage;
 import lombok.AccessLevel;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
@@ -19,14 +25,6 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
-
-import javax.mail.internet.MimeMessage;
-import java.time.Instant;
-import java.time.temporal.ChronoUnit;
-import java.util.UUID;
-
-import static cz.klecansky.projectmanagement.user.EmailConstants.*;
-
 
 @FieldDefaults(makeFinal = true, level = AccessLevel.PRIVATE)
 @RequiredArgsConstructor
@@ -54,10 +52,17 @@ public class EmailService {
     @NonFinal
     String serverUrl;
 
-    @NonNull JavaMailSender javaMailSender;
-    @NonNull VerificationTokenService verificationTokenService;
-    @NonNull PasswordResetTokenService passwordResetTokenService;
-    @NonNull UserMapper userMapper;
+    @NonNull
+    JavaMailSender javaMailSender;
+
+    @NonNull
+    VerificationTokenService verificationTokenService;
+
+    @NonNull
+    PasswordResetTokenService passwordResetTokenService;
+
+    @NonNull
+    UserMapper userMapper;
 
     @SneakyThrows
     public void sendVerificationEmail(UserCommand userCommand) {
@@ -120,17 +125,22 @@ public class EmailService {
         }
     }
 
-
     private String getVerificationEmailHTMLText(VerificationTokenEntity verificationTokenEntity) {
-        return VERIFICATION_EMAIL_BODY.replace("$address", "http://" + serverUrl + "/authentication/email-verification/" + verificationTokenEntity.getToken());
+        return VERIFICATION_EMAIL_BODY.replace(
+                "$address",
+                "http://" + serverUrl + "/authentication/email-verification/" + verificationTokenEntity.getToken());
     }
 
     private String getForgottenPasswordEmailHTMLText(PasswordResetTokenEntity passwordResetTokenEntity) {
-        return FORGOTTEN_PASSWORD_BODY.replace("$address", "http://" + serverUrl + "/authentication/new-password/" + passwordResetTokenEntity.getToken());
+        return FORGOTTEN_PASSWORD_BODY.replace(
+                "$address",
+                "http://" + serverUrl + "/authentication/new-password/" + passwordResetTokenEntity.getToken());
     }
 
     private String getAssignToTaskEmailHTMLText(TaskCommand taskCommand) {
-        return ASSIGN_TO_TASK_BODY.replace("$address", "http://" + serverUrl + "/task/" + taskCommand.getId()).replace("$taskName", taskCommand.getName());
+        return ASSIGN_TO_TASK_BODY
+                .replace("$address", "http://" + serverUrl + "/task/" + taskCommand.getId())
+                .replace("$taskName", taskCommand.getName());
     }
 
     private VerificationTokenEntity createVerificationToken(UserCommand userCommand) {
@@ -151,5 +161,4 @@ public class EmailService {
         passwordResetTokenEntity.setExpiryDate(Instant.now().plus(15, ChronoUnit.MINUTES));
         return passwordResetTokenEntity;
     }
-
 }

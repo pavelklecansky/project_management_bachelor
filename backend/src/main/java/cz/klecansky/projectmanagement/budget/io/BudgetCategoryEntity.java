@@ -1,12 +1,11 @@
 package cz.klecansky.projectmanagement.budget.io;
 
-import lombok.Getter;
-import lombok.Setter;
-
-import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
+import javax.persistence.*;
+import lombok.Getter;
+import lombok.Setter;
 
 @Entity
 @Table(name = "budget_categoryies")
@@ -28,10 +27,8 @@ public class BudgetCategoryEntity {
     @JoinColumn(name = "budget_id")
     private BudgetEntity budgetEntity;
 
-
     @PreRemove
     private void preRemove() {
         items.clear();
     }
-
 }

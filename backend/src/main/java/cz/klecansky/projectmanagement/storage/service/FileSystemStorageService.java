@@ -1,14 +1,6 @@
 package cz.klecansky.projectmanagement.storage.service;
 
 import cz.klecansky.projectmanagement.storage.shared.FileCommand;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.core.io.Resource;
-import org.springframework.core.io.UrlResource;
-import org.springframework.stereotype.Service;
-import org.springframework.util.FileSystemUtils;
-import org.springframework.util.StringUtils;
-import org.springframework.web.multipart.MultipartFile;
-
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.nio.file.Files;
@@ -18,6 +10,13 @@ import java.nio.file.StandardCopyOption;
 import java.nio.file.attribute.BasicFileAttributes;
 import java.util.List;
 import java.util.UUID;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.io.Resource;
+import org.springframework.core.io.UrlResource;
+import org.springframework.stereotype.Service;
+import org.springframework.util.FileSystemUtils;
+import org.springframework.util.StringUtils;
+import org.springframework.web.multipart.MultipartFile;
 
 @Service
 public class FileSystemStorageService implements StorageService {
@@ -33,7 +32,10 @@ public class FileSystemStorageService implements StorageService {
 
     @Override
     public List<FileCommand> list(Path path) throws IOException {
-        return Files.list(root.resolve(path)).map(Path::normalize).map(this::pathToFileCommand).toList();
+        return Files.list(root.resolve(path))
+                .map(Path::normalize)
+                .map(this::pathToFileCommand)
+                .toList();
     }
 
     @Override
@@ -92,7 +94,6 @@ public class FileSystemStorageService implements StorageService {
         } catch (IOException ex) {
             throw new IOException("Could not be rename", ex);
         }
-
     }
 
     @Override
@@ -123,7 +124,6 @@ public class FileSystemStorageService implements StorageService {
                 path.getFileName().toString(),
                 path.toAbsolutePath(),
                 attr.lastModifiedTime().toInstant(),
-                attr.isDirectory()
-        );
+                attr.isDirectory());
     }
 }

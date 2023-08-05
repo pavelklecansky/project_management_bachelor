@@ -6,23 +6,27 @@ import cz.klecansky.projectmanagement.result.io.ResultEntity;
 import cz.klecansky.projectmanagement.result.io.ResultRepository;
 import cz.klecansky.projectmanagement.result.shared.ResultCommand;
 import cz.klecansky.projectmanagement.result.shared.ResultMapper;
+import java.util.Optional;
+import java.util.UUID;
 import lombok.AccessLevel;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import org.springframework.stereotype.Service;
 
-import java.util.Optional;
-import java.util.UUID;
-
 @Service
 @FieldDefaults(makeFinal = true, level = AccessLevel.PRIVATE)
 @RequiredArgsConstructor
 public class ResultServiceImpl implements ResultService {
 
-    @NonNull ResultRepository resultRepository;
-    @NonNull ResultMapper resultMapper;
-    @NonNull OutcomeMapper outcomeMapper;
+    @NonNull
+    ResultRepository resultRepository;
+
+    @NonNull
+    ResultMapper resultMapper;
+
+    @NonNull
+    OutcomeMapper outcomeMapper;
 
     @Override
     public ResultCommand create(ResultCommand resultCommand) {

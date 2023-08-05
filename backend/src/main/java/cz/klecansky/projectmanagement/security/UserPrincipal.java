@@ -1,6 +1,7 @@
 package cz.klecansky.projectmanagement.security;
 
 import cz.klecansky.projectmanagement.user.io.entity.UserEntity;
+import java.util.Collection;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NonNull;
@@ -9,14 +10,13 @@ import lombok.experimental.FieldDefaults;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import java.util.Collection;
-
 @FieldDefaults(makeFinal = true, level = AccessLevel.PRIVATE)
 @RequiredArgsConstructor
 @Getter
 public class UserPrincipal implements UserDetails {
 
-    @NonNull UserEntity user;
+    @NonNull
+    UserEntity user;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

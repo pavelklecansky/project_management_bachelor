@@ -15,21 +15,26 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 public class OutcomeCategoryMapper {
 
-    @NonNull ModelMapper modelMapper;
+    @NonNull
+    ModelMapper modelMapper;
 
-    public OutcomeCategoryEntity outcomeCategoryCommandToOutcomeCategoryEntity(OutcomeCategoryCommand outcomeCategoryCommand) {
+    public OutcomeCategoryEntity outcomeCategoryCommandToOutcomeCategoryEntity(
+            OutcomeCategoryCommand outcomeCategoryCommand) {
         return modelMapper.map(outcomeCategoryCommand, OutcomeCategoryEntity.class);
     }
 
-    public OutcomeCategoryCommand outcomeCategoryEntityToOutcomeCategoryCommand(OutcomeCategoryEntity outcomeCategoryEntity) {
+    public OutcomeCategoryCommand outcomeCategoryEntityToOutcomeCategoryCommand(
+            OutcomeCategoryEntity outcomeCategoryEntity) {
         return modelMapper.map(outcomeCategoryEntity, OutcomeCategoryCommand.class);
     }
 
-    public OutcomeCategoryCommand outcomeCategoryRequestToOutcomeCategoryCommand(OutcomeCategoryRequest outcomeCategoryRequest) {
+    public OutcomeCategoryCommand outcomeCategoryRequestToOutcomeCategoryCommand(
+            OutcomeCategoryRequest outcomeCategoryRequest) {
         return modelMapper.map(outcomeCategoryRequest, OutcomeCategoryCommand.class);
     }
 
-    public OutcomeCategoryResponse outcomeCategoryCommandToOutcomeCategoryResponse(OutcomeCategoryCommand outcomeCategoryCommand) {
+    public OutcomeCategoryResponse outcomeCategoryCommandToOutcomeCategoryResponse(
+            OutcomeCategoryCommand outcomeCategoryCommand) {
         return modelMapper.map(outcomeCategoryCommand, OutcomeCategoryResponse.class);
     }
 }

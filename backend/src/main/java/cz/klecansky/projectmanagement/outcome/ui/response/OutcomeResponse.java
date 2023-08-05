@@ -2,11 +2,10 @@ package cz.klecansky.projectmanagement.outcome.ui.response;
 
 import cz.klecansky.projectmanagement.phase.ui.response.PhaseResponse;
 import cz.klecansky.projectmanagement.result.ui.response.ResultResponse;
-import lombok.Data;
-
 import java.time.Instant;
 import java.util.List;
 import java.util.UUID;
+import lombok.Data;
 
 @Data
 public class OutcomeResponse {

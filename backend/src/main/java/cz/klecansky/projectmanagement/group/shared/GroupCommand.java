@@ -2,10 +2,9 @@ package cz.klecansky.projectmanagement.group.shared;
 
 import cz.klecansky.projectmanagement.project.shared.ProjectCommand;
 import cz.klecansky.projectmanagement.task.shared.TaskCommand;
-import lombok.Data;
-
 import java.util.List;
 import java.util.UUID;
+import lombok.Data;
 
 @Data
 public class GroupCommand {

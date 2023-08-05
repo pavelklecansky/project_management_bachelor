@@ -1,11 +1,9 @@
 package cz.klecansky.projectmanagement.schedule.shared;
 
-
 import cz.klecansky.projectmanagement.project.shared.ProjectCommand;
-import lombok.Data;
-
 import java.util.List;
 import java.util.UUID;
+import lombok.Data;
 
 @Data
 public class ScheduleCommand {
@@ -17,6 +15,4 @@ public class ScheduleCommand {
     private List<RowCommand> rows;
 
     private List<TaskCommand> tasks;
-
-
 }

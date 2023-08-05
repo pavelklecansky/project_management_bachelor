@@ -1,9 +1,8 @@
 package cz.klecansky.projectmanagement.project.ui.request;
 
-import lombok.Data;
-
-import javax.validation.constraints.NotNull;
 import java.time.Instant;
+import javax.validation.constraints.NotNull;
+import lombok.Data;
 
 @Data
 public class ProjectRequest {

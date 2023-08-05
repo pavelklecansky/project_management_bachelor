@@ -14,7 +14,8 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 public class ScheduleMapper {
 
-    @NonNull ModelMapper modelMapper;
+    @NonNull
+    ModelMapper modelMapper;
 
     public ScheduleEntity scheduleCommandToScheduleEntity(ScheduleCommand scheduleCommand) {
         return modelMapper.map(scheduleCommand, ScheduleEntity.class);

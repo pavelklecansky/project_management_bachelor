@@ -8,14 +8,13 @@ import cz.klecansky.projectmanagement.phase.io.PhaseEntity;
 import cz.klecansky.projectmanagement.schedule.io.ScheduleEntity;
 import cz.klecansky.projectmanagement.task.io.TaskEntity;
 import cz.klecansky.projectmanagement.user.io.entity.UserEntity;
-import lombok.Getter;
-import lombok.Setter;
-
-import javax.persistence.*;
 import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
+import javax.persistence.*;
+import lombok.Getter;
+import lombok.Setter;
 
 @Entity
 @Table(name = "projects")
@@ -35,9 +34,11 @@ public class ProjectEntity {
 
     private Instant endDate;
 
-    @OneToMany(mappedBy = "project", cascade = {CascadeType.PERSIST}, orphanRemoval = true)
+    @OneToMany(
+            mappedBy = "project",
+            cascade = {CascadeType.PERSIST},
+            orphanRemoval = true)
     private List<TaskEntity> tasks;
-
 
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
     @JoinColumn(name = "project_id")
@@ -52,13 +53,15 @@ public class ProjectEntity {
     private List<PhaseEntity> phases = new ArrayList<>();
 
     @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
-    @JoinTable(name = "project_user_entities",
+    @JoinTable(
+            name = "project_user_entities",
             joinColumns = @JoinColumn(name = "project_id"),
             inverseJoinColumns = @JoinColumn(name = "user_id"))
     private List<UserEntity> members = new ArrayList<>();
 
     @ManyToMany(cascade = {CascadeType.PERSIST})
-    @JoinTable(name = "project_group_entities",
+    @JoinTable(
+            name = "project_group_entities",
             joinColumns = @JoinColumn(name = "project_id"),
             inverseJoinColumns = @JoinColumn(name = "group_id"))
     private List<GroupEntity> memberGroups = new ArrayList<>();

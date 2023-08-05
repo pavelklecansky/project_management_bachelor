@@ -15,7 +15,8 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 public class OrganizationMapper {
 
-    @NonNull ModelMapper modelMapper;
+    @NonNull
+    ModelMapper modelMapper;
 
     public OrganizationEntity organizationCommandToOrganizationEntity(OrganizationCommand organizationCommand) {
         return modelMapper.map(organizationCommand, OrganizationEntity.class);

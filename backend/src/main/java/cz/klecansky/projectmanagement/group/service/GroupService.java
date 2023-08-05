@@ -1,7 +1,6 @@
 package cz.klecansky.projectmanagement.group.service;
 
 import cz.klecansky.projectmanagement.group.shared.GroupCommand;
-
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;

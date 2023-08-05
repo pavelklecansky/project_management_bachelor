@@ -1,10 +1,8 @@
 package cz.klecansky.projectmanagement.outcome.io;
 
+import java.util.UUID;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import java.util.UUID;
-
 @Repository
-public interface OutcomeRepository extends JpaRepository<OutcomeEntity, UUID> {
-}
+public interface OutcomeRepository extends JpaRepository<OutcomeEntity, UUID> {}

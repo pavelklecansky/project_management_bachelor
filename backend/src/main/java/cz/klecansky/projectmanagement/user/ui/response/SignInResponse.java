@@ -8,5 +8,6 @@ import lombok.Value;
 public class SignInResponse {
     @JsonUnwrapped
     JWTToken jwtToken;
+
     UserResponse user;
 }

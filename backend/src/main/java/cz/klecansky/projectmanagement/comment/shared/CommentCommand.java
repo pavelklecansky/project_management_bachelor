@@ -1,10 +1,9 @@
 package cz.klecansky.projectmanagement.comment.shared;
 
 import cz.klecansky.projectmanagement.user.shared.UserCommand;
-import lombok.Data;
-
 import java.time.Instant;
 import java.util.UUID;
+import lombok.Data;
 
 @Data
 public class CommentCommand {

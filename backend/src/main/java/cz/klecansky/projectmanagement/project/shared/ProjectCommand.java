@@ -8,11 +8,10 @@ import cz.klecansky.projectmanagement.phase.shared.PhaseCommand;
 import cz.klecansky.projectmanagement.schedule.shared.ScheduleCommand;
 import cz.klecansky.projectmanagement.task.shared.TaskCommand;
 import cz.klecansky.projectmanagement.user.shared.UserCommand;
-import lombok.Data;
-
 import java.time.Instant;
 import java.util.List;
 import java.util.UUID;
+import lombok.Data;
 
 @Data
 public class ProjectCommand {

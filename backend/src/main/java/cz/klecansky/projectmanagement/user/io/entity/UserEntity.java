@@ -5,22 +5,21 @@ import cz.klecansky.projectmanagement.organization.io.OrganizationEntity;
 import cz.klecansky.projectmanagement.project.io.ProjectEntity;
 import cz.klecansky.projectmanagement.task.io.TaskEntity;
 import cz.klecansky.projectmanagement.user.shared.Role;
-import lombok.Getter;
-import lombok.Setter;
-
-import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
+import javax.persistence.*;
+import lombok.Getter;
+import lombok.Setter;
 
 @Entity
 @Table(name = "users")
 @Getter
 @Setter
 public class UserEntity {
-/*
-    @Serial private static final long serialVersionUID = 5313493413859894403L;
-*/
+    /*
+        @Serial private static final long serialVersionUID = 5313493413859894403L;
+    */
 
     @Id
     private UUID id;
@@ -59,19 +58,27 @@ public class UserEntity {
     @ElementCollection(fetch = FetchType.EAGER)
     private List<Role> roles;
 
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true) private List<PasswordResetTokenEntity> passwordResetTokenEntities = new ArrayList<>();
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<PasswordResetTokenEntity> passwordResetTokenEntities = new ArrayList<>();
 
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true) private List<VerificationTokenEntity> verificationTokenEntities = new ArrayList<>();
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<VerificationTokenEntity> verificationTokenEntities = new ArrayList<>();
 
-    @OneToMany(mappedBy = "assigned", cascade = {CascadeType.PERSIST, CascadeType.MERGE}) private List<TaskEntity> tasks = new ArrayList<>();
+    @OneToMany(
+            mappedBy = "assigned",
+            cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    private List<TaskEntity> tasks = new ArrayList<>();
 
     @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
-    @JoinTable(name = "users_organization_entities",
+    @JoinTable(
+            name = "users_organization_entities",
             joinColumns = @JoinColumn(name = "user_entity"),
             inverseJoinColumns = @JoinColumn(name = "organization_entities"))
     private List<OrganizationEntity> organizations = new ArrayList<>();
 
-    @ManyToMany(mappedBy = "members", cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @ManyToMany(
+            mappedBy = "members",
+            cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     private List<ProjectEntity> projects = new ArrayList<>();
 
     @OneToMany(mappedBy = "user", orphanRemoval = true)

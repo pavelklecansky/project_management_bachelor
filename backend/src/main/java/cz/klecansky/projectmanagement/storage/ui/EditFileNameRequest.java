@@ -1,8 +1,7 @@
 package cz.klecansky.projectmanagement.storage.ui;
 
-import lombok.Data;
-
 import javax.validation.constraints.NotNull;
+import lombok.Data;
 
 @Data
 public class EditFileNameRequest {

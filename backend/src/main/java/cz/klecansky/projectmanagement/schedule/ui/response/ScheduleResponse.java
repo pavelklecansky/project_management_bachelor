@@ -1,11 +1,9 @@
 package cz.klecansky.projectmanagement.schedule.ui.response;
 
-
 import cz.klecansky.projectmanagement.project.ui.response.ProjectResponse;
-import lombok.Data;
-
 import java.util.List;
 import java.util.UUID;
+import lombok.Data;
 
 @Data
 public class ScheduleResponse {

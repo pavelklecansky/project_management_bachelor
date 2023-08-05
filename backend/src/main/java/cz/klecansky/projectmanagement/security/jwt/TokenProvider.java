@@ -1,5 +1,7 @@
 package cz.klecansky.projectmanagement.security.jwt;
 
+import static cz.klecansky.projectmanagement.security.SecurityConstants.*;
+
 import cz.klecansky.projectmanagement.security.UserPrincipal;
 import cz.klecansky.projectmanagement.user.io.entity.UserEntity;
 import cz.klecansky.projectmanagement.user.io.repository.UserRepository;
@@ -8,6 +10,13 @@ import io.jsonwebtoken.JwtException;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.security.Keys;
+import java.security.Key;
+import java.util.Base64;
+import java.util.Date;
+import java.util.Optional;
+import java.util.stream.Collectors;
+import javax.annotation.PostConstruct;
+import javax.servlet.http.HttpServletRequest;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
@@ -15,16 +24,6 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.stereotype.Component;
-
-import javax.annotation.PostConstruct;
-import javax.servlet.http.HttpServletRequest;
-import java.security.Key;
-import java.util.Base64;
-import java.util.Date;
-import java.util.Optional;
-import java.util.stream.Collectors;
-
-import static cz.klecansky.projectmanagement.security.SecurityConstants.*;
 
 @Component
 @RequiredArgsConstructor
@@ -40,14 +39,14 @@ public class TokenProvider {
 
     private Key key;
 
-    @NonNull private final UserRepository userRepository;
+    @NonNull
+    private final UserRepository userRepository;
 
     @PostConstruct
     protected void init() {
         this.key = Keys.hmacShaKeyFor(secretKey.getBytes());
         secretKey = Base64.getEncoder().encodeToString(secretKey.getBytes());
     }
-
 
     public JWTToken createToken(Authentication authentication) {
         String authorities = authentication.getAuthorities().stream()
@@ -97,5 +96,4 @@ public class TokenProvider {
         }
         return null;
     }
-
 }

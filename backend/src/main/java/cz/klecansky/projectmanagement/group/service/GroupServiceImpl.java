@@ -8,30 +8,35 @@ import cz.klecansky.projectmanagement.group.shared.GroupCommand;
 import cz.klecansky.projectmanagement.group.shared.GroupMemberCommand;
 import cz.klecansky.projectmanagement.group.shared.mappers.GroupMapper;
 import cz.klecansky.projectmanagement.group.shared.mappers.GroupMemberMapper;
+import java.util.List;
+import java.util.Optional;
+import java.util.UUID;
 import lombok.AccessLevel;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-import java.util.Optional;
-import java.util.UUID;
-
 @FieldDefaults(makeFinal = true, level = AccessLevel.PRIVATE)
 @RequiredArgsConstructor
 @Service
 public class GroupServiceImpl implements GroupService {
 
-    @NonNull GroupRepository groupRepository;
-    @NonNull GroupMapper groupMapper;
-    @NonNull GroupMemberMapper groupMemberMapper;
+    @NonNull
+    GroupRepository groupRepository;
+
+    @NonNull
+    GroupMapper groupMapper;
+
+    @NonNull
+    GroupMemberMapper groupMemberMapper;
 
     @Override
     public List<GroupCommand> getGroups() {
-        return groupRepository.findAll().stream().map(groupMapper::groupEntityToGroupCommand).toList();
+        return groupRepository.findAll().stream()
+                .map(groupMapper::groupEntityToGroupCommand)
+                .toList();
     }
-
 
     @Override
     public Optional<GroupCommand> getGroup(UUID id) {
@@ -42,7 +47,7 @@ public class GroupServiceImpl implements GroupService {
     public void deleteGroup(UUID id) {
         try {
             groupRepository.deleteById(id);
-        } catch (Exception e){
+        } catch (Exception e) {
             throw new GroupCannotBeDeletedException("Group cannot be deleted.", e);
         }
     }
@@ -64,8 +69,7 @@ public class GroupServiceImpl implements GroupService {
         for (GroupMemberCommand member : groupCommand.getMembers()) {
             member.setId(UUID.randomUUID());
         }
-        return groupMapper.groupEntityToGroupCommand(groupRepository.save(groupMapper.groupCommandToGroupEntity(groupCommand)));
+        return groupMapper.groupEntityToGroupCommand(
+                groupRepository.save(groupMapper.groupCommandToGroupEntity(groupCommand)));
     }
-
-
 }

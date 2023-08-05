@@ -1,8 +1,7 @@
 package cz.klecansky.projectmanagement.budget.ui.response;
 
-import lombok.Data;
-
 import java.util.UUID;
+import lombok.Data;
 
 @Data
 public class BudgetItemResponse {

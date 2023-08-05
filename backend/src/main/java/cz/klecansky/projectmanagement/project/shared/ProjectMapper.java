@@ -15,7 +15,8 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 public class ProjectMapper {
 
-    @NonNull ModelMapper modelMapper;
+    @NonNull
+    ModelMapper modelMapper;
 
     public ProjectEntity projectCommandToProjectEntity(ProjectCommand projectCommand) {
         return modelMapper.map(projectCommand, ProjectEntity.class);

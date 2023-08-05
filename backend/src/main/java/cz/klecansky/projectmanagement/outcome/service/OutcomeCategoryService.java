@@ -2,7 +2,6 @@ package cz.klecansky.projectmanagement.outcome.service;
 
 import cz.klecansky.projectmanagement.core.exception.NoSuchElementFoundException;
 import cz.klecansky.projectmanagement.outcome.shared.OutcomeCategoryCommand;
-
 import java.util.Optional;
 import java.util.UUID;
 

@@ -18,28 +18,40 @@ import cz.klecansky.projectmanagement.security.SecurityUtils;
 import cz.klecansky.projectmanagement.user.io.entity.UserEntity;
 import cz.klecansky.projectmanagement.user.shared.UserCommand;
 import cz.klecansky.projectmanagement.user.shared.UserMapper;
+import java.util.List;
+import java.util.Optional;
+import java.util.UUID;
 import lombok.AccessLevel;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-import java.util.Optional;
-import java.util.UUID;
-
 @Service
 @FieldDefaults(makeFinal = true, level = AccessLevel.PRIVATE)
 @RequiredArgsConstructor
 public class ProjectServiceImpl implements ProjectService {
 
-    @NonNull ProjectRepository projectRepository;
-    @NonNull ProjectMapper projectMapper;
-    @NonNull CommentMapper commentMapper;
-    @NonNull GroupMapper groupMapper;
-    @NonNull UserMapper userMapper;
-    @NonNull ScheduleRepository scheduleRepository;
-    @NonNull BudgetRepository budgetRepository;
+    @NonNull
+    ProjectRepository projectRepository;
+
+    @NonNull
+    ProjectMapper projectMapper;
+
+    @NonNull
+    CommentMapper commentMapper;
+
+    @NonNull
+    GroupMapper groupMapper;
+
+    @NonNull
+    UserMapper userMapper;
+
+    @NonNull
+    ScheduleRepository scheduleRepository;
+
+    @NonNull
+    BudgetRepository budgetRepository;
 
     @Override
     public ProjectCommand create(ProjectCommand projectCommand) {
@@ -60,7 +72,9 @@ public class ProjectServiceImpl implements ProjectService {
 
     @Override
     public List<ProjectCommand> getAll() {
-        return projectRepository.findAll().stream().map(projectMapper::projectEntityToProjectCommand).toList();
+        return projectRepository.findAll().stream()
+                .map(projectMapper::projectEntityToProjectCommand)
+                .toList();
     }
 
     @Override

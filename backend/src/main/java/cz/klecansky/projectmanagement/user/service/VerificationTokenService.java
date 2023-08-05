@@ -8,24 +8,28 @@ import cz.klecansky.projectmanagement.user.io.repository.UserRepository;
 import cz.klecansky.projectmanagement.user.io.repository.VerificationTokenRepository;
 import cz.klecansky.projectmanagement.user.shared.UserCommand;
 import cz.klecansky.projectmanagement.user.shared.UserMapper;
+import java.time.Instant;
+import java.util.Optional;
+import java.util.UUID;
 import lombok.AccessLevel;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import org.springframework.stereotype.Service;
 
-import java.time.Instant;
-import java.util.Optional;
-import java.util.UUID;
-
 @FieldDefaults(makeFinal = true, level = AccessLevel.PRIVATE)
 @RequiredArgsConstructor
 @Service
 public class VerificationTokenService {
 
-    @NonNull VerificationTokenRepository verificationTokenRepository;
-    @NonNull UserRepository userRepository;
-    @NonNull UserMapper userMapper;
+    @NonNull
+    VerificationTokenRepository verificationTokenRepository;
+
+    @NonNull
+    UserRepository userRepository;
+
+    @NonNull
+    UserMapper userMapper;
 
     public void saveVerificationToken(VerificationTokenEntity token) {
         verificationTokenRepository.save(token);

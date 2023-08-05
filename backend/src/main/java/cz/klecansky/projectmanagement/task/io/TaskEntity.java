@@ -7,14 +7,13 @@ import cz.klecansky.projectmanagement.project.io.ProjectEntity;
 import cz.klecansky.projectmanagement.task.shared.Priority;
 import cz.klecansky.projectmanagement.task.shared.Status;
 import cz.klecansky.projectmanagement.user.io.entity.UserEntity;
-import lombok.Getter;
-import lombok.Setter;
-
-import javax.persistence.*;
 import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
+import javax.persistence.*;
+import lombok.Getter;
+import lombok.Setter;
 
 @Entity
 @Table(name = "tasks")
@@ -54,7 +53,9 @@ public class TaskEntity {
     @JoinColumn(name = "phases_id")
     private PhaseEntity phase;
 
-    @ManyToOne(fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
+    @ManyToOne(
+            fetch = FetchType.LAZY,
+            cascade = {CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
     @JoinColumn(name = "projects_id", nullable = false)
     private ProjectEntity project;
 

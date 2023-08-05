@@ -3,7 +3,6 @@ package cz.klecansky.projectmanagement.task.service;
 import cz.klecansky.projectmanagement.comment.shared.CommentCommand;
 import cz.klecansky.projectmanagement.core.exception.NoSuchElementFoundException;
 import cz.klecansky.projectmanagement.task.shared.TaskCommand;
-
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;

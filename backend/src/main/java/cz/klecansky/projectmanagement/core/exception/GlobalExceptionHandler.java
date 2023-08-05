@@ -1,5 +1,8 @@
 package cz.klecansky.projectmanagement.core.exception;
 
+import static org.springframework.http.HttpStatus.BAD_REQUEST;
+import static org.springframework.http.HttpStatus.UNAUTHORIZED;
+
 import cz.klecansky.projectmanagement.core.response.ErrorResponse;
 import lombok.NonNull;
 import org.springframework.http.HttpHeaders;
@@ -13,9 +16,6 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
-import static org.springframework.http.HttpStatus.BAD_REQUEST;
-import static org.springframework.http.HttpStatus.UNAUTHORIZED;
-
 @RestControllerAdvice
 public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
 
@@ -27,18 +27,20 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
                         .code(UNAUTHORIZED.value())
                         .status(UNAUTHORIZED.getReasonPhrase())
                         .message("Authorization error")
-                        .build(), UNAUTHORIZED);
+                        .build(),
+                UNAUTHORIZED);
     }
 
     @Override
     @ResponseStatus(BAD_REQUEST)
-    protected @NonNull ResponseEntity<Object> handleHttpMessageNotReadable(HttpMessageNotReadableException ex, HttpHeaders headers, HttpStatus status, WebRequest request) {
+    protected @NonNull ResponseEntity<Object> handleHttpMessageNotReadable(
+            HttpMessageNotReadableException ex, HttpHeaders headers, HttpStatus status, WebRequest request) {
         return new ResponseEntity<>(
                 ErrorResponse.builder()
                         .code(BAD_REQUEST.value())
                         .status(BAD_REQUEST.getReasonPhrase())
                         .message("Bad type ")
-                        .build(), BAD_REQUEST);
+                        .build(),
+                BAD_REQUEST);
     }
-
 }

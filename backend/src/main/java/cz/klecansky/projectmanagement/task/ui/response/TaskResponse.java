@@ -6,11 +6,10 @@ import cz.klecansky.projectmanagement.phase.ui.response.PhaseResponse;
 import cz.klecansky.projectmanagement.task.shared.Priority;
 import cz.klecansky.projectmanagement.task.shared.Status;
 import cz.klecansky.projectmanagement.user.ui.response.UserResponse;
-import lombok.Data;
-
 import java.time.Instant;
 import java.util.List;
 import java.util.UUID;
+import lombok.Data;
 
 @Data
 public class TaskResponse {

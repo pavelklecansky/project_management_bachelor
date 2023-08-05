@@ -1,9 +1,8 @@
 package cz.klecansky.projectmanagement.group.ui.response;
 
 import cz.klecansky.projectmanagement.user.ui.response.UserResponse;
-import lombok.Data;
-
 import java.util.UUID;
+import lombok.Data;
 
 @Data
 public class GroupMemberResponse {
