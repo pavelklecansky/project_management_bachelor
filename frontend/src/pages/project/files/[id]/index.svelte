@@ -3,8 +3,8 @@
     import {goto, params, url} from "@roxi/routify";
     import {getContext, onMount} from "svelte";
     import {deleteFile, deleteFolder, downloadFileInBrowser, listFiles, uploadFile,} from "../../../../lib/storage.service";
-    import Document32 from "carbon-icons-svelte/lib/Document32";
-    import Folder32 from "carbon-icons-svelte/lib/Folder32";
+    import Document from "carbon-icons-svelte/lib/Document.svelte";
+    import Folder from "carbon-icons-svelte/lib/Folder.svelte";
     import OveflowMenu from "../../../../components/core/OveflowMenu.svelte";
     import {error, success} from "../../../../lib/notification";
     import UploadButton from "../../../../components/core/UploadButton.svelte";
@@ -146,7 +146,7 @@
                     </div>
 
                     <div>
-                        <Folder32 class="w-32 h-32 fill-current"/>
+                        <Folder class="w-32 h-32 fill-current"/>
                     </div>
 
                     <div class="w-5/6">
@@ -186,7 +186,7 @@
                     </div>
 
                     <div>
-                        <Document32 class="w-32 h-32 fill-current"/>
+                        <Document class="w-32 h-32 fill-current"/>
                     </div>
 
                     <div class="w-5/6">

@@ -1,6 +1,6 @@
 <script lang="ts">
     import {goto} from "@roxi/routify";
-    import Close32 from "carbon-icons-svelte/lib/Close32";
+    import Close from "carbon-icons-svelte/lib/Close.svelte";
 
     export let outsideClickGotoPath;
     export let handleSubmit = (event) => {};
@@ -18,7 +18,7 @@
             class="absolute top-0 right-0 cursor-pointer"
             on:click={() => $goto(outsideClickGotoPath)}
         >
-            <Close32 />
+            <Close />
         </div>
         <form
             on:submit|preventDefault={handleSubmit}

@@ -1,27 +1,39 @@
 <script>
     import {users} from "../../lib/users.store";
-    import {Datatable} from "svelte-simple-datatables";
+    import {Datatable, DataHandler, Th, ThFilter} from "@vincjo/datatables"
+    import {afterPageLoad} from "@roxi/routify";
 
-    const settings = {
-        sortable: true,
-        pagination: true,
-        rowsPerPage: 50,
-        noRows: "No data found",
-        columnFilter: true,
-    };
+    let handler;
     let rows;
+
+
+    $afterPageLoad(async () => {
+        handler = new DataHandler($users, {rowsPerPage: 50});
+        rows = handler.getRows();
+    });
 </script>
 
-<Datatable {settings} data={$users} bind:dataRows={rows}>
-    <thead>
-        <th data-key="firstName">First name</th>
-        <th data-key="lastName">Last name</th>
-        <th data-key="email">Email</th>
-        <th data-key="phoneNumber">Phone number</th>
-        <th data-key="note">Note</th>
-    </thead>
-    <tbody>
-        {#if rows}
+{#if rows}
+    <Datatable {handler} pagination={true}>
+        <table>
+            <thead>
+            <tr>
+                <Th {handler} orderBy="firstName">First name</Th>
+                <Th {handler} orderBy="lastName">Last name</Th>
+                <Th {handler} orderBy="email">Email</Th>
+                <Th {handler} orderBy="phoneNumber">Phone number</Th>
+                <Th {handler} orderBy="note">Note</Th>
+            </tr>
+            <tr>
+                <ThFilter {handler} filterBy="firstName"/>
+                <ThFilter {handler} filterBy="lastName"/>
+                <ThFilter {handler} filterBy="email"/>
+                <ThFilter {handler} filterBy="phoneNumber"/>
+                <ThFilter {handler} filterBy="note"/>
+            </tr>
+            </thead>
+            <tbody>
+
             {#each $rows as row}
                 <tr>
                     <td>{row.firstName}</td>
@@ -31,9 +43,11 @@
                     <td>{row.note}</td>
                 </tr>
             {/each}
-        {/if}
-    </tbody>
-</Datatable>
+
+            </tbody>
+        </table>
+    </Datatable>
+{/if}
 
 <style>
     td {

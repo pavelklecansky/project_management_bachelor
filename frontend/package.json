@@ -1,6 +1,7 @@
 {
    "name": "project_management",
    "version": "1.0.0",
+   "type": "module",
    "@comments scripts": {
       "dev": "run all dev:* scripts",
       "dev:routify": "generate Routify's ro  utes.js on filechange",
@@ -22,31 +23,29 @@
       "validate": "svelte-check"
    },
    "devDependencies": {
-      "@rollup/plugin-typescript": "8.3.0",
-      "@roxi/routify": "^2.18.4",
-      "@sveltejs/vite-plugin-svelte": "^1.0.0-next.31",
-      "@tsconfig/svelte": "^2.0.1",
-      "@zerodevx/svelte-toast": "^0.6.2",
-      "autoprefixer": "^10.4.0",
-      "carbon-icons-svelte": "^10.44.0",
+      "@rollup/plugin-typescript": "11.1.2",
+      "@roxi/routify": "^2.18.12",
+      "@sveltejs/vite-plugin-svelte": "^2.4.2",
+      "@tsconfig/svelte": "^5.0.0",
+      "@zerodevx/svelte-toast": "^0.9.5",
+      "autoprefixer": "^10.4.14",
+      "carbon-icons-svelte": "^12.1.0",
       "cross-env": "^7.0.3",
-      "cssnano": "^5.0.12",
-      "fkill": "^8.0.0",
+      "cssnano": "^6.0.1",
+      "fkill": "^8.1.1",
       "npm-run-all": "^4.1.5",
-      "postcss": "^8.4.4",
-      "postcss-import": "^14.0.2",
-      "svelte": "^3.44.2",
-      "svelte-check": "^2.2.10",
-      "svelte-feather-icons": "^3.5.0",
-      "svelte-hmr": "^0.14.7",
-      "svelte-preprocess": "^4.9.8",
-      "svelte-select": "^4.4.6",
-      "svelte-simple-datatables": "^0.2.3",
-      "tailwindcss": "^3.0.1",
-      "tslib": "^2.3.1",
-      "typescript": "^4.5.3",
-      "vite": "^2.9.5",
-      "vite-main-js": "^0.0.1"
+      "postcss": "^8.4.27",
+      "postcss-import": "^15.1.0",
+      "svelte": "^4.0.5",
+      "svelte-check": "^3.4.6",
+      "svelte-feather-icons": "^4.0.1",
+      "svelte-hmr": "^0.15.3",
+      "svelte-preprocess": "^5.0.4",
+      "svelte-select": "^5.6.1",
+      "tailwindcss": "^3.3.3",
+      "tslib": "^2.6.1",
+      "typescript": "^5.0.2",
+      "vite": "^4.4.5"
    },
    "routify": {
       "extensions": "svelte,html,svx,md"
@@ -66,11 +65,11 @@
       "../../*"
    ],
    "dependencies": {
-      "moment": "^2.29.1",
-      "svelte-gantt": "^4.0.3-beta",
-      "axios": "^0.26.0",
-      "svelte-forms-lib": "^2.0.0",
-      "svelte-local-storage-store": "^0.2.6",
-      "svelte-simple-modal": "^1.3.1"
+      "axios": "^1.4.0",
+      "moment": "^2.29.4",
+      "svelte-forms-lib": "^2.0.1",
+      "svelte-gantt": "^4.0.9-beta",
+      "svelte-local-storage-store": "^0.5.0",
+      "svelte-simple-modal": "^1.6.1"
    }
 }

@@ -1,7 +1,7 @@
 import type {Organization} from "./core.type";
 import type {Role} from "./role.enum";
 
-export interface User{
+export type User = {
     id: string;
     firstName: string;
     lastName: string;

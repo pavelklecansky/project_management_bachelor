@@ -1,33 +1,23 @@
 <script lang="ts">
-    import {Datatable} from "svelte-simple-datatables";
+    import {Datatable, DataHandler, Th, ThFilter} from "@vincjo/datatables";
     import {goto, params, url} from "@roxi/routify";
     import {onMount} from "svelte";
     import CreateButton from "../../../components/core/CreateButton.svelte";
     import {error, success} from "../../../lib/notification";
     import {deleteGroupMember, deleteMember, getProject,} from "../../../lib/project.service";
-    import type {Group, Project} from "../../../types/core.type";
-    import type {User} from "../../../types/authentication.type";
+    import type {Project} from "../../../types/core.type";
     import {getDataFromResponse} from "../../../lib/utils";
-    import Delete24 from "carbon-icons-svelte/lib/Delete24";
+    import TrashCan from "carbon-icons-svelte/lib/TrashCan.svelte";
+
 
     let project = {} as Project;
-    let members = [] as User[];
-    let groupMembers = [] as Group[];
     let id;
 
     let memberRows;
     let groupMemberRows;
+    let memberHandler;
+    let groupMemberHandler;
 
-    const settings = {
-        sortable: true,
-        pagination: true,
-        rowsPerPage: 10,
-        noRows: "No data found",
-        columnFilter: false,
-        blocks: {
-            searchInput: false,
-        },
-    };
 
     onMount(async () => {
         id = $params.id;
@@ -37,8 +27,10 @@
             $goto(`/`);
         } else {
             project = success!;
-            members = project.members;
-            groupMembers = project.memberGroups;
+            memberHandler = new DataHandler(project.members, {rowsPerPage: 50});
+            memberRows = memberHandler.getRows();
+            groupMemberHandler = new DataHandler(project.memberGroups, {rowsPerPage: 50});
+            groupMemberRows = groupMemberHandler.getRows();
         }
     });
 
@@ -50,8 +42,10 @@
         } else {
             success(successMessage);
             project = getDataFromResponse(successMessage)!;
-            members = project.members;
-            groupMembers = project.memberGroups;
+            memberHandler = new DataHandler(project.members, {rowsPerPage: 50});
+            memberRows = memberHandler.getRows();
+            groupMemberHandler = new DataHandler(project.memberGroups, {rowsPerPage: 50});
+            groupMemberRows = groupMemberHandler.getRows();
         }
     };
     const deleteGroupMemberOnClick = async (idMember: string) => {
@@ -65,85 +59,111 @@
         } else {
             success(successMessage);
             project = getDataFromResponse(successMessage)!;
-            members = project.members;
-            groupMembers = project.memberGroups;
+            memberHandler = new DataHandler(project.members, {rowsPerPage: 50});
+            memberRows = memberHandler.getRows();
+            groupMemberHandler = new DataHandler(project.memberGroups, {rowsPerPage: 50});
+            groupMemberRows = groupMemberHandler.getRows();
         }
     };
 </script>
 
 <div class="flex justify-end w-full mb-2">
     <a class="mr-4" href={$url(`./new-group-member/${id}`)}
-        ><CreateButton text={"Add new group member"} /></a
+    >
+        <CreateButton text={"Add new group member"}/>
+    </a
     >
     <a class="mr-4" href={$url(`./new-member/${id}`)}
-        ><CreateButton text={"Add new member"} /></a
+    >
+        <CreateButton text={"Add new member"}/>
+    </a
     >
 </div>
 
 <div>
     <div>
         <h2 class="text-2xl mb-2">Members</h2>
-        <Datatable
-            {settings}
-            data={members}
-            bind:dataRows={memberRows}
-            id={"table-1"}
-        >
-            <thead>
-                <th data-key="name">Name</th>
-                <th>Actions</th>
-            </thead>
-            <tbody>
-                {#if memberRows}
-                    {#each $memberRows as row}
-                        <tr>
-                            <td>{row.firstName} {row.lastName}</td>
-                            <td>
-                                <Delete24
-                                    class="cursor-pointer"
-                                    on:click={() => deleteMemberOnClick(row.id)}
-                                />
-                            </td>
-                        </tr>
-                    {/each}
-                {/if}
-            </tbody>
-        </Datatable>
+        {#if memberRows}
+            <Datatable
+                    handler={memberHandler}
+                    pagination={true}
+                    id={"table-1"}
+            >
+                <table>
+
+                    <thead>
+                    <tr>
+                        <Th handler={memberHandler} orderBy="name">Name</Th>
+                        <th>Actions</th>
+                    </tr>
+                    <tr>
+                        <ThFilter handler={memberHandler} filterBy="name"/>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {#if memberRows}
+                        {#each $memberRows as row}
+                            <tr>
+                                <td>{row.firstName} {row.lastName}</td>
+                                <td>
+                                    <TrashCan
+                                            class="cursor-pointer"
+                                            on:click={() => deleteMemberOnClick(row.id)}
+                                    />
+                                </td>
+                            </tr>
+                        {/each}
+                    {/if}
+                    </tbody>
+
+                </table>
+            </Datatable>
+        {/if}
     </div>
     <div>
         <h2 class="text-2xl mt-10 mb-2">Group Members</h2>
-        <Datatable
-            {settings}
-            data={groupMembers}
-            bind:dataRows={groupMemberRows}
-            id={"table-2"}
-        >
-            <thead>
-                <th data-key="name">Name</th>
-                <th>Actions</th>
-            </thead>
-            <tbody>
-                {#if groupMemberRows}
-                    {#each $groupMemberRows as row}
-                        <tr>
-                            <td>{row.name}</td>
-                            <td>
-                                <Delete24
-                                    class="cursor-pointer"
-                                    on:click={() =>
+        {#if groupMemberRows}
+            <Datatable
+                    handler={groupMemberHandler}
+                    pagination={true}
+                    id={"table-2"}
+            >
+                <table>
+
+                    <thead>
+                    <tr>
+                        <Th handler={groupMemberHandler} orderBy="name">Name</Th>
+                        <th>Actions</th>
+                    </tr>
+                    <tr>
+                        <ThFilter handler={groupMemberHandler} filterBy="name"/>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {#if groupMemberRows}
+                        {#each $groupMemberRows as row}
+                            <tr>
+                                <td>{row.name}</td>
+                                <td>
+                                    <TrashCan
+                                            class="cursor-pointer"
+                                            on:click={() =>
                                         deleteGroupMemberOnClick(row.id)}
-                                />
-                            </td>
-                        </tr>
-                    {/each}
-                {/if}
-            </tbody>
-        </Datatable>
+                                    />
+                                </td>
+                            </tr>
+                        {/each}
+                    {/if}
+                    </tbody>
+
+                </table>
+            </Datatable>
+        {/if}
     </div>
 </div>
 
 <style>
-    td{
+    td {
         @apply w-1/2;
     }
 </style>

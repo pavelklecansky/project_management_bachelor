@@ -1,23 +1,23 @@
 <script>
     import {isActive, params, url} from "@roxi/routify";
 
-    import Folder24 from "carbon-icons-svelte/lib/Folder24";
-    import Group24 from "carbon-icons-svelte/lib/Group24";
-    import Dashboard24 from "carbon-icons-svelte/lib/Dashboard24";
-    import CategoryNewEach24 from "carbon-icons-svelte/lib/CategoryNewEach24";
-    import CertificateCheck24 from "carbon-icons-svelte/lib/CertificateCheck24";
-    import CalendarHeatMap24 from "carbon-icons-svelte/lib/CalendarHeatMap24";
-    import Money24 from "carbon-icons-svelte/lib/Money24";
+    import Folder from "carbon-icons-svelte/lib/Folder.svelte";
+    import Group from "carbon-icons-svelte/lib/Group.svelte";
+    import Dashboard from "carbon-icons-svelte/lib/Dashboard.svelte";
+    import CategoryNewEach from "carbon-icons-svelte/lib/CategoryNewEach.svelte";
+    import CertificateCheck from "carbon-icons-svelte/lib/CertificateCheck.svelte";
+    import CalendarHeatMap from "carbon-icons-svelte/lib/CalendarHeatMap.svelte";
+    import Money from "carbon-icons-svelte/lib/Money.svelte";
 
 
     $: urls = [
-        [$url("/project/:id", $params), "Main", Dashboard24],
-        [$url("/project/members/:id", $params), "Members", Group24],
-        [$url("/project/files/:id", $params), "Files", Folder24],
-        [$url("/project/phases/:id", $params), "Phases", CategoryNewEach24],
-        [$url("/project/outcomes/:id", $params), "Outcomes", CertificateCheck24],
-        [$url("/project/schedule/:id", $params), "Schedule", CalendarHeatMap24],
-        [$url("/project/budget/:id", $params), "Budget", Money24],
+        [$url("/project/:id", $params), "Main", Dashboard],
+        [$url("/project/members/:id", $params), "Members", Group],
+        [$url("/project/files/:id", $params), "Files", Folder],
+        [$url("/project/phases/:id", $params), "Phases", CategoryNewEach],
+        [$url("/project/outcomes/:id", $params), "Outcomes", CertificateCheck],
+        [$url("/project/schedule/:id", $params), "Schedule", CalendarHeatMap],
+        [$url("/project/budget/:id", $params), "Budget", Money],
     ].map(([path, name, icon]) => {
         return {
             name,

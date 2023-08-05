@@ -9,7 +9,7 @@
     import UploadButton from "../../../../../../components/core/UploadButton.svelte";
     import {deleteFile, downloadFileInBrowser, listFiles, uploadFile} from '../../../../../../lib/storage.service';
     import OveflowMenu from "../../../../../../components/core/OveflowMenu.svelte";
-    import Document32 from "carbon-icons-svelte/lib/Document32";
+    import Document from "carbon-icons-svelte/lib/Document.svelte";
     import EditFilePopup from '../../../../../../components/storage/EditFilePopup.svelte';
 
     let id = $params.resultId;
@@ -143,7 +143,7 @@
                     </div>
 
                     <div>
-                        <Document32 class="w-32 h-32 fill-current"/>
+                        <Document class="w-32 h-32 fill-current"/>
                     </div>
 
                     <div class="w-5/6">

@@ -1,12 +1,12 @@
 <script lang="ts">
     import {isActive, url} from "@roxi/routify";
 
-    import Building24 from "carbon-icons-svelte/lib/Building24";
-    import Group24 from "carbon-icons-svelte/lib/Group24";
+    import Building from "carbon-icons-svelte/lib/Building.svelte";
+    import Group from "carbon-icons-svelte/lib/Group.svelte";
 
     $: urls = [
-        ["./users", "Users", Group24],
-        ["./organization", "Organization", Building24],
+        ["./users", "Users", Group],
+        ["./organization", "Organization", Building],
     ].map(([path, name, icon]) => {
         return {
             name,

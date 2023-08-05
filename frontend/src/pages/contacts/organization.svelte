@@ -1,36 +1,42 @@
 <script lang="ts">
-    import {Datatable} from "svelte-simple-datatables";
+    import {Datatable, DataHandler, Th, ThFilter} from "@vincjo/datatables";
     import {afterPageLoad} from "@roxi/routify";
     import {getAllOrganizations} from "../../lib/organization.service";
     import {getDataFromResponse} from "../../lib/utils";
 
-    const settings = {
-        sortable: true,
-        pagination: true,
-        rowsPerPage: 50,
-        noRows: "No data found",
-        columnFilter: true,
-    };
+    let handler;
     let rows;
-    let data = [];
 
     $afterPageLoad(async () => {
         const [successResponse, errorResponse] = await getAllOrganizations();
-        data = getDataFromResponse(successResponse);
+        const data = getDataFromResponse(successResponse);
+
+        handler = new DataHandler(data, {rowsPerPage: 20});
+        rows = handler.getRows();
     });
 </script>
 
 <div class="h-full max-w-full">
-    <Datatable {settings} {data} bind:dataRows={rows}>
-        <thead>
-            <th data-key="name">Name</th>
-            <th data-key="email">Email</th>
-            <th data-key="ico">IČO</th>
-            <th data-key="phoneNumber">Phone number</th>
-            <th data-key="note">Note</th>
-        </thead>
-        <tbody>
-            {#if rows}
+    {#if rows}
+        <Datatable {handler} pagination={true}>
+            <table>
+                <thead>
+                <tr>
+                    <Th {handler} orderBy="name">Name</Th>
+                    <Th {handler} orderBy="email">Email</Th>
+                    <Th {handler} orderBy="ico">IČO</Th>
+                    <Th {handler} orderBy="phoneNumber">Phone number</Th>
+                    <Th {handler} orderBy="note">Note</Th>
+                </tr>
+                <tr>
+                    <ThFilter {handler} filterBy="name"/>
+                    <ThFilter {handler} filterBy="email"/>
+                    <ThFilter {handler} filterBy="ico"/>
+                    <ThFilter {handler} filterBy="phoneNumber"/>
+                    <ThFilter {handler} filterBy="note"/>
+                </tr>
+                </thead>
+                <tbody>
                 {#each $rows as row}
                     <tr>
                         <td>{row.name}</td>
@@ -40,12 +46,13 @@
                         <td>{row.note}</td>
                     </tr>
                 {/each}
-            {/if}
-        </tbody>
-    </Datatable>
+                </tbody>
+            </table>
+        </Datatable>
+    {/if}
 </div>
 
-<slot />
+<slot/>
 
 <style>
     td {
