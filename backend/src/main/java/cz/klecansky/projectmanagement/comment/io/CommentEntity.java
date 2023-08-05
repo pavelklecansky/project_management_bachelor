@@ -1,18 +1,17 @@
 package cz.klecansky.projectmanagement.comment.io;
 
 import cz.klecansky.projectmanagement.user.io.entity.UserEntity;
+import java.time.Instant;
+import java.util.UUID;
+import javax.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
-import javax.persistence.*;
-import java.time.Instant;
-import java.util.UUID;
-
- @Entity
- @Table(name = "comments")
- @Getter
- @Setter
- public class CommentEntity {
+@Entity
+@Table(name = "comments")
+@Getter
+@Setter
+public class CommentEntity {
 
     @Id
     private UUID id;
@@ -45,4 +44,4 @@ import java.util.UUID;
     public int hashCode() {
         return id != null ? id.hashCode() : 0;
     }
- }
+}

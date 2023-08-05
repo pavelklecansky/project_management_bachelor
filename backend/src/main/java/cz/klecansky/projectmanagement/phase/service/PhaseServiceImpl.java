@@ -8,25 +8,31 @@ import cz.klecansky.projectmanagement.phase.shared.PhaseMapper;
 import cz.klecansky.projectmanagement.project.io.ProjectRepository;
 import cz.klecansky.projectmanagement.project.shared.ProjectCommand;
 import cz.klecansky.projectmanagement.project.shared.ProjectMapper;
+import java.util.List;
+import java.util.Optional;
+import java.util.UUID;
 import lombok.AccessLevel;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-import java.util.Optional;
-import java.util.UUID;
-
 @Service
 @FieldDefaults(makeFinal = true, level = AccessLevel.PRIVATE)
 @RequiredArgsConstructor
 public class PhaseServiceImpl implements PhaseService {
 
-    @NonNull PhaseRepository phaseRepository;
-    @NonNull ProjectRepository projectRepository;
-    @NonNull PhaseMapper phaseMapper;
-    @NonNull ProjectMapper projectMapper;
+    @NonNull
+    PhaseRepository phaseRepository;
+
+    @NonNull
+    ProjectRepository projectRepository;
+
+    @NonNull
+    PhaseMapper phaseMapper;
+
+    @NonNull
+    ProjectMapper projectMapper;
 
     @Override
     public PhaseCommand create(ProjectCommand projectCommand, PhaseCommand phaseCommand) {
@@ -38,7 +44,9 @@ public class PhaseServiceImpl implements PhaseService {
 
     @Override
     public List<PhaseCommand> getAll() {
-        return phaseRepository.findAll().stream().map(phaseMapper::phaseEntityToPhaseCommand).toList();
+        return phaseRepository.findAll().stream()
+                .map(phaseMapper::phaseEntityToPhaseCommand)
+                .toList();
     }
 
     @Override

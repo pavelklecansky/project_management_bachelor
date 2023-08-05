@@ -1,9 +1,8 @@
 package cz.klecansky.projectmanagement.schedule.shared;
 
-import lombok.Data;
-
 import java.util.List;
 import java.util.UUID;
+import lombok.Data;
 
 @Data
 public class RowCommand {

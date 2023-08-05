@@ -13,14 +13,20 @@ public class ProjectUtils {
     }
 
     private static boolean isMember(ProjectCommand projectCommand, UserPrincipal userPrincipal) {
-        return projectCommand.getMembers().stream().anyMatch(userCommand -> userCommand.getId().equals(userPrincipal.getUser().getId()));
+        return projectCommand.getMembers().stream()
+                .anyMatch(userCommand ->
+                        userCommand.getId().equals(userPrincipal.getUser().getId()));
     }
 
     private static boolean isGroupMember(ProjectCommand projectCommand, UserPrincipal userPrincipal) {
-        return projectCommand.getMemberGroups().stream().anyMatch(groupCommand -> isMemberOfGroup(groupCommand, userPrincipal));
+        return projectCommand.getMemberGroups().stream()
+                .anyMatch(groupCommand -> isMemberOfGroup(groupCommand, userPrincipal));
     }
 
     private static boolean isMemberOfGroup(GroupCommand groupCommand, UserPrincipal userPrincipal) {
-        return groupCommand.getMembers().stream().anyMatch(memberCommand -> memberCommand.getUser().getId().equals(userPrincipal.getUser().getId()));
+        return groupCommand.getMembers().stream().anyMatch(memberCommand -> memberCommand
+                .getUser()
+                .getId()
+                .equals(userPrincipal.getUser().getId()));
     }
 }

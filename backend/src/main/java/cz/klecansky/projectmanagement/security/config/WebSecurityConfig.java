@@ -1,5 +1,7 @@
 package cz.klecansky.projectmanagement.security.config;
 
+import static cz.klecansky.projectmanagement.security.SecurityConstants.PUBLIC_URLS;
+
 import cz.klecansky.projectmanagement.security.jwt.JWTAccessDeniedHandler;
 import cz.klecansky.projectmanagement.security.jwt.JWTAuthenticationEntryPoint;
 import cz.klecansky.projectmanagement.security.jwt.JWTConfigurer;
@@ -16,8 +18,6 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-
-import static cz.klecansky.projectmanagement.security.SecurityConstants.PUBLIC_URLS;
 
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(prePostEnabled = true, securedEnabled = true)
@@ -36,19 +36,20 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity httpSecurity) throws Exception {
         httpSecurity
-                .csrf().disable()
+                .csrf()
+                .disable()
                 .exceptionHandling()
                 .accessDeniedHandler(jwtAccessDeniedHandler)
                 .authenticationEntryPoint(jwtAuthenticationEntryPoint)
                 .and()
                 .sessionManagement()
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-
                 .and()
                 .authorizeRequests()
-                .antMatchers(PUBLIC_URLS).permitAll()
-                .anyRequest().authenticated()
-
+                .antMatchers(PUBLIC_URLS)
+                .permitAll()
+                .anyRequest()
+                .authenticated()
                 .and()
                 .apply(new JWTConfigurer(tokenProvider));
     }

@@ -15,7 +15,8 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 public class BudgetItemMapper {
 
-    @NonNull ModelMapper modelMapper;
+    @NonNull
+    ModelMapper modelMapper;
 
     public BudgetItemEntity budgetItemCommandToBudgetItemEntity(BudgetItemCommand budgetItemCommand) {
         return modelMapper.map(budgetItemCommand, BudgetItemEntity.class);

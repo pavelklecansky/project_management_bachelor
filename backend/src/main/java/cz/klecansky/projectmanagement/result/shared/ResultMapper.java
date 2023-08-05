@@ -15,7 +15,8 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 public class ResultMapper {
 
-    @NonNull ModelMapper modelMapper;
+    @NonNull
+    ModelMapper modelMapper;
 
     public ResultEntity resultCommandToResultEntity(ResultCommand resultCommand) {
         return modelMapper.map(resultCommand, ResultEntity.class);

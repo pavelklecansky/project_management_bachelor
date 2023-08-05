@@ -4,11 +4,10 @@ import cz.klecansky.projectmanagement.comment.ui.response.CommentResponse;
 import cz.klecansky.projectmanagement.group.ui.response.GroupResponse;
 import cz.klecansky.projectmanagement.task.ui.response.TaskResponse;
 import cz.klecansky.projectmanagement.user.ui.response.UserResponse;
-import lombok.Data;
-
 import java.time.Instant;
 import java.util.List;
 import java.util.UUID;
+import lombok.Data;
 
 @Data
 public class ProjectResponse {

@@ -12,7 +12,8 @@ import org.springframework.stereotype.Component;
 @FieldDefaults(makeFinal = true, level = AccessLevel.PRIVATE)
 @RequiredArgsConstructor
 public class StorageMapper {
-    @NonNull ModelMapper modelMapper;
+    @NonNull
+    ModelMapper modelMapper;
 
     public FileResponse fileCommandToFileResponse(FileCommand fileCommand) {
         return modelMapper.map(fileCommand, FileResponse.class);

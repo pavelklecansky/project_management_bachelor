@@ -1,20 +1,19 @@
 package cz.klecansky.projectmanagement.user.ui.request;
 
 import cz.klecansky.projectmanagement.user.shared.Role;
-import lombok.Data;
-import org.springframework.lang.Nullable;
-
-import javax.validation.constraints.Email;
-import javax.validation.constraints.NotBlank;
 import java.util.List;
 import java.util.UUID;
-
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
+import lombok.Data;
+import org.springframework.lang.Nullable;
 
 @Data
 public class UserRequest {
 
     @NotBlank
     private String firstName;
+
     @NotBlank
     private String lastName;
 

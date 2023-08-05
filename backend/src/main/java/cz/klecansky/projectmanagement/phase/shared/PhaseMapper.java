@@ -15,7 +15,8 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 public class PhaseMapper {
 
-    @NonNull ModelMapper modelMapper;
+    @NonNull
+    ModelMapper modelMapper;
 
     public PhaseEntity phaseCommandToPhaseEntity(PhaseCommand phaseCommand) {
         return modelMapper.map(phaseCommand, PhaseEntity.class);

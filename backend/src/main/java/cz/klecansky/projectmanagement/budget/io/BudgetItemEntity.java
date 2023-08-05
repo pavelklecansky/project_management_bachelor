@@ -1,10 +1,9 @@
 package cz.klecansky.projectmanagement.budget.io;
 
+import java.util.UUID;
+import javax.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
-
-import javax.persistence.*;
-import java.util.UUID;
 
 @Entity
 @Table(name = "budget_items")

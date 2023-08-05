@@ -1,9 +1,8 @@
 package cz.klecansky.projectmanagement.schedule.shared;
 
-import lombok.Data;
-
 import java.time.Instant;
 import java.util.UUID;
+import lombok.Data;
 
 @Data
 public class TaskCommand {

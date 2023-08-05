@@ -15,21 +15,26 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 public class BudgetCategoryMapper {
 
-    @NonNull ModelMapper modelMapper;
+    @NonNull
+    ModelMapper modelMapper;
 
-    public BudgetCategoryEntity budgetCategoryCommandToBudgetCategoryEntity(BudgetCategoryCommand budgetCategoryCommand) {
+    public BudgetCategoryEntity budgetCategoryCommandToBudgetCategoryEntity(
+            BudgetCategoryCommand budgetCategoryCommand) {
         return modelMapper.map(budgetCategoryCommand, BudgetCategoryEntity.class);
     }
 
-    public BudgetCategoryCommand budgetCategoryEntityToBudgetCategoryCommand(BudgetCategoryEntity budgetCategoryEntity) {
+    public BudgetCategoryCommand budgetCategoryEntityToBudgetCategoryCommand(
+            BudgetCategoryEntity budgetCategoryEntity) {
         return modelMapper.map(budgetCategoryEntity, BudgetCategoryCommand.class);
     }
 
-    public BudgetCategoryCommand budgetCategoryRequestToBudgetCategoryCommand(BudgetCategoryRequest budgetCategoryRequest) {
+    public BudgetCategoryCommand budgetCategoryRequestToBudgetCategoryCommand(
+            BudgetCategoryRequest budgetCategoryRequest) {
         return modelMapper.map(budgetCategoryRequest, BudgetCategoryCommand.class);
     }
 
-    public BudgetCategoryResponse budgetCategoryCommandToBudgetCategoryResponse(BudgetCategoryCommand budgetCategoryCommand) {
+    public BudgetCategoryResponse budgetCategoryCommandToBudgetCategoryResponse(
+            BudgetCategoryCommand budgetCategoryCommand) {
         return modelMapper.map(budgetCategoryCommand, BudgetCategoryResponse.class);
     }
 }

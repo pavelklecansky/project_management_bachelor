@@ -4,7 +4,6 @@ import cz.klecansky.projectmanagement.core.exception.NoSuchElementFoundException
 import cz.klecansky.projectmanagement.schedule.shared.RowCommand;
 import cz.klecansky.projectmanagement.schedule.shared.ScheduleCommand;
 import cz.klecansky.projectmanagement.schedule.shared.TaskCommand;
-
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;

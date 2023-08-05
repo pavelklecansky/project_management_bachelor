@@ -1,11 +1,10 @@
 package cz.klecansky.projectmanagement.user.io.entity;
 
-import lombok.Getter;
-import lombok.Setter;
-
-import javax.persistence.*;
 import java.time.Instant;
 import java.util.UUID;
+import javax.persistence.*;
+import lombok.Getter;
+import lombok.Setter;
 
 @Entity
 @Table(name = "verification_tokens")
@@ -26,5 +25,4 @@ public class VerificationTokenEntity {
 
     @Column(nullable = false)
     private Instant expiryDate;
-
 }

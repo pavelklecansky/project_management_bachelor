@@ -1,9 +1,8 @@
 package cz.klecansky.projectmanagement.storage.ui;
 
-import lombok.Data;
-
 import java.nio.file.Path;
 import java.time.Instant;
+import lombok.Data;
 
 @Data
 public class FileResponse {

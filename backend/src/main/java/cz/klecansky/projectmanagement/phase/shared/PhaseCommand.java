@@ -2,11 +2,10 @@ package cz.klecansky.projectmanagement.phase.shared;
 
 import cz.klecansky.projectmanagement.outcome.shared.OutcomeCommand;
 import cz.klecansky.projectmanagement.task.shared.TaskCommand;
-import lombok.Data;
-
 import java.time.Instant;
 import java.util.List;
 import java.util.UUID;
+import lombok.Data;
 
 @Data
 public class PhaseCommand {

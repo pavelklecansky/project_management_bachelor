@@ -1,13 +1,12 @@
 package cz.klecansky.projectmanagement.organization.io;
 
 import cz.klecansky.projectmanagement.user.io.entity.UserEntity;
-import lombok.Getter;
-import lombok.Setter;
-
-import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
+import javax.persistence.*;
+import lombok.Getter;
+import lombok.Setter;
 
 @Entity
 @Table(name = "organizations")
@@ -29,7 +28,10 @@ public class OrganizationEntity {
 
     private String note;
 
-    @ManyToMany(mappedBy = "organizations", cascade = {CascadeType.PERSIST}) private List<UserEntity> users = new ArrayList<>();
+    @ManyToMany(
+            mappedBy = "organizations",
+            cascade = {CascadeType.PERSIST})
+    private List<UserEntity> users = new ArrayList<>();
 
     @PreRemove
     private void preRemove() {

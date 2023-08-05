@@ -1,15 +1,14 @@
 package cz.klecansky.projectmanagement.user.io.entity;
 
-import lombok.Getter;
-import lombok.Setter;
-
+import java.util.UUID;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
-import java.util.UUID;
+import lombok.Getter;
+import lombok.Setter;
 
 @Entity
 @Table(name = "new_user_passcode")

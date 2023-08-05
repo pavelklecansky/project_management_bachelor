@@ -2,13 +2,12 @@ package cz.klecansky.projectmanagement.group.io.entity;
 
 import cz.klecansky.projectmanagement.project.io.ProjectEntity;
 import cz.klecansky.projectmanagement.task.io.TaskEntity;
-import lombok.Getter;
-import lombok.Setter;
-
-import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
+import javax.persistence.*;
+import lombok.Getter;
+import lombok.Setter;
 
 @Entity
 @Table(name = "groups")
@@ -26,7 +25,9 @@ public class GroupEntity {
     @JoinColumn(name = "group_id")
     private List<GroupMemberEntity> members;
 
-    @ManyToMany(mappedBy = "memberGroups", cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @ManyToMany(
+            mappedBy = "memberGroups",
+            cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     private List<ProjectEntity> projects = new ArrayList<>();
 
     @OneToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})

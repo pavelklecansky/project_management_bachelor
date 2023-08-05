@@ -1,11 +1,10 @@
 package cz.klecansky.projectmanagement.result.io;
 
 import cz.klecansky.projectmanagement.outcome.io.OutcomeEntity;
+import java.util.UUID;
+import javax.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
-
-import javax.persistence.*;
-import java.util.UUID;
 
 @Entity
 @Table(name = "results")

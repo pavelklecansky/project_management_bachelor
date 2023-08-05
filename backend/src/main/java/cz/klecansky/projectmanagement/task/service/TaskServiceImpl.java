@@ -11,29 +11,41 @@ import cz.klecansky.projectmanagement.task.shared.TaskCommand;
 import cz.klecansky.projectmanagement.task.shared.TaskMapper;
 import cz.klecansky.projectmanagement.user.service.EmailService;
 import cz.klecansky.projectmanagement.user.shared.UserMapper;
+import java.util.List;
+import java.util.Objects;
+import java.util.Optional;
+import java.util.UUID;
 import lombok.AccessLevel;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-import java.util.Objects;
-import java.util.Optional;
-import java.util.UUID;
-
 @Service
 @FieldDefaults(makeFinal = true, level = AccessLevel.PRIVATE)
 @RequiredArgsConstructor
 public class TaskServiceImpl implements TaskService {
 
-    @NonNull TaskRepository taskRepository;
-    @NonNull TaskMapper taskMapper;
-    @NonNull UserMapper userMapper;
-    @NonNull GroupMapper groupMapper;
-    @NonNull CommentMapper commentMapper;
-    @NonNull PhaseMapper phaseMapper;
-    @NonNull EmailService emailService;
+    @NonNull
+    TaskRepository taskRepository;
+
+    @NonNull
+    TaskMapper taskMapper;
+
+    @NonNull
+    UserMapper userMapper;
+
+    @NonNull
+    GroupMapper groupMapper;
+
+    @NonNull
+    CommentMapper commentMapper;
+
+    @NonNull
+    PhaseMapper phaseMapper;
+
+    @NonNull
+    EmailService emailService;
 
     @Override
     public TaskCommand create(TaskCommand taskCommand) {
@@ -51,7 +63,9 @@ public class TaskServiceImpl implements TaskService {
 
     @Override
     public List<TaskCommand> getAll() {
-        return taskRepository.findAll().stream().map(taskMapper::taskEntityToTaskCommand).toList();
+        return taskRepository.findAll().stream()
+                .map(taskMapper::taskEntityToTaskCommand)
+                .toList();
     }
 
     @Override
@@ -76,7 +90,10 @@ public class TaskServiceImpl implements TaskService {
         taskEntity.setStatus(taskCommand.getStatus());
         taskEntity.setProgress(taskCommand.getProgress());
         if (taskCommand.getAssigned() != null) {
-            if (!taskEntity.getAssigned().getId().equals(taskCommand.getAssigned().getId())) {
+            if (!taskEntity
+                    .getAssigned()
+                    .getId()
+                    .equals(taskCommand.getAssigned().getId())) {
                 taskCommand.setId(taskEntity.getId());
                 emailService.sendAssignToTaskEmail(taskCommand);
             }
@@ -86,7 +103,11 @@ public class TaskServiceImpl implements TaskService {
             taskEntity.setAssigned(null);
         }
         if (taskCommand.getAssignedForGroup() != null) {
-            if (Objects.isNull(taskEntity.getAssignedForGroup()) || !taskEntity.getAssignedForGroup().getId().equals(taskCommand.getAssignedForGroup().getId())) {
+            if (Objects.isNull(taskEntity.getAssignedForGroup())
+                    || !taskEntity
+                            .getAssignedForGroup()
+                            .getId()
+                            .equals(taskCommand.getAssignedForGroup().getId())) {
                 taskCommand.setId(taskEntity.getId());
                 emailService.sendAssignToGroupTaskEmail(taskCommand);
             }

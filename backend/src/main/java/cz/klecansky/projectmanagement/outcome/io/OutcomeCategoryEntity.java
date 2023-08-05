@@ -1,13 +1,12 @@
 package cz.klecansky.projectmanagement.outcome.io;
 
 import cz.klecansky.projectmanagement.project.io.ProjectEntity;
-import lombok.Getter;
-import lombok.Setter;
-
-import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
+import javax.persistence.*;
+import lombok.Getter;
+import lombok.Setter;
 
 @Entity
 @Table(name = "outcome_categories")

@@ -14,17 +14,21 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 public class NewUserPasscodeMapper {
 
-    @NonNull ModelMapper modelMapper;
+    @NonNull
+    ModelMapper modelMapper;
 
-    public NewUserPasscodeResponse newUserPasscodeCommandToNewUserPasscodeResponse(NewUserPasscodeCommand newUserPasscodeCommand) {
+    public NewUserPasscodeResponse newUserPasscodeCommandToNewUserPasscodeResponse(
+            NewUserPasscodeCommand newUserPasscodeCommand) {
         return modelMapper.map(newUserPasscodeCommand, NewUserPasscodeResponse.class);
     }
 
-    public NewUserPasscodeEntity newUserPasscodeCommandToNewUserPasscodeEntity(NewUserPasscodeCommand newUserPasscodeCommand) {
+    public NewUserPasscodeEntity newUserPasscodeCommandToNewUserPasscodeEntity(
+            NewUserPasscodeCommand newUserPasscodeCommand) {
         return modelMapper.map(newUserPasscodeCommand, NewUserPasscodeEntity.class);
     }
 
-    public NewUserPasscodeCommand newUserPasscodeEntityToNewUserPasscodeCommand(NewUserPasscodeEntity newUserPasscodeEntity) {
+    public NewUserPasscodeCommand newUserPasscodeEntityToNewUserPasscodeCommand(
+            NewUserPasscodeEntity newUserPasscodeEntity) {
         return modelMapper.map(newUserPasscodeEntity, NewUserPasscodeCommand.class);
     }
 }

@@ -1,18 +1,15 @@
 package cz.klecansky.projectmanagement.user.config;
 
+import static cz.klecansky.projectmanagement.user.EmailConstants.*;
+
+import java.util.Properties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
-import java.util.Properties;
-
-import static cz.klecansky.projectmanagement.user.EmailConstants.*;
-
 
 @Configuration
 public class UserConfig {
-
-
 
     @Bean
     public JavaMailSender getJavaMailSender() {
@@ -32,5 +29,4 @@ public class UserConfig {
 
         return mailSender;
     }
-
 }

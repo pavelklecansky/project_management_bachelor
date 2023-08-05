@@ -2,14 +2,13 @@ package cz.klecansky.projectmanagement.outcome.io;
 
 import cz.klecansky.projectmanagement.phase.io.PhaseEntity;
 import cz.klecansky.projectmanagement.result.io.ResultEntity;
-import lombok.Getter;
-import lombok.Setter;
-
-import javax.persistence.*;
 import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
+import javax.persistence.*;
+import lombok.Getter;
+import lombok.Setter;
 
 @Entity
 @Table(name = "outcomes")

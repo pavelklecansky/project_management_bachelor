@@ -2,10 +2,9 @@ package cz.klecansky.projectmanagement.user.ui.response;
 
 import cz.klecansky.projectmanagement.organization.ui.response.OrganizationResponse;
 import cz.klecansky.projectmanagement.user.shared.Role;
-import lombok.Data;
-
 import java.util.List;
 import java.util.UUID;
+import lombok.Data;
 
 @Data
 public class UserResponse {

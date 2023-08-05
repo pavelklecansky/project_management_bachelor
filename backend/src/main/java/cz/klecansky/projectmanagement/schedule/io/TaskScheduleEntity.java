@@ -1,11 +1,10 @@
 package cz.klecansky.projectmanagement.schedule.io;
 
-import lombok.Getter;
-import lombok.Setter;
-
-import javax.persistence.*;
 import java.time.Instant;
 import java.util.UUID;
+import javax.persistence.*;
+import lombok.Getter;
+import lombok.Setter;
 
 @Entity
 @Table(name = "schedule_tasks")

@@ -5,13 +5,12 @@ import cz.klecansky.projectmanagement.group.shared.GroupCommand;
 import cz.klecansky.projectmanagement.phase.shared.PhaseCommand;
 import cz.klecansky.projectmanagement.project.shared.ProjectCommand;
 import cz.klecansky.projectmanagement.user.shared.UserCommand;
-import lombok.Data;
-import lombok.ToString;
-import org.springframework.lang.Nullable;
-
 import java.time.Instant;
 import java.util.List;
 import java.util.UUID;
+import lombok.Data;
+import lombok.ToString;
+import org.springframework.lang.Nullable;
 
 @Data
 public class TaskCommand {

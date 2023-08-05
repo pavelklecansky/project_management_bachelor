@@ -2,7 +2,6 @@ package cz.klecansky.projectmanagement.organization.service;
 
 import cz.klecansky.projectmanagement.core.exception.NoSuchElementFoundException;
 import cz.klecansky.projectmanagement.organization.shared.OrganizationCommand;
-
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;

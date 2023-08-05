@@ -7,24 +7,30 @@ import cz.klecansky.projectmanagement.outcome.shared.OutcomeCategoryMapper;
 import cz.klecansky.projectmanagement.outcome.shared.OutcomeCommand;
 import cz.klecansky.projectmanagement.outcome.shared.OutcomeMapper;
 import cz.klecansky.projectmanagement.phase.shared.PhaseMapper;
+import java.util.Optional;
+import java.util.UUID;
 import lombok.AccessLevel;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import org.springframework.stereotype.Service;
 
-import java.util.Optional;
-import java.util.UUID;
-
 @Service
 @FieldDefaults(makeFinal = true, level = AccessLevel.PRIVATE)
 @RequiredArgsConstructor
 public class OutcomeServiceImpl implements OutcomeService {
 
-    @NonNull OutcomeRepository outcomeRepository;
-    @NonNull OutcomeMapper outcomeMapper;
-    @NonNull PhaseMapper phaseMapper;
-    @NonNull OutcomeCategoryMapper outcomeCategoryMapper;
+    @NonNull
+    OutcomeRepository outcomeRepository;
+
+    @NonNull
+    OutcomeMapper outcomeMapper;
+
+    @NonNull
+    PhaseMapper phaseMapper;
+
+    @NonNull
+    OutcomeCategoryMapper outcomeCategoryMapper;
 
     @Override
     public OutcomeCommand create(OutcomeCommand outcomeCommand) {
@@ -52,8 +58,9 @@ public class OutcomeServiceImpl implements OutcomeService {
         outcomeEntity.setEndDate(outcomeCommand.getEndDate());
         outcomeEntity.setPhase(phaseMapper.phaseCommandToPhaseEntity(outcomeCommand.getPhase()));
         if (outcomeCommand.getOutcomeCategory() != null) {
-            outcomeEntity.setOutcomeCategory(outcomeCategoryMapper.outcomeCategoryCommandToOutcomeCategoryEntity(outcomeCommand.getOutcomeCategory()));
-        }else{
+            outcomeEntity.setOutcomeCategory(outcomeCategoryMapper.outcomeCategoryCommandToOutcomeCategoryEntity(
+                    outcomeCommand.getOutcomeCategory()));
+        } else {
             outcomeEntity.setOutcomeCategory(null);
         }
         return outcomeMapper.outcomeEntityToOutcomeCommand(outcomeRepository.save(outcomeEntity));

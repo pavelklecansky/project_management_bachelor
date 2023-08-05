@@ -14,6 +14,7 @@ public class EmailConstants {
 
     @Value("${smtp.username}")
     public static String SMTP_USERNAME;
+
     @Value("${smtp.password}")
     public static String SMTP_PASSWORD;
 

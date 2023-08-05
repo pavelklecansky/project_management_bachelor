@@ -3,7 +3,6 @@ package cz.klecansky.projectmanagement.phase.service;
 import cz.klecansky.projectmanagement.core.exception.NoSuchElementFoundException;
 import cz.klecansky.projectmanagement.phase.shared.PhaseCommand;
 import cz.klecansky.projectmanagement.project.shared.ProjectCommand;
-
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;

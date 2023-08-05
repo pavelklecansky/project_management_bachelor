@@ -15,7 +15,8 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 public class CommentMapper {
 
-    @NonNull ModelMapper modelMapper;
+    @NonNull
+    ModelMapper modelMapper;
 
     public CommentEntity commentCommandToCommentEntity(CommentCommand commentCommand) {
         return modelMapper.map(commentCommand, CommentEntity.class);
