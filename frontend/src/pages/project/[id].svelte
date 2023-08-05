@@ -12,7 +12,7 @@
     import {error, success} from "../../lib/notification";
     import {getDataFromResponse} from "../../lib/utils";
     import {isAdmin} from "../../lib/auth";
-    import Delete24 from "carbon-icons-svelte/lib/Delete24";
+    import TrashCan from "carbon-icons-svelte/lib/TrashCan.svelte";
 
     let project = {} as Project;
     let loaded = false;
@@ -150,7 +150,7 @@
                                 </p>
                                 {#if isAdmin()}
                                     <div class="text-red-500">
-                                        <Delete24
+                                        <TrashCan
                                             on:click={() =>
                                                 deleteCommentOnClick(
                                                     comment.id

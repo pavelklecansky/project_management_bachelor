@@ -1,12 +1,12 @@
 <script>
     import Item from "./SidebarItem.svelte";
     import {isActive, url} from "@roxi/routify";
-    import Building24 from "carbon-icons-svelte/lib/Building24";
-    import UserMultiple24 from "carbon-icons-svelte/lib/UserMultiple24";
-    import Group24 from "carbon-icons-svelte/lib/Group24";
-    import Dashboard24 from "carbon-icons-svelte/lib/Dashboard24";
-    import Phone24 from "carbon-icons-svelte/lib/Phone24";
-    import WatsonHealthStackedScrolling_124 from "carbon-icons-svelte/lib/WatsonHealthStackedScrolling_124";
+    import Building from "carbon-icons-svelte/lib/Building.svelte";
+    import UserMultiple from "carbon-icons-svelte/lib/UserMultiple.svelte";
+    import Group from "carbon-icons-svelte/lib/Group.svelte";
+    import Dashboard from "carbon-icons-svelte/lib/Dashboard.svelte";
+    import Phone from "carbon-icons-svelte/lib/Phone.svelte";
+    import WatsonHealthStackedScrolling_1 from "carbon-icons-svelte/lib/WatsonHealthStackedScrolling_1.svelte";
 
     import {isAdmin} from "../../lib/auth";
 
@@ -14,9 +14,9 @@
     let adminLinks = [];
 
     $: adminLinks = [
-        ["/users", "Users", UserMultiple24],
-        ["/groups", "Groups", Group24],
-        ["/organizations", "Organizations", Building24],
+        ["/users", "Users", UserMultiple],
+        ["/groups", "Groups", Group],
+        ["/organizations", "Organizations", Building],
     ].map(([path, name, icon]) => {
         return {
             name,
@@ -27,9 +27,9 @@
     });
 
     $: userLinks = [
-        ["/index", "Dashboard", Dashboard24],
-        ["/projects", "Projects", WatsonHealthStackedScrolling_124],
-        ["/contacts", "Contacts", Phone24],
+        ["/index", "Dashboard", Dashboard],
+        ["/projects", "Projects", WatsonHealthStackedScrolling_1],
+        ["/contacts", "Contacts", Phone],
     ].map(([path, name, icon]) => {
         return {
             name,

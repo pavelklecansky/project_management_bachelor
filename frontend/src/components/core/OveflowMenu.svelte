@@ -1,5 +1,5 @@
 <script lang="ts">
-    import OverflowMenuVertical32 from "carbon-icons-svelte/lib/OverflowMenuVertical32";
+    import OverflowMenuVertical from "carbon-icons-svelte/lib/OverflowMenuVertical.svelte";
 
     export let hidden = true;
 </script>
@@ -8,7 +8,7 @@
     class="absolute top-0 right-0 z-10 block p-1 text-gray-700 border"
     on:click={() => (hidden = !hidden)}
 >
-    <OverflowMenuVertical32 />
+    <OverflowMenuVertical />
 </button>
 
 <div

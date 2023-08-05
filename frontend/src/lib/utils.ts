@@ -2,7 +2,7 @@ import {endpoint} from "./consts"
 import {get as getStoreValue} from "svelte/store"
 import {authState, signout} from "./auth"
 import type {BudgetItem, ErrorMessage, Priority, ScheduleTask, Status} from "../types/core.type";
-import axios, {ResponseType} from 'axios';
+import axios, {type ResponseType} from 'axios';
 import moment from 'moment';
 
 export interface RequestOptions {
