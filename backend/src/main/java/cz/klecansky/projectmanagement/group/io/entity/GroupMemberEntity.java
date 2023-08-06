@@ -1,8 +1,8 @@
 package cz.klecansky.projectmanagement.group.io.entity;
 
 import cz.klecansky.projectmanagement.user.io.entity.UserEntity;
-import java.util.UUID;
 import jakarta.persistence.*;
+import java.util.UUID;
 import lombok.Getter;
 import lombok.Setter;
 

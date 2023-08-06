@@ -1,5 +1,7 @@
 package cz.klecansky.projectmanagement.user.service;
 
+import static cz.klecansky.projectmanagement.security.SecurityUtils.*;
+
 import cz.klecansky.projectmanagement.core.exception.NoSuchElementFoundException;
 import cz.klecansky.projectmanagement.organization.shared.OrganizationMapper;
 import cz.klecansky.projectmanagement.security.UserPrincipal;
@@ -13,6 +15,10 @@ import cz.klecansky.projectmanagement.user.io.repository.NewUserPasscodeReposito
 import cz.klecansky.projectmanagement.user.io.repository.UserRepository;
 import cz.klecansky.projectmanagement.user.shared.UserCommand;
 import cz.klecansky.projectmanagement.user.shared.UserMapper;
+import java.util.List;
+import java.util.Optional;
+import java.util.UUID;
+import java.util.stream.Collectors;
 import lombok.AccessLevel;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
@@ -22,13 +28,6 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
-import java.util.Optional;
-import java.util.UUID;
-import java.util.stream.Collectors;
-
-import static cz.klecansky.projectmanagement.security.SecurityUtils.*;
 
 @FieldDefaults(makeFinal = true, level = AccessLevel.PRIVATE)
 @RequiredArgsConstructor
@@ -47,17 +46,14 @@ public class UserServiceImpl implements UserService {
     @NonNull
     PasswordEncoder passwordEncoder;
 
-
     @NonNull
     EmailService emailService;
 
     @NonNull
     NewUserPasscodeRepository newUserPasscodeRepository;
 
-
     @NonNull
     PasswordResetTokenService passwordResetTokenService;
-
 
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
@@ -113,8 +109,8 @@ public class UserServiceImpl implements UserService {
         userEntity.setPhoneNumber(user.getPhoneNumber());
         userEntity.setNote(user.getNote());
         userEntity.setOrganizations(user.getOrganizations().stream()
-                                            .map(organizationMapper::organizationCommandToOrganizationEntity)
-                                            .collect(Collectors.toList()));
+                .map(organizationMapper::organizationCommandToOrganizationEntity)
+                .collect(Collectors.toList()));
         if (loginUserIsSuperAdmin()) {
             userEntity.setRoles(user.getRoles());
         }

@@ -1,7 +1,7 @@
 package cz.klecansky.projectmanagement.budget.io;
 
-import java.util.UUID;
 import jakarta.persistence.*;
+import java.util.UUID;
 import lombok.Getter;
 import lombok.Setter;
 

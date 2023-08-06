@@ -2,7 +2,6 @@ package cz.klecansky.projectmanagement.security.service;
 
 import cz.klecansky.projectmanagement.security.jwt.JWTToken;
 import cz.klecansky.projectmanagement.user.shared.NewUserPasscodeCommand;
-
 import java.util.UUID;
 
 public interface AuthenticationService {
@@ -13,5 +12,4 @@ public interface AuthenticationService {
     boolean forgottenPasswordTokenCheck(UUID token);
 
     NewUserPasscodeCommand generateNewUserPasscode();
-
 }

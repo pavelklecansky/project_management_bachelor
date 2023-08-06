@@ -1,5 +1,7 @@
 package cz.klecansky.projectmanagement.security.api;
 
+import static cz.klecansky.projectmanagement.core.WebConstants.USERS_API;
+
 import cz.klecansky.projectmanagement.core.exception.NoSuchElementFoundException;
 import cz.klecansky.projectmanagement.core.response.SuccessResponse;
 import cz.klecansky.projectmanagement.security.jwt.JWTToken;
@@ -26,8 +28,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import static cz.klecansky.projectmanagement.core.WebConstants.USERS_API;
-
 @RestController
 @RequestMapping(USERS_API)
 @FieldDefaults(makeFinal = true, level = AccessLevel.PRIVATE)
@@ -40,13 +40,11 @@ public class AuthenticationController {
     @NonNull
     AuthenticationService authenticationService;
 
-
     @NonNull
     UserMapper userMapper;
 
     @NonNull
     NewUserPasscodeMapper newUserPasscodeMapper;
-
 
     @PostMapping(path = "login")
     public ResponseEntity<SignInResponse> signIn(@RequestBody SignInRequest signInRequest) {
@@ -62,8 +60,8 @@ public class AuthenticationController {
             @RequestBody @Valid PasswordResetRequestRequest passwordResetRequestRequest) {
         authenticationService.forgottenPasswordRequest(passwordResetRequestRequest.getEmail());
         return ResponseEntity.ok(SuccessResponse.builder()
-                                         .message("Password reset request was send to you email.")
-                                         .build());
+                .message("Password reset request was send to you email.")
+                .build());
     }
 
     @PostMapping("passwordReset/check")
@@ -71,14 +69,13 @@ public class AuthenticationController {
         return ResponseEntity.ok(authenticationService.forgottenPasswordTokenCheck(request.getId()));
     }
 
-
     @PostMapping("generatePasscode")
     @PreAuthorize("hasAnyRole('ADMIN','SUPER_ADMIN')")
     public ResponseEntity<SuccessResponse<NewUserPasscodeResponse>> generatePasscode() {
         NewUserPasscodeCommand newUserPasscodeCommand = authenticationService.generateNewUserPasscode();
         return ResponseEntity.ok(SuccessResponse.<NewUserPasscodeResponse>builder()
-                                         .message("Passcode was generated")
-                                         .data(newUserPasscodeMapper.newUserPasscodeCommandToNewUserPasscodeResponse(newUserPasscodeCommand))
-                                         .build());
+                .message("Passcode was generated")
+                .data(newUserPasscodeMapper.newUserPasscodeCommandToNewUserPasscodeResponse(newUserPasscodeCommand))
+                .build());
     }
 }

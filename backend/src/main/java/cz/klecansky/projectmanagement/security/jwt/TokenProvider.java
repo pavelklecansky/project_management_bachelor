@@ -1,5 +1,7 @@
 package cz.klecansky.projectmanagement.security.jwt;
 
+import static cz.klecansky.projectmanagement.security.SecurityConstants.*;
+
 import cz.klecansky.projectmanagement.security.UserPrincipal;
 import cz.klecansky.projectmanagement.user.io.entity.UserEntity;
 import cz.klecansky.projectmanagement.user.io.repository.UserRepository;
@@ -10,6 +12,11 @@ import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.security.Keys;
 import jakarta.annotation.PostConstruct;
 import jakarta.servlet.http.HttpServletRequest;
+import java.security.Key;
+import java.util.Base64;
+import java.util.Date;
+import java.util.Optional;
+import java.util.stream.Collectors;
 import lombok.NonNull;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Lazy;
@@ -17,14 +24,6 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.stereotype.Component;
-
-import java.security.Key;
-import java.util.Base64;
-import java.util.Date;
-import java.util.Optional;
-import java.util.stream.Collectors;
-
-import static cz.klecansky.projectmanagement.security.SecurityConstants.*;
 
 @Component
 public class TokenProvider {

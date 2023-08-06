@@ -1,7 +1,7 @@
 package cz.klecansky.projectmanagement.comment.ui.request;
 
-import java.time.Instant;
 import jakarta.validation.constraints.NotNull;
+import java.time.Instant;
 import lombok.Data;
 
 @Data

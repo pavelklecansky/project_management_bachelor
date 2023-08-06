@@ -1,9 +1,9 @@
 package cz.klecansky.projectmanagement.comment.io;
 
 import cz.klecansky.projectmanagement.user.io.entity.UserEntity;
+import jakarta.persistence.*;
 import java.time.Instant;
 import java.util.UUID;
-import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 

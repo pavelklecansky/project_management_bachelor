@@ -1,10 +1,10 @@
 package cz.klecansky.projectmanagement.budget.io;
 
 import cz.klecansky.projectmanagement.project.io.ProjectEntity;
+import jakarta.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
-import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
