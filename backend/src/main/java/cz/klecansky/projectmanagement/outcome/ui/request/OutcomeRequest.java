@@ -2,7 +2,7 @@ package cz.klecansky.projectmanagement.outcome.ui.request;
 
 import java.time.Instant;
 import java.util.UUID;
-import javax.validation.constraints.NotNull;
+import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 
 @Data

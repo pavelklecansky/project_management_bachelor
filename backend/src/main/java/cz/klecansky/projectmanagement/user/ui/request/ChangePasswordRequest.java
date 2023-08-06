@@ -1,6 +1,6 @@
 package cz.klecansky.projectmanagement.user.ui.request;
 
-import javax.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotBlank;
 import lombok.Data;
 
 @Data

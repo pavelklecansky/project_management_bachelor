@@ -3,8 +3,8 @@ package cz.klecansky.projectmanagement.user.ui.request;
 import cz.klecansky.projectmanagement.user.shared.Role;
 import java.util.List;
 import java.util.UUID;
-import javax.validation.constraints.Email;
-import javax.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
 import lombok.Data;
 
 @Data

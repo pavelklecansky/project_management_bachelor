@@ -5,7 +5,7 @@ import cz.klecansky.projectmanagement.task.io.TaskEntity;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
-import javax.persistence.*;
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 

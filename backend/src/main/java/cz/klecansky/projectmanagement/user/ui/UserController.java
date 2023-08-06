@@ -1,24 +1,21 @@
 package cz.klecansky.projectmanagement.user.ui;
 
-import static cz.klecansky.projectmanagement.core.WebConstants.USERS_API;
-
 import cz.klecansky.projectmanagement.core.exception.NoSuchElementFoundException;
 import cz.klecansky.projectmanagement.core.response.SuccessResponse;
 import cz.klecansky.projectmanagement.organization.shared.OrganizationCommand;
 import cz.klecansky.projectmanagement.security.UserPrincipal;
-import cz.klecansky.projectmanagement.security.jwt.JWTToken;
 import cz.klecansky.projectmanagement.user.exception.UserDeletionException;
 import cz.klecansky.projectmanagement.user.service.UserService;
 import cz.klecansky.projectmanagement.user.service.VerificationTokenService;
-import cz.klecansky.projectmanagement.user.shared.*;
-import cz.klecansky.projectmanagement.user.ui.request.*;
-import cz.klecansky.projectmanagement.user.ui.response.NewUserPasscodeResponse;
-import cz.klecansky.projectmanagement.user.ui.response.SignInResponse;
+import cz.klecansky.projectmanagement.user.shared.Role;
+import cz.klecansky.projectmanagement.user.shared.UserCommand;
+import cz.klecansky.projectmanagement.user.shared.UserMapper;
+import cz.klecansky.projectmanagement.user.ui.request.ChangePasswordRequest;
+import cz.klecansky.projectmanagement.user.ui.request.NewPasswordRequest;
+import cz.klecansky.projectmanagement.user.ui.request.SignUpRequest;
+import cz.klecansky.projectmanagement.user.ui.request.UserRequest;
 import cz.klecansky.projectmanagement.user.ui.response.UserResponse;
-import java.net.URI;
-import java.util.List;
-import java.util.UUID;
-import javax.validation.Valid;
+import jakarta.validation.Valid;
 import lombok.AccessLevel;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
@@ -29,6 +26,12 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.CurrentSecurityContext;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
+
+import java.net.URI;
+import java.util.List;
+import java.util.UUID;
+
+import static cz.klecansky.projectmanagement.core.WebConstants.USERS_API;
 
 @RestController
 @RequestMapping(USERS_API)
@@ -48,17 +51,9 @@ public class UserController {
     @NonNull
     VerificationTokenService verificationTokenService;
 
-    @NonNull
-    NewUserPasscodeMapper newUserPasscodeMapper;
 
-    @PostMapping(path = "login")
-    public ResponseEntity<SignInResponse> signIn(@RequestBody SignInRequest signInRequest) {
-        JWTToken signin = userService.signIn(signInRequest.getEmail(), signInRequest.getPassword());
-        UserCommand currentUser = userService
-                .getUserByEmail(signInRequest.getEmail())
-                .orElseThrow(() -> new NoSuchElementFoundException("User is not logged."));
-        return ResponseEntity.ok(new SignInResponse(signin, userMapper.userCommandToUserResponse(currentUser)));
-    }
+
+
 
     @PostMapping("register")
     public ResponseEntity<SuccessResponse> register(@RequestBody @Valid SignUpRequest userRequest) {
@@ -86,19 +81,8 @@ public class UserController {
         return ResponseEntity.ok(userMapper.userCommandToUserResponse(currentUser));
     }
 
-    @PostMapping("passwordReset")
-    public ResponseEntity<SuccessResponse> passwordResetRequest(
-            @RequestBody @Valid PasswordResetRequestRequest passwordResetRequestRequest) {
-        userService.forgottenPasswordRequest(passwordResetRequestRequest.getEmail());
-        return ResponseEntity.ok(SuccessResponse.builder()
-                .message("Password reset request was send to you email.")
-                .build());
-    }
 
-    @PostMapping("passwordReset/check")
-    public ResponseEntity<Boolean> passwordResetCheck(@RequestBody PasswordResetCheckRequest request) {
-        return ResponseEntity.ok(userService.forgottenPasswordTokenCheck(request.getId()));
-    }
+
 
     @PostMapping("newPassword")
     public ResponseEntity<SuccessResponse<UserResponse>> newPassword(@RequestBody NewPasswordRequest request) {
@@ -175,13 +159,5 @@ public class UserController {
                 .build());
     }
 
-    @PostMapping("generatePasscode")
-    @PreAuthorize("hasAnyRole('ADMIN','SUPER_ADMIN')")
-    public ResponseEntity<SuccessResponse<NewUserPasscodeResponse>> generatePasscode() {
-        NewUserPasscodeCommand newUserPasscodeCommand = userService.generateNewUserPasscode();
-        return ResponseEntity.ok(SuccessResponse.<NewUserPasscodeResponse>builder()
-                .message("Passcode was generated")
-                .data(newUserPasscodeMapper.newUserPasscodeCommandToNewUserPasscodeResponse(newUserPasscodeCommand))
-                .build());
-    }
+
 }

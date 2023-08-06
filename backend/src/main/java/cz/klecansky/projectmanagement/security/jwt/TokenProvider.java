@@ -1,7 +1,5 @@
 package cz.klecansky.projectmanagement.security.jwt;
 
-import static cz.klecansky.projectmanagement.security.SecurityConstants.*;
-
 import cz.klecansky.projectmanagement.security.UserPrincipal;
 import cz.klecansky.projectmanagement.user.io.entity.UserEntity;
 import cz.klecansky.projectmanagement.user.io.repository.UserRepository;
@@ -10,23 +8,25 @@ import io.jsonwebtoken.JwtException;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.security.Keys;
-import java.security.Key;
-import java.util.Base64;
-import java.util.Date;
-import java.util.Optional;
-import java.util.stream.Collectors;
-import javax.annotation.PostConstruct;
-import javax.servlet.http.HttpServletRequest;
+import jakarta.annotation.PostConstruct;
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.NonNull;
-import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.stereotype.Component;
 
+import java.security.Key;
+import java.util.Base64;
+import java.util.Date;
+import java.util.Optional;
+import java.util.stream.Collectors;
+
+import static cz.klecansky.projectmanagement.security.SecurityConstants.*;
+
 @Component
-@RequiredArgsConstructor
 public class TokenProvider {
 
     private static final String AUTHORITIES_KEY = "auth";
@@ -41,6 +41,10 @@ public class TokenProvider {
 
     @NonNull
     private final UserRepository userRepository;
+
+    public TokenProvider(@NonNull @Lazy UserRepository userRepository) {
+        this.userRepository = userRepository;
+    }
 
     @PostConstruct
     protected void init() {
