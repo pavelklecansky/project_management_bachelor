@@ -10,8 +10,6 @@ repositories {
 allprojects {
     group = "cz.klecansky"
     version = "0.0.1"
-
-    apply(plugin = "idea")
 }
 
 spotless {
@@ -27,17 +25,10 @@ spotless {
 }
 
 subprojects {
-    apply(plugin = "java")
 
-    tasks.withType<JavaCompile> {
-        sourceCompatibility = JavaVersion.VERSION_17.toString()
-        targetCompatibility = JavaVersion.VERSION_17.toString()
-    }
-
-    tasks.test {
+    tasks.withType<Test> {
         useJUnitPlatform()
     }
-
 }
 
 

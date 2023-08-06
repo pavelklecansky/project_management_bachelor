@@ -4,10 +4,10 @@ import cz.klecansky.projectmanagement.task.shared.Priority;
 import cz.klecansky.projectmanagement.task.shared.Status;
 import java.time.Instant;
 import java.util.UUID;
-import javax.validation.constraints.Max;
-import javax.validation.constraints.Min;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
+import jakarta.validation.constraints.Max;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 import org.springframework.lang.Nullable;
 

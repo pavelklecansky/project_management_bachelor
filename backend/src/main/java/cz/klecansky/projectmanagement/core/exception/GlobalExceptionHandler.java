@@ -1,8 +1,5 @@
 package cz.klecansky.projectmanagement.core.exception;
 
-import static org.springframework.http.HttpStatus.BAD_REQUEST;
-import static org.springframework.http.HttpStatus.UNAUTHORIZED;
-
 import cz.klecansky.projectmanagement.core.response.ErrorResponse;
 import lombok.NonNull;
 import org.springframework.http.HttpHeaders;
@@ -14,10 +11,12 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.context.request.WebRequest;
-import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
+
+import static org.springframework.http.HttpStatus.BAD_REQUEST;
+import static org.springframework.http.HttpStatus.UNAUTHORIZED;
 
 @RestControllerAdvice
-public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
+public class GlobalExceptionHandler {
 
     @ExceptionHandler(AuthenticationException.class)
     @ResponseStatus(UNAUTHORIZED)
@@ -31,7 +30,8 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
                 UNAUTHORIZED);
     }
 
-    @Override
+
+    @ExceptionHandler(Exception.class)
     @ResponseStatus(BAD_REQUEST)
     protected @NonNull ResponseEntity<Object> handleHttpMessageNotReadable(
             HttpMessageNotReadableException ex, HttpHeaders headers, HttpStatus status, WebRequest request) {

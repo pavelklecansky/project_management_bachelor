@@ -1,12 +1,8 @@
 package cz.klecansky.projectmanagement.user.service;
 
-import static cz.klecansky.projectmanagement.security.SecurityUtils.*;
-
 import cz.klecansky.projectmanagement.core.exception.NoSuchElementFoundException;
 import cz.klecansky.projectmanagement.organization.shared.OrganizationMapper;
 import cz.klecansky.projectmanagement.security.UserPrincipal;
-import cz.klecansky.projectmanagement.security.jwt.JWTToken;
-import cz.klecansky.projectmanagement.security.jwt.TokenProvider;
 import cz.klecansky.projectmanagement.user.exception.BadPasscodeException;
 import cz.klecansky.projectmanagement.user.exception.EmailAlreadyExistsException;
 import cz.klecansky.projectmanagement.user.exception.UserDeletionException;
@@ -15,27 +11,24 @@ import cz.klecansky.projectmanagement.user.io.entity.PasswordResetTokenEntity;
 import cz.klecansky.projectmanagement.user.io.entity.UserEntity;
 import cz.klecansky.projectmanagement.user.io.repository.NewUserPasscodeRepository;
 import cz.klecansky.projectmanagement.user.io.repository.UserRepository;
-import cz.klecansky.projectmanagement.user.shared.NewUserPasscodeCommand;
-import cz.klecansky.projectmanagement.user.shared.NewUserPasscodeMapper;
 import cz.klecansky.projectmanagement.user.shared.UserCommand;
 import cz.klecansky.projectmanagement.user.shared.UserMapper;
-import java.util.List;
-import java.util.Optional;
-import java.util.UUID;
-import java.util.concurrent.ThreadLocalRandom;
-import java.util.stream.Collectors;
 import lombok.AccessLevel;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
-import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
+import java.util.Optional;
+import java.util.UUID;
+import java.util.stream.Collectors;
+
+import static cz.klecansky.projectmanagement.security.SecurityUtils.*;
 
 @FieldDefaults(makeFinal = true, level = AccessLevel.PRIVATE)
 @RequiredArgsConstructor
@@ -54,23 +47,17 @@ public class UserServiceImpl implements UserService {
     @NonNull
     PasswordEncoder passwordEncoder;
 
-    @NonNull
-    AuthenticationManager authenticationManager;
-
-    @NonNull
-    TokenProvider tokenProvider;
 
     @NonNull
     EmailService emailService;
 
     @NonNull
-    PasswordResetTokenService passwordResetTokenService;
-
-    @NonNull
     NewUserPasscodeRepository newUserPasscodeRepository;
 
+
     @NonNull
-    NewUserPasscodeMapper newUserPasscodeMapper;
+    PasswordResetTokenService passwordResetTokenService;
+
 
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
@@ -79,32 +66,12 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public JWTToken signIn(String username, String password) {
-        Authentication authenticate =
-                authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(username, password));
-        return tokenProvider.createToken(authenticate);
-    }
-
-    @Override
-    public void forgottenPasswordRequest(String email) {
-        UserEntity user = userRepository
-                .findUserEntityByEmail(email)
-                .orElseThrow(() -> new UsernameNotFoundException("Username not found."));
-        emailService.sendForgottenPasswordEmail(userMapper.userEntityToUserCommand(userRepository.save(user)));
-    }
-
-    @Override
-    public boolean forgottenPasswordTokenCheck(UUID token) {
-        return passwordResetTokenService.getToken(token).isPresent();
-    }
-
-    @Override
     public UserCommand createUser(UserCommand userCommand, String passcode) {
         if (userRepository.findUserEntityByEmail(userCommand.getEmail()).isPresent()) {
             throw new EmailAlreadyExistsException("Email is already in use");
         }
         try {
-            int passcodeNumber = Integer.valueOf(passcode);
+            int passcodeNumber = Integer.parseInt(passcode);
             Optional<NewUserPasscodeEntity> newUserPasscodeEntityByPasscode =
                     newUserPasscodeRepository.findNewUserPasscodeEntityByPasscode(passcodeNumber);
             if (newUserPasscodeEntityByPasscode.isPresent()) {
@@ -146,8 +113,8 @@ public class UserServiceImpl implements UserService {
         userEntity.setPhoneNumber(user.getPhoneNumber());
         userEntity.setNote(user.getNote());
         userEntity.setOrganizations(user.getOrganizations().stream()
-                .map(organizationMapper::organizationCommandToOrganizationEntity)
-                .collect(Collectors.toList()));
+                                            .map(organizationMapper::organizationCommandToOrganizationEntity)
+                                            .collect(Collectors.toList()));
         if (loginUserIsSuperAdmin()) {
             userEntity.setRoles(user.getRoles());
         }
@@ -197,14 +164,5 @@ public class UserServiceImpl implements UserService {
             return userMapper.userEntityToUserCommand(save);
         }
         throw new UsernameNotFoundException("Username not found.");
-    }
-
-    @Override
-    public NewUserPasscodeCommand generateNewUserPasscode() {
-        NewUserPasscodeEntity newUserPasscodeEntity = new NewUserPasscodeEntity();
-        newUserPasscodeEntity.setId(UUID.randomUUID());
-        newUserPasscodeEntity.setPasscode(ThreadLocalRandom.current().nextInt(1000000, 9999999 + 1));
-        return newUserPasscodeMapper.newUserPasscodeEntityToNewUserPasscodeCommand(
-                newUserPasscodeRepository.save(newUserPasscodeEntity));
     }
 }

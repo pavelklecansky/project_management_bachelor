@@ -3,7 +3,7 @@ package cz.klecansky.projectmanagement.comment.io;
 import cz.klecansky.projectmanagement.user.io.entity.UserEntity;
 import java.time.Instant;
 import java.util.UUID;
-import javax.persistence.*;
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 

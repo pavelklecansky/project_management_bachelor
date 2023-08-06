@@ -25,7 +25,7 @@ import cz.klecansky.projectmanagement.user.shared.UserCommand;
 import java.net.URI;
 import java.util.List;
 import java.util.UUID;
-import javax.validation.Valid;
+import jakarta.validation.Valid;
 import lombok.AccessLevel;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;

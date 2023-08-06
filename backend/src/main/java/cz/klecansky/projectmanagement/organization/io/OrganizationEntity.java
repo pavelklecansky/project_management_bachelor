@@ -4,7 +4,7 @@ import cz.klecansky.projectmanagement.user.io.entity.UserEntity;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
-import javax.persistence.*;
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
