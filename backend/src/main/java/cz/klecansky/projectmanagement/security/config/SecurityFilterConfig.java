@@ -1,5 +1,7 @@
 package cz.klecansky.projectmanagement.security.config;
 
+import static cz.klecansky.projectmanagement.security.SecurityConstants.PUBLIC_URLS;
+
 import cz.klecansky.projectmanagement.security.jwt.JWTAccessDeniedHandler;
 import cz.klecansky.projectmanagement.security.jwt.JWTAuthenticationEntryPoint;
 import cz.klecansky.projectmanagement.security.jwt.JWTConfigurer;
@@ -16,8 +18,6 @@ import org.springframework.security.config.annotation.web.configurers.AbstractHt
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.SecurityFilterChain;
 
-import static cz.klecansky.projectmanagement.security.SecurityConstants.PUBLIC_URLS;
-
 @EnableWebSecurity
 @EnableMethodSecurity
 @FieldDefaults(makeFinal = true, level = AccessLevel.PRIVATE)
@@ -28,8 +28,6 @@ public class SecurityFilterConfig {
     JWTAccessDeniedHandler jwtAccessDeniedHandler;
     JWTAuthenticationEntryPoint jwtAuthenticationEntryPoint;
 
-
-
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http.csrf(AbstractHttpConfigurer::disable)
@@ -37,18 +35,15 @@ public class SecurityFilterConfig {
                     exceptionHandling.accessDeniedHandler(jwtAccessDeniedHandler);
                     exceptionHandling.authenticationEntryPoint(jwtAuthenticationEntryPoint);
                 })
-//
-//
-                .sessionManagement((session) -> session
-                        .sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-                .authorizeRequests((authorize) -> authorize.requestMatchers(PUBLIC_URLS)
+                //
+                //
+                .sessionManagement((session) -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+                .authorizeRequests((authorize) -> authorize
+                        .requestMatchers(PUBLIC_URLS)
                         .permitAll()
                         .anyRequest()
                         .authenticated())
                 .apply(new JWTConfigurer(tokenProvider));
         return http.build();
     }
-
-
-
 }

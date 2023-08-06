@@ -1,6 +1,5 @@
 package cz.klecansky.projectmanagement.security.service;
 
-
 import cz.klecansky.projectmanagement.security.jwt.JWTToken;
 import cz.klecansky.projectmanagement.security.jwt.TokenProvider;
 import cz.klecansky.projectmanagement.user.io.entity.NewUserPasscodeEntity;
@@ -11,6 +10,8 @@ import cz.klecansky.projectmanagement.user.service.UserService;
 import cz.klecansky.projectmanagement.user.shared.NewUserPasscodeCommand;
 import cz.klecansky.projectmanagement.user.shared.NewUserPasscodeMapper;
 import cz.klecansky.projectmanagement.user.shared.UserCommand;
+import java.util.UUID;
+import java.util.concurrent.ThreadLocalRandom;
 import lombok.AccessLevel;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
@@ -20,9 +21,6 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
-
-import java.util.UUID;
-import java.util.concurrent.ThreadLocalRandom;
 
 @FieldDefaults(makeFinal = true, level = AccessLevel.PRIVATE)
 @RequiredArgsConstructor
@@ -35,7 +33,8 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     @NonNull
     TokenProvider tokenProvider;
 
-    @NonNull UserService userService;
+    @NonNull
+    UserService userService;
 
     @NonNull
     EmailService emailService;
@@ -46,11 +45,8 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     @NonNull
     PasswordResetTokenService passwordResetTokenService;
 
-
-
     @NonNull
     NewUserPasscodeRepository newUserPasscodeRepository;
-
 
     @Override
     public JWTToken signIn(String username, String password) {

@@ -1,7 +1,7 @@
 package cz.klecansky.projectmanagement.user.ui.request;
 
-import java.util.UUID;
 import jakarta.validation.constraints.NotBlank;
+import java.util.UUID;
 import lombok.Data;
 
 @Data

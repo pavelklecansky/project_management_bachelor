@@ -7,11 +7,11 @@ import cz.klecansky.projectmanagement.project.io.ProjectEntity;
 import cz.klecansky.projectmanagement.task.shared.Priority;
 import cz.klecansky.projectmanagement.task.shared.Status;
 import cz.klecansky.projectmanagement.user.io.entity.UserEntity;
+import jakarta.persistence.*;
 import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
-import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 

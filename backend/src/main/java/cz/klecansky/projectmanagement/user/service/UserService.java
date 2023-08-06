@@ -2,11 +2,10 @@ package cz.klecansky.projectmanagement.user.service;
 
 import cz.klecansky.projectmanagement.security.UserPrincipal;
 import cz.klecansky.projectmanagement.user.shared.UserCommand;
-import org.springframework.security.core.userdetails.UserDetailsService;
-
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
+import org.springframework.security.core.userdetails.UserDetailsService;
 
 public interface UserService extends UserDetailsService {
     UserCommand createUser(UserCommand userCommand, String passcode);
@@ -20,7 +19,6 @@ public interface UserService extends UserDetailsService {
     void deleteUser(UUID userId);
 
     List<UserCommand> getUsers();
-
 
     UserCommand newPassword(UUID passwordResetToken, String newPassword);
 

@@ -2,11 +2,11 @@ package cz.klecansky.projectmanagement.outcome.io;
 
 import cz.klecansky.projectmanagement.phase.io.PhaseEntity;
 import cz.klecansky.projectmanagement.result.io.ResultEntity;
+import jakarta.persistence.*;
 import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
-import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 

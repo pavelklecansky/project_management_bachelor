@@ -1,5 +1,7 @@
 package cz.klecansky.projectmanagement.user.ui;
 
+import static cz.klecansky.projectmanagement.core.WebConstants.USERS_API;
+
 import cz.klecansky.projectmanagement.core.exception.NoSuchElementFoundException;
 import cz.klecansky.projectmanagement.core.response.SuccessResponse;
 import cz.klecansky.projectmanagement.organization.shared.OrganizationCommand;
@@ -16,6 +18,9 @@ import cz.klecansky.projectmanagement.user.ui.request.SignUpRequest;
 import cz.klecansky.projectmanagement.user.ui.request.UserRequest;
 import cz.klecansky.projectmanagement.user.ui.response.UserResponse;
 import jakarta.validation.Valid;
+import java.net.URI;
+import java.util.List;
+import java.util.UUID;
 import lombok.AccessLevel;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
@@ -26,12 +31,6 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.CurrentSecurityContext;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
-
-import java.net.URI;
-import java.util.List;
-import java.util.UUID;
-
-import static cz.klecansky.projectmanagement.core.WebConstants.USERS_API;
 
 @RestController
 @RequestMapping(USERS_API)
@@ -50,10 +49,6 @@ public class UserController {
 
     @NonNull
     VerificationTokenService verificationTokenService;
-
-
-
-
 
     @PostMapping("register")
     public ResponseEntity<SuccessResponse> register(@RequestBody @Valid SignUpRequest userRequest) {
@@ -80,9 +75,6 @@ public class UserController {
                 .orElseThrow(() -> new NoSuchElementFoundException("User is not logged."));
         return ResponseEntity.ok(userMapper.userCommandToUserResponse(currentUser));
     }
-
-
-
 
     @PostMapping("newPassword")
     public ResponseEntity<SuccessResponse<UserResponse>> newPassword(@RequestBody NewPasswordRequest request) {
@@ -158,6 +150,4 @@ public class UserController {
                 .data(userMapper.userCommandToUserResponse(update))
                 .build());
     }
-
-
 }

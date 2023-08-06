@@ -1,5 +1,8 @@
 package cz.klecansky.projectmanagement.core.exception;
 
+import static org.springframework.http.HttpStatus.BAD_REQUEST;
+import static org.springframework.http.HttpStatus.UNAUTHORIZED;
+
 import cz.klecansky.projectmanagement.core.response.ErrorResponse;
 import lombok.NonNull;
 import org.springframework.http.HttpHeaders;
@@ -11,9 +14,6 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.context.request.WebRequest;
-
-import static org.springframework.http.HttpStatus.BAD_REQUEST;
-import static org.springframework.http.HttpStatus.UNAUTHORIZED;
 
 @RestControllerAdvice
 public class GlobalExceptionHandler {
@@ -29,7 +29,6 @@ public class GlobalExceptionHandler {
                         .build(),
                 UNAUTHORIZED);
     }
-
 
     @ExceptionHandler(Exception.class)
     @ResponseStatus(BAD_REQUEST)
