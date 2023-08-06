@@ -26,6 +26,9 @@ dependencies {
     annotationProcessor("org.projectlombok:lombok:1.18.22")
     annotationProcessor("org.mapstruct:mapstruct-processor:1.4.2.Final")
     testImplementation("org.springframework.boot:spring-boot-starter-test")
+    testImplementation("org.springframework.boot:spring-boot-testcontainers")
+    testImplementation("org.testcontainers:junit-jupiter")
+    testImplementation("org.testcontainers:postgresql:1.18.3")
     developmentOnly("org.springframework.boot:spring-boot-devtools")
 }
 
