@@ -1,4 +1,4 @@
-import type {Phase, Task} from "../types/core.type"
+import type {Phase, Task} from "$lib/types/core.type"
 import {apiRequest} from "./utils"
 
 export const getAllPhasesOfProject: (id: string) => Promise<[Phase[], any]> = async (id) => {

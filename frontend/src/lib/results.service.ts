@@ -1,4 +1,4 @@
-import type {Result} from "../types/core.type"
+import type {Result} from "$lib/types/core.type"
 import {apiRequest} from "./utils"
 
 export const getResult: (id: string) => Promise<[Result, any]> = async (id) => {

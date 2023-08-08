@@ -2,33 +2,29 @@
    "name": "project_management",
    "version": "1.0.0",
    "type": "module",
-   "@comments scripts": {
-      "dev": "run all dev:* scripts",
-      "dev:routify": "generate Routify's ro  utes.js on filechange",
-      "build": "run all build:* scripts",
-      "build:routify": "build routify",
-      "serve": "serve content in 'dist' folder"
-   },
    "scripts": {
-      "dev": "run-p dev:*",
-      "dev:routify": "routify",
+      "dev": "vite dev",
       "preview": "vite preview",
-      "build": "cross-env NODE_ENV=production run-s build:*",
-      "build:routify": "routify -b",
-      "test": "npm run test:dev && npm run test:build",
-      "test:dev": "node test/lib/wrapper dev ava test/{common,dev}/**/*.test.js",
-      "test:build": "node test/lib/wrapper build ava test/{common,build}/**/*.test.js",
-      "dev:vite": "vite --host",
-      "build:vite": "vite build",
-      "validate": "svelte-check"
+      "build": "vite build",
+      "test": " npm run test:unit",
+      "check": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",
+      "check:watch": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json --watch",
+      "lint": "prettier --plugin-search-dir . --check . && eslint .",
+      "format": "prettier --plugin-search-dir . --write .",
+      "test:unit": "vitest"
    },
    "devDependencies": {
       "@rollup/plugin-typescript": "11.1.2",
-      "@roxi/routify": "^2.18.12",
       "@sveltejs/vite-plugin-svelte": "^2.4.2",
       "@tsconfig/svelte": "^5.0.0",
       "@zerodevx/svelte-toast": "^0.9.5",
+      "@fontsource/fira-mono": "^4.5.10",
+      "@neoconfetti/svelte": "^1.0.0",
+      "@sveltejs/adapter-auto": "^2.0.0",
+      "@sveltejs/adapter-static": "^2.0.3",
+      "@sveltejs/kit": "^1.20.4",
       "autoprefixer": "^10.4.14",
+      "@vincjo/datatables": " 1.12.3",
       "carbon-icons-svelte": "^12.1.0",
       "cross-env": "^7.0.3",
       "cssnano": "^6.0.1",
@@ -47,23 +43,6 @@
       "typescript": "^5.0.2",
       "vite": "^4.4.5"
    },
-   "routify": {
-      "extensions": "svelte,html,svx,md"
-   },
-   "appConfig": {
-      "port": 5000,
-      "assetsDir": "public",
-      "template": "dist/index.html",
-      "distDir": "dist",
-      "buildDir": "dist/assets",
-      "script": "dist/main.js"
-   },
-   "ava": {
-      "verbose": true
-   },
-   "workspaces": [
-      "../../*"
-   ],
    "dependencies": {
       "axios": "^1.4.0",
       "moment": "^2.29.4",

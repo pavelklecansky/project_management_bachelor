@@ -1,5 +1,5 @@
 import {apiRequest, transferify} from "./utils"
-import type {User} from '../types/authentication.type'
+import type {User} from '$lib/types/authentication.type'
 
 
 export const updateUser: (user: User) => any = async (user) => {

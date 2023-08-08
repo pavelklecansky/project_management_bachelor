@@ -1,4 +1,4 @@
-import type {Task} from "../types/core.type"
+import type {Task} from "$lib/types/core.type"
 import {apiRequest, transferify} from "./utils"
 
 export const createTask: (task: Task) => Promise<[Task | null, any]> = async (task) => {

@@ -2,8 +2,8 @@ import {AUTH_STATE_KEY} from "./consts"
 import {get as getStoreValue} from 'svelte/store'
 import {writable} from 'svelte-local-storage-store'
 import {apiRequest, getDataFromResponse} from "./utils"
-import type {User} from "../types/authentication.type";
-import {Role} from "../types/role.enum";
+import type {User} from "$lib/types/authentication.type";
+import {Role} from "$lib/types/role.enum";
 import {updateUser} from './user';
 
 export const authState = writable(AUTH_STATE_KEY, {

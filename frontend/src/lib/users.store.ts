@@ -1,6 +1,6 @@
 import {writable} from 'svelte/store';
-import {getAllUsers} from "../lib/user";
-import type {User} from '../types/authentication.type';
+import {getAllUsers} from "$lib/user";
+import type {User} from '$lib/types/authentication.type';
 import {authState} from './auth';
 
 export const users = writable<User[]>();
