@@ -1,4 +1,4 @@
-import type {Budget, BudgetCategory, BudgetItem} from "../types/core.type"
+import type {Budget, BudgetCategory, BudgetItem} from "$lib/types/core.type"
 import {apiRequest} from "./utils"
 
 export const getBudgetByProject: (id: string) => Promise<[Budget, any]> = async (id) => {

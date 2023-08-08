@@ -1,15 +1,21 @@
 import {endpoint} from "./consts"
 import {get as getStoreValue} from "svelte/store"
 import {authState, signout} from "./auth"
-import type {BudgetItem, ErrorMessage, Priority, ScheduleTask, Status} from "../types/core.type";
+import type {BudgetItem, ErrorMessage, Priority, ScheduleTask, Status} from "$lib/types/core.type";
 import axios, {type ResponseType} from 'axios';
 import moment from 'moment';
+import type {Page} from '@sveltejs/kit';
 
 export interface RequestOptions {
     endpointName: string,
     body?: {},
     method?: "GET" | "POST" | "PUT" | "DELETE",
     responseType?: ResponseType
+}
+
+export function isActive(page: Page<Record<string, string>>, path: string) {
+    const pathname = page.url.pathname;
+    return pathname === path;
 }
 
 export type ApiResponse = Promise<[any, null] | [null, ErrorMessage | string]>
@@ -35,7 +41,10 @@ export async function apiRequest(options: RequestOptions): ApiResponse {
             {
                 method,
                 data: method !== "GET" ? body : null,
-                responseType
+                responseType,
+                headers: {
+                    ...(getAuthorizationHeader() ? {"Authorization": getAuthorizationHeader()} : {}),
+                }
             }
         )
         let data = await res.data;

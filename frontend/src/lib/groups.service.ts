@@ -1,4 +1,4 @@
-import type {Group} from "../types/core.type"
+import type {Group} from "$lib/types/core.type"
 import {apiRequest, transferify} from "./utils"
 
 export const getGroups: () => Promise<[Group[], any]> = async () => {

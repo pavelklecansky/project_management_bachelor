@@ -1,4 +1,4 @@
-import type {Row, Schedule, ScheduleTask} from "../types/core.type"
+import type {Row, Schedule, ScheduleTask} from "$lib/types/core.type"
 import {apiRequest} from "./utils"
 
 export const getScheduleByProject: (id: string) => Promise<[Schedule, any]> = async (id) => {

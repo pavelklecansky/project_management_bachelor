@@ -1,5 +1,5 @@
-import type {User} from "../types/authentication.type"
-import type {Group, Project} from "../types/core.type"
+import type {User} from "$lib/types/authentication.type"
+import type {Group, Project} from "$lib/types/core.type"
 import {apiRequest, transferify} from "./utils"
 
 export const getAllProjects: () => Promise<any[]> = async () => {

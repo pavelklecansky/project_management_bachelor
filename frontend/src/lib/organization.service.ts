@@ -1,4 +1,4 @@
-import type {Organization} from "../types/core.type"
+import type {Organization} from "$lib/types/core.type"
 import {apiRequest} from "./utils"
 
 export const getAllOrganizations: () => Promise<[Organization[], any]> = async () => {
