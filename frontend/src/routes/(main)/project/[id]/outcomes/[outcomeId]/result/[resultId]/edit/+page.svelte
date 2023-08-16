@@ -3,9 +3,9 @@
     import { goto } from '$app/navigation';
 
     import {error, success} from "$lib/notification";
-    import SubmitButton from "$libcomponents/core/SubmitButton.svelte";
-    import CloseButton from "$libcomponents/core/CloseButton.svelte";
-    import TextInput from "$libcomponents/core/TextInput.svelte";
+    import SubmitButton from "$lib/components/core/SubmitButton.svelte";
+    import CloseButton from "$lib/components/core/CloseButton.svelte";
+    import TextInput from "$lib/components/core/TextInput.svelte";
     import {createForm} from "svelte-forms-lib";
     import TextArea from "$lib/components/core/TextArea.svelte";
     import ModalWindow from "$lib/components/modal/ModalWindow.svelte";
