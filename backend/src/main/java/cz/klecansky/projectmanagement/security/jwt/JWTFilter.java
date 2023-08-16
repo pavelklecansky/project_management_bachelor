@@ -29,14 +29,23 @@ public class JWTFilter extends OncePerRequestFilter {
         String token = tokenProvider.resolveToken(request);
         String requestURI = request.getRequestURI();
 
-        if (StringUtils.hasText(token) && tokenProvider.validateToken(token)) {
-            Authentication auth = tokenProvider.getAuthentication(token);
-            SecurityContextHolder.getContext().setAuthentication(auth);
-            LOG.debug("Authentication to security context is set for '{}', uri: {}", auth.getName(), requestURI);
-        } else {
-            LOG.debug("no valid JWT token found, uri: {}", requestURI);
+        try {
+            if (StringUtils.hasText(token) && tokenProvider.validateToken(token)) {
+                Authentication auth = tokenProvider.getAuthentication(token);
+                SecurityContextHolder.getContext().setAuthentication(auth);
+                LOG.debug("Authentication to security context is set for '{}', uri: {}", auth.getName(), requestURI);
+            } else {
+                LOG.debug("no valid JWT token found, uri: {}", requestURI);
+            }
+        } catch (Exception e) {
+            handleInvalidCorrelationId(response, e);
+            return; // make sure you have this set!
         }
 
         filterChain.doFilter(request, response);
+    }
+
+    private void handleInvalidCorrelationId(HttpServletResponse response, Exception exception) throws IOException {
+        response.sendError(HttpServletResponse.SC_UNAUTHORIZED, exception.getMessage());
     }
 }

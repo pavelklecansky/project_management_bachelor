@@ -202,3 +202,4 @@ assets/build
 postgres-data/
 /data/
 !/docker-compose-prod_server.yml
+/frontend/.svelte-kit/

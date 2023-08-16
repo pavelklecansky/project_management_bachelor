@@ -50,6 +50,7 @@ export async function apiRequest(options: RequestOptions): ApiResponse {
         let data = await res.data;
         return [data, null];
     } catch (error) {
+        console.log(error);
         ifExpiredOrInvalidJWTTokenSignout(error.response);
         return [null, error.response.data];
     }

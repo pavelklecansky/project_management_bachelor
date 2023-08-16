@@ -8,8 +8,8 @@ export default {
     kit: {
         adapter: adapter({
             fallback: 'index.html',
-            pages: 'build/webapp/static',
-            assets: 'build/webapp/static'
+            pages: '../backend/build/webapp/static',
+            assets: '../backend/build/webapp/static'
         }),
         prerender: { entries: [] },
 

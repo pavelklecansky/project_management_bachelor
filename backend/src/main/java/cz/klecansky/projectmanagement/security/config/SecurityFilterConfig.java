@@ -1,7 +1,5 @@
 package cz.klecansky.projectmanagement.security.config;
 
-import static cz.klecansky.projectmanagement.security.SecurityConstants.PUBLIC_URLS;
-
 import cz.klecansky.projectmanagement.security.jwt.JWTAccessDeniedHandler;
 import cz.klecansky.projectmanagement.security.jwt.JWTAuthenticationEntryPoint;
 import cz.klecansky.projectmanagement.security.jwt.JWTConfigurer;
@@ -31,18 +29,14 @@ public class SecurityFilterConfig {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http.csrf(AbstractHttpConfigurer::disable)
-                .exceptionHandling(exceptionHandling -> {
-                    exceptionHandling.accessDeniedHandler(jwtAccessDeniedHandler);
-                    exceptionHandling.authenticationEntryPoint(jwtAuthenticationEntryPoint);
-                })
+                .cors(AbstractHttpConfigurer::disable)
+                //                .exceptionHandling(exceptionHandling -> {
+                //                    exceptionHandling.accessDeniedHandler(jwtAccessDeniedHandler);
+                //                    exceptionHandling.authenticationEntryPoint(jwtAuthenticationEntryPoint);
+                //                })
                 //
                 //
                 .sessionManagement((session) -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-                .authorizeRequests((authorize) -> authorize
-                        .requestMatchers(PUBLIC_URLS)
-                        .permitAll()
-                        .anyRequest()
-                        .authenticated())
                 .apply(new JWTConfigurer(tokenProvider));
         return http.build();
     }
