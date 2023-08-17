@@ -1,18 +1,17 @@
-import {writable} from 'svelte/store';
-import {getAllUsers} from "$lib/user";
-import type {User} from '$lib/types/authentication.type';
-import {authState} from './auth';
+import { writable } from 'svelte/store';
+import { getAllUsers } from '$lib/user';
+import type { User } from '$lib/types/authentication.type';
+import { authState } from './auth';
 
 export const users = writable<User[]>();
 
 export const load = async () => {
-    const [success] = await getAllUsers();
-    users.set(success!);
+	const [success] = await getAllUsers();
+	users.set(success!);
 };
 
-authState.subscribe(value => {
-    if (value.isSignedIn) {
-        load();
-    }
+authState.subscribe((value) => {
+	if (value.isSignedIn) {
+		load();
+	}
 });
-

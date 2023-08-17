@@ -1,22 +1,22 @@
 <script lang="ts">
 	import { page } from '$app/stores';
-	import {afterNavigate, goto} from '$app/navigation';
-    import {error} from "$lib/notification";
-    import {onMount} from "svelte";
-    import ModalWindow from "$lib/components/modal/ModalWindow.svelte";
-    import {getGroup} from "$lib/groups.service";
-    import type {Group} from "$lib/types/core.type";
-    import {getDataFromResponse} from "$lib/utils";
-	import {base} from '$app/paths';
+	import { afterNavigate, goto } from '$app/navigation';
+	import { error } from '$lib/notification';
+	import { onMount } from 'svelte';
+	import ModalWindow from '$lib/components/modal/ModalWindow.svelte';
+	import { getGroup } from '$lib/groups.service';
+	import type { Group } from '$lib/types/core.type';
+	import { getDataFromResponse } from '$lib/utils';
+	import { base } from '$app/paths';
 
-    let group = {} as Group;
+	let group = {} as Group;
 	let loaded = false;
 
 	let previousPage: string = base;
 
-	afterNavigate(({from}) => {
-		previousPage = from?.url.pathname || previousPage
-	})
+	afterNavigate(({ from }) => {
+		previousPage = from?.url.pathname || previousPage;
+	});
 
 	onMount(async () => {
 		let id = $page.params.id;
@@ -60,9 +60,7 @@
 											{member.user.firstName}
 											{member.user.lastName}</td
 										>
-										<td class="px-6 py-4"
-											>{member.position}</td
-										>
+										<td class="px-6 py-4">{member.position}</td>
 									</tr>
 								{/each}
 							</tbody>

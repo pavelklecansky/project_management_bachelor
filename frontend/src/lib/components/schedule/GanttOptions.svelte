@@ -1,16 +1,16 @@
 <script>
-    import {createEventDispatcher, getContext} from "svelte";
+	import { createEventDispatcher, getContext } from 'svelte';
 
-    export let options;
+	export let options;
 
-    $: {
-        dispatch('change', options);
-    }
+	$: {
+		dispatch('change', options);
+	}
 
-    const dispatch = createEventDispatcher();
+	const dispatch = createEventDispatcher();
 
-    let {optionsStream} = getContext('options');
-    $: {
-        dispatch('change', $optionsStream);
-    }
+	let { optionsStream } = getContext('options');
+	$: {
+		dispatch('change', $optionsStream);
+	}
 </script>
