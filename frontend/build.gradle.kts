@@ -12,19 +12,19 @@ node {
     version.set("18.16.0")
 }
 
-//val lintTask = tasks.register<PnpmTask>("lintWebapp") {
-//    args.set(listOf("run", "lint"))
-//    dependsOn(tasks.pnpmInstall)
-//    inputs.dir("src")
-//    outputs.upToDateWhen { true }
-//}
-//
-//val formatTask = tasks.register<PnpmTask>("formatWebapp") {
-//    args.set(listOf("run", "format"))
-//    dependsOn(tasks.pnpmInstall)
-//    inputs.dir("src")
-//    outputs.upToDateWhen { true }
-//}
+val lintTask = tasks.register<PnpmTask>("lintWebapp") {
+    args.set(listOf("run", "lint"))
+    dependsOn(tasks.pnpmInstall)
+    inputs.dir("src")
+    outputs.upToDateWhen { true }
+}
+
+val formatTask = tasks.register<PnpmTask>("formatWebapp") {
+    args.set(listOf("run", "format"))
+    dependsOn(tasks.pnpmInstall)
+    inputs.dir("src")
+    outputs.upToDateWhen { true }
+}
 
 val buildTask = tasks.register<PnpmTask>("buildWebapp") {
     args.set(listOf("run", "build"))
@@ -35,7 +35,7 @@ val buildTask = tasks.register<PnpmTask>("buildWebapp") {
 
 val testTask = tasks.register<PnpmTask>("testFrontend") {
     args.set(listOf("run", "test"))
-    dependsOn(tasks.pnpmInstall)
+    dependsOn(tasks.pnpmInstall, lintTask)
     inputs.dir("src")
     outputs.upToDateWhen { true }
 }
@@ -51,6 +51,6 @@ sourceSets {
     }
 }
 
-//tasks.test {
-//    dependsOn(lintTask, testTask)
-//}
+tasks.test {
+    dependsOn(lintTask, testTask)
+}

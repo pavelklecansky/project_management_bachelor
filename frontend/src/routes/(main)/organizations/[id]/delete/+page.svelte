@@ -1,18 +1,17 @@
 <script lang="ts">
-    import { page } from '$app/stores';
-    import {afterNavigate, goto} from '$app/navigation';
-    import {error, success} from "$lib/notification";
-    import {onMount} from "svelte";
-    import {deleteOrganization} from "$lib/organization.service";
-    import {base} from '$app/paths';
+	import { page } from '$app/stores';
+	import { afterNavigate, goto } from '$app/navigation';
+	import { error, success } from '$lib/notification';
+	import { onMount } from 'svelte';
+	import { deleteOrganization } from '$lib/organization.service';
 
-    let previousPage: string = "/organizations";
+	let previousPage: string = '/organizations';
 
-    afterNavigate(({from}) => {
-        previousPage = from?.url.pathname || previousPage
-    })
+	afterNavigate(({ from }) => {
+		previousPage = from?.url.pathname || previousPage;
+	});
 
-    onMount(async () => {
+	onMount(async () => {
 		let id = $page.params.id;
 		const [successMessage, errorMessage] = await deleteOrganization(id);
 		if (!successMessage || errorMessage) {

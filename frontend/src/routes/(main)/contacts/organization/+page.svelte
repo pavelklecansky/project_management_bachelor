@@ -1,62 +1,62 @@
 <script lang="ts">
-    import {Datatable, DataHandler, Th, ThFilter} from "@vincjo/datatables";
-    import {afterNavigate} from '$app/navigation';
-    import {getAllOrganizations} from "$lib/organization.service";
-    import {getDataFromResponse} from "$lib/utils";
+	import { Datatable, DataHandler, Th, ThFilter } from '@vincjo/datatables';
+	import { afterNavigate } from '$app/navigation';
+	import { getAllOrganizations } from '$lib/organization.service';
+	import { getDataFromResponse } from '$lib/utils';
 
-    let handler;
-    let rows;
+	let handler;
+	let rows;
 
-    afterNavigate(async () => {
-        const [successResponse, errorResponse] = await getAllOrganizations();
-        const data = getDataFromResponse(successResponse);
+	afterNavigate(async () => {
+		const [successResponse, errorResponse] = await getAllOrganizations();
+		const data = getDataFromResponse(successResponse);
 
-        handler = new DataHandler(data, {rowsPerPage: 20});
-        rows = handler.getRows();
-    });
+		handler = new DataHandler(data, { rowsPerPage: 20 });
+		rows = handler.getRows();
+	});
 </script>
 
 <div class="h-full max-w-full">
-    {#if rows}
-        <Datatable {handler} pagination={true}>
-            <table>
-                <thead>
-                <tr>
-                    <Th {handler} orderBy="name">Name</Th>
-                    <Th {handler} orderBy="email">Email</Th>
-                    <Th {handler} orderBy="ico">IČO</Th>
-                    <Th {handler} orderBy="phoneNumber">Phone number</Th>
-                    <Th {handler} orderBy="note">Note</Th>
-                </tr>
-                <tr>
-                    <ThFilter {handler} filterBy="name"/>
-                    <ThFilter {handler} filterBy="email"/>
-                    <ThFilter {handler} filterBy="ico"/>
-                    <ThFilter {handler} filterBy="phoneNumber"/>
-                    <ThFilter {handler} filterBy="note"/>
-                </tr>
-                </thead>
-                <tbody>
-                {#each $rows as row}
-                    <tr>
-                        <td>{row.name}</td>
-                        <td>{row.email}</td>
-                        <td>{row.ico}</td>
-                        <td>{row.phoneNumber}</td>
-                        <td>{row.note}</td>
-                    </tr>
-                {/each}
-                </tbody>
-            </table>
-        </Datatable>
-    {/if}
+	{#if rows}
+		<Datatable {handler} pagination={true}>
+			<table>
+				<thead>
+					<tr>
+						<Th {handler} orderBy="name">Name</Th>
+						<Th {handler} orderBy="email">Email</Th>
+						<Th {handler} orderBy="ico">IČO</Th>
+						<Th {handler} orderBy="phoneNumber">Phone number</Th>
+						<Th {handler} orderBy="note">Note</Th>
+					</tr>
+					<tr>
+						<ThFilter {handler} filterBy="name" />
+						<ThFilter {handler} filterBy="email" />
+						<ThFilter {handler} filterBy="ico" />
+						<ThFilter {handler} filterBy="phoneNumber" />
+						<ThFilter {handler} filterBy="note" />
+					</tr>
+				</thead>
+				<tbody>
+					{#each $rows as row}
+						<tr>
+							<td>{row.name}</td>
+							<td>{row.email}</td>
+							<td>{row.ico}</td>
+							<td>{row.phoneNumber}</td>
+							<td>{row.note}</td>
+						</tr>
+					{/each}
+				</tbody>
+			</table>
+		</Datatable>
+	{/if}
 </div>
 
-<slot/>
+<slot />
 
 <style>
-    td {
-        text-align: center;
-        padding: 4px 0;
-    }
+	td {
+		text-align: center;
+		padding: 4px 0;
+	}
 </style>

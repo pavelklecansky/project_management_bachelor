@@ -1,37 +1,37 @@
 <script lang="ts">
 	import { page } from '$app/stores';
 	import { goto } from '$app/navigation';
-    import {error, success} from "$lib/notification";
-    import SubmitButton from "$lib/components/core/SubmitButton.svelte";
-    import CloseButton from "$lib/components/core/CloseButton.svelte";
-    import TextInput from "$lib/components/core/TextInput.svelte";
-    import {createForm} from "svelte-forms-lib";
-    import type {Task} from "$lib/types/core.type";
-    import TextArea from "$lib/components/core/TextArea.svelte";
-    import DateInput from "$lib/components/core/DateInput.svelte";
-    import {getTask, updateTask} from "$lib/task.service";
-    import {load} from "$lib/projects.store";
-    import {onMount} from "svelte";
-    import Select from "svelte-select";
-    import {
-        dateISOFormat,
-        getAllPriorityTypes,
-        getAllStatusTypes,
-        getDefaultPriorityType,
-        getDefaultStatusType,
-        isEmptyObject,
-        isEmptyObjectOrNull,
-        priorityLabelFromValue,
-        statusLabelFromValue,
-        transferify,
-    } from "$lib/utils";
-    import NumberInput from "$lib/components/core/NumberInput.svelte";
-    import UserSelectInput from "$lib/components/user/UserSelectInput.svelte";
-    import ModalWindow from "$lib/components/modal/ModalWindow.svelte";
-    import GroupSelectInput from "$lib/components/group/GroupSelectInput.svelte";
-    import PhaseSelectInput from "$lib/components/phase/PhaseSelectInput.svelte";
+	import { error, success } from '$lib/notification';
+	import SubmitButton from '$lib/components/core/SubmitButton.svelte';
+	import CloseButton from '$lib/components/core/CloseButton.svelte';
+	import TextInput from '$lib/components/core/TextInput.svelte';
+	import { createForm } from 'svelte-forms-lib';
+	import type { Task } from '$lib/types/core.type';
+	import TextArea from '$lib/components/core/TextArea.svelte';
+	import DateInput from '$lib/components/core/DateInput.svelte';
+	import { getTask, updateTask } from '$lib/task.service';
+	import { load } from '$lib/projects.store';
+	import { onMount } from 'svelte';
+	import Select from 'svelte-select';
+	import {
+		dateISOFormat,
+		getAllPriorityTypes,
+		getAllStatusTypes,
+		getDefaultPriorityType,
+		getDefaultStatusType,
+		isEmptyObject,
+		isEmptyObjectOrNull,
+		priorityLabelFromValue,
+		statusLabelFromValue,
+		transferify
+	} from '$lib/utils';
+	import NumberInput from '$lib/components/core/NumberInput.svelte';
+	import UserSelectInput from '$lib/components/user/UserSelectInput.svelte';
+	import ModalWindow from '$lib/components/modal/ModalWindow.svelte';
+	import GroupSelectInput from '$lib/components/group/GroupSelectInput.svelte';
+	import PhaseSelectInput from '$lib/components/phase/PhaseSelectInput.svelte';
 
-    let priorityValueSelect = getDefaultPriorityType();
+	let priorityValueSelect = getDefaultPriorityType();
 	let statusValueSelect = getDefaultStatusType();
 	let loaded = false;
 
@@ -46,22 +46,18 @@
 	const { form, handleSubmit } = createForm({
 		initialValues: {
 			task: {} as Task,
-			startDate: "",
-			endDate: "",
+			startDate: '',
+			endDate: ''
 		},
 
 		onSubmit: async (values) => {
 			values.task.startDate = new Date(values.startDate);
 			values.task.endDate = new Date(values.endDate);
-			values.task.assigned = isEmptyObject(values.task.assigned)
-				? null
-				: values.task.assigned;
+			values.task.assigned = isEmptyObject(values.task.assigned) ? null : values.task.assigned;
 			values.task.assignedForGroup = isEmptyObject(values.task.assignedForGroup)
 				? null
 				: values.task.assignedForGroup;
-			const [createdSuccess, createdError] = await updateTask(
-				transferify(values.task)
-			);
+			const [createdSuccess, createdError] = await updateTask(transferify(values.task));
 			if (createdError) {
 				error(createdError);
 				goto(`./../${$form.task.id}`);
@@ -70,7 +66,7 @@
 				load();
 				goto(`./../${$form.task.id}`);
 			}
-		},
+		}
 	});
 
 	onMount(async () => {
@@ -96,32 +92,19 @@
 	{#if loaded}
 		<div class="px-4 mb-4">
 			<h2 class="text-3xl font-medium">Update task</h2>
-			<div class="w-full mt-4 ">
-				<p
-					class="text-left text-sm font-medium text-gray-900 block mb-2"
-				>
-					Name
-				</p>
+			<div class="w-full mt-4">
+				<p class="text-left text-sm font-medium text-gray-900 block mb-2">Name</p>
 				<TextInput placeholder="Name" bind:value={$form.task.name} />
 			</div>
 
-			<div class="w-full mt-4 ">
-				<p
-					class="text-left text-sm font-medium text-gray-900 block mb-2"
-				>
-					Description
-				</p>
-				<TextArea
-					placeholder="Description"
-					bind:value={$form.task.description}
-				/>
+			<div class="w-full mt-4">
+				<p class="text-left text-sm font-medium text-gray-900 block mb-2">Description</p>
+				<TextArea placeholder="Description" bind:value={$form.task.description} />
 			</div>
 
-			<div class="w-full mt-4 ">
-				<p class="text-left text-sm font-medium text-gray-900 block mb-2">
-					Status
-				</p>
-	
+			<div class="w-full mt-4">
+				<p class="text-left text-sm font-medium text-gray-900 block mb-2">Status</p>
+
 				<Select
 					items={getAllStatusTypes()}
 					value={statusValueSelect}
@@ -129,43 +112,31 @@
 				/>
 			</div>
 
-			<div class="w-full mt-4 ">
-				<p
-					class="text-left text-sm font-medium text-gray-900 block mb-2"
-				>
-					Assigneed
-				</p>
-				<UserSelectInput bind:value={$form.task.assigned} disable={!isEmptyObjectOrNull($form.task.assignedForGroup)} />
+			<div class="w-full mt-4">
+				<p class="text-left text-sm font-medium text-gray-900 block mb-2">Assigneed</p>
+				<UserSelectInput
+					bind:value={$form.task.assigned}
+					disable={!isEmptyObjectOrNull($form.task.assignedForGroup)}
+				/>
 			</div>
 
-			<div class="w-full mt-4 ">
-				<p class="text-left text-sm font-medium text-gray-900 block mb-2">
-					Assigneed to Group
-				</p>
-	
+			<div class="w-full mt-4">
+				<p class="text-left text-sm font-medium text-gray-900 block mb-2">Assigneed to Group</p>
+
 				<GroupSelectInput
 					bind:value={$form.task.assignedForGroup}
 					disable={!isEmptyObjectOrNull($form.task.assigned)}
 				/>
 			</div>
 
-			<div class="w-full mt-4 ">
-				<p class="text-left text-sm font-medium text-gray-900 block mb-2">
-					Phase
-				</p>
+			<div class="w-full mt-4">
+				<p class="text-left text-sm font-medium text-gray-900 block mb-2">Phase</p>
 
-				<PhaseSelectInput
-						bind:value={$form.task.phase}
-						taskId={$page.params.id}
-				/>
+				<PhaseSelectInput bind:value={$form.task.phase} taskId={$page.params.id} />
 			</div>
 
-			<div class="w-full mt-4 ">
-				<p
-					class="text-left text-sm font-medium text-gray-900 block mb-2"
-				>
-					Priority
-				</p>
+			<div class="w-full mt-4">
+				<p class="text-left text-sm font-medium text-gray-900 block mb-2">Priority</p>
 
 				<Select
 					items={getAllPriorityTypes()}
@@ -174,40 +145,23 @@
 				/>
 			</div>
 
-			<div class="w-full mt-4 ">
-				<p
-					class="text-left text-sm font-medium text-gray-900 block mb-2"
-				>
-					Progress
-				</p>
-				<NumberInput bind:value={$form.task.progress} max="100"/>
+			<div class="w-full mt-4">
+				<p class="text-left text-sm font-medium text-gray-900 block mb-2">Progress</p>
+				<NumberInput bind:value={$form.task.progress} max="100" />
 			</div>
 
-			<div class="w-full mt-4 ">
-				<p
-					class="text-left text-sm font-medium text-gray-900 block mb-2"
-				>
-					Start date
-				</p>
+			<div class="w-full mt-4">
+				<p class="text-left text-sm font-medium text-gray-900 block mb-2">Start date</p>
 				<DateInput bind:value={$form.startDate} />
 			</div>
-			<div class="w-full mt-4 ">
-				<p
-					class="text-left text-sm font-medium text-gray-900 block mb-2"
-				>
-					End date
-				</p>
+			<div class="w-full mt-4">
+				<p class="text-left text-sm font-medium text-gray-900 block mb-2">End date</p>
 				<DateInput bind:value={$form.endDate} />
 			</div>
 		</div>
-		<div
-			class="flex mt-10 justify-between py-4 px-4 border-t border-gray-300 false"
-		>
+		<div class="flex mt-10 justify-between py-4 px-4 border-t border-gray-300 false">
 			<SubmitButton text="Edit" />
-			<CloseButton
-				text="Close"
-				on:click={() => goto(`./../${$form.task.id}`)}
-			/>
+			<CloseButton text="Close" on:click={() => goto(`./../${$form.task.id}`)} />
 		</div>
 	{/if}
 </ModalWindow>
