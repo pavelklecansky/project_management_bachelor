@@ -2,14 +2,14 @@ package cz.klecansky.projectmanagement.user.ui.request;
 
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
-import lombok.Data;
+import lombok.Value;
 
-@Data
+@Value
 public class SignInRequest {
     @NotBlank
-    private String password;
+    String password;
 
     @Email
     @NotBlank
-    private String email;
+    String email;
 }

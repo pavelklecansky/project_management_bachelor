@@ -5,22 +5,18 @@ import static org.springframework.http.HttpStatus.UNAUTHORIZED;
 
 import cz.klecansky.projectmanagement.core.response.ErrorResponse;
 import lombok.NonNull;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
-import org.springframework.web.context.request.WebRequest;
 
 @RestControllerAdvice
 public class GlobalExceptionHandler {
 
     @ExceptionHandler(AuthenticationException.class)
     @ResponseStatus(UNAUTHORIZED)
-    public ResponseEntity<ErrorResponse> handleStatusException(AuthenticationException ex, WebRequest request) {
+    public ResponseEntity<ErrorResponse> handleStatusException() {
         return new ResponseEntity<>(
                 ErrorResponse.builder()
                         .code(UNAUTHORIZED.value())
@@ -32,13 +28,12 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(Exception.class)
     @ResponseStatus(BAD_REQUEST)
-    protected @NonNull ResponseEntity<Object> handleHttpMessageNotReadable(
-            HttpMessageNotReadableException ex, HttpHeaders headers, HttpStatus status, WebRequest request) {
+    protected @NonNull ResponseEntity<Object> handleHttpMessageNotReadable(Exception ex) {
         return new ResponseEntity<>(
                 ErrorResponse.builder()
                         .code(BAD_REQUEST.value())
                         .status(BAD_REQUEST.getReasonPhrase())
-                        .message("Bad type ")
+                        .message(ex.getMessage())
                         .build(),
                 BAD_REQUEST);
     }

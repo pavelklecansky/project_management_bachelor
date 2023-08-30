@@ -27,10 +27,12 @@ dependencies {
     compileOnly("org.projectlombok:lombok:1.18.22")
     annotationProcessor("org.projectlombok:lombok:1.18.22")
     annotationProcessor("org.mapstruct:mapstruct-processor:1.4.2.Final")
+    testImplementation("io.rest-assured:rest-assured:5.3.1")
     testImplementation("org.springframework.boot:spring-boot-starter-test")
     testImplementation("org.springframework.boot:spring-boot-testcontainers")
     testImplementation("org.testcontainers:junit-jupiter")
     testImplementation("org.testcontainers:postgresql:1.18.3")
+    testImplementation("org.apache.httpcomponents:httpclient:4.5.14")
     developmentOnly("org.springframework.boot:spring-boot-devtools")
 }
 
