@@ -486,4 +486,31 @@
     <changeSet author="pavelklecansky (generated)" id="1693504069810-64">
         <addForeignKeyConstraint baseColumnNames="users_id" baseTableName="comments" constraintName="fkt55y2infwbbw3o942o2mhm0v4" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="users" validate="true"/>
     </changeSet>
+
+    <changeSet id="1693505103485-1" author="pavelklecansky" context="test">
+        <insert tableName="users">
+            <column name="id" value="5c3ed006-4639-4fff-b554-0901b50e0116"/>
+            <column name="first_name" value="Admin"/>
+            <column name="last_name" value="Admin"/>
+            <column name="email" value="admin@admin.com"/>
+            <column name="encrypted_password" value="$2a$10$1irFbMD4ZUuYATM/VNZzXeFHnpdV4tsT9Jt68VsC5wf8Lfrn2m0JC"/>
+            <column name="email_verified" valueBoolean="true"/>
+            <column name="account_not_locked" valueBoolean="true"/>
+            <column name="account_not_expired" valueBoolean="true"/>
+            <column name="credentials_non_expired" valueBoolean="true"/>
+            <column name="enabled" valueBoolean="true"/>
+        </insert>
+        <insert tableName="user_entity_roles">
+            <column name="roles" value="0"/>
+            <column name="user_entity_id" value="5c3ed006-4639-4fff-b554-0901b50e0116"/>
+        </insert>
+        <insert tableName="user_entity_roles">
+            <column name="roles" value="1"/>
+            <column name="user_entity_id" value="5c3ed006-4639-4fff-b554-0901b50e0116"/>
+        </insert>
+        <insert tableName="user_entity_roles">
+            <column name="roles" value="2"/>
+            <column name="user_entity_id" value="5c3ed006-4639-4fff-b554-0901b50e0116"/>
+        </insert>
+    </changeSet>
 </databaseChangeLog>

@@ -47,6 +47,7 @@ public class AuthenticationController {
     NewUserPasscodeMapper newUserPasscodeMapper;
 
     @PostMapping(path = "login")
+    @PreAuthorize("permitAll()")
     public ResponseEntity<SignInResponse> signIn(@RequestBody SignInRequest signInRequest) {
         JWTToken signin = authenticationService.signIn(signInRequest.getEmail(), signInRequest.getPassword());
         UserCommand currentUser = userService
