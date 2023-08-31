@@ -1,0 +1,489 @@
+<?xml version="1.1" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+    <changeSet author="pavelklecansky (generated)" id="1693504069810-1">
+        <createTable tableName="tasks">
+            <column name="id" type="UUID">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="tasks_pkey"/>
+            </column>
+            <column name="description" type="VARCHAR(255)"/>
+            <column name="end_date" type="TIMESTAMP WITH TIME ZONE"/>
+            <column name="name" type="VARCHAR(50)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="priority" type="SMALLINT">
+                <constraints nullable="false"/>
+            </column>
+            <column defaultValueNumeric="0" name="progress" type="INTEGER">
+                <constraints nullable="false"/>
+            </column>
+            <column name="start_date" type="TIMESTAMP WITH TIME ZONE"/>
+            <column name="status" type="SMALLINT"/>
+            <column name="users_id" type="UUID"/>
+            <column name="groups_id" type="UUID"/>
+            <column name="phases_id" type="UUID"/>
+            <column name="projects_id" type="UUID">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="pavelklecansky (generated)" id="1693504069810-2">
+        <createTable tableName="new_user_passcode">
+            <column name="id" type="UUID">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="new_user_passcode_pkey"/>
+            </column>
+            <column name="passcode" type="INTEGER">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="pavelklecansky (generated)" id="1693504069810-3">
+        <createTable tableName="users">
+            <column name="id" type="UUID">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="users_pkey"/>
+            </column>
+            <column name="account_not_expired" type="BOOLEAN">
+                <constraints nullable="false"/>
+            </column>
+            <column name="account_not_locked" type="BOOLEAN">
+                <constraints nullable="false"/>
+            </column>
+            <column name="credentials_non_expired" type="BOOLEAN">
+                <constraints nullable="false"/>
+            </column>
+            <column name="email" type="VARCHAR(120)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="email_verified" type="BOOLEAN">
+                <constraints nullable="false"/>
+            </column>
+            <column name="enabled" type="BOOLEAN">
+                <constraints nullable="false"/>
+            </column>
+            <column name="encrypted_password" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="first_name" type="VARCHAR(50)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="last_name" type="VARCHAR(50)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="note" type="VARCHAR(255)"/>
+            <column name="phone_number" type="VARCHAR(255)"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="pavelklecansky (generated)" id="1693504069810-4">
+        <createTable tableName="projects_comments">
+            <column name="project_entity_id" type="UUID">
+                <constraints nullable="false"/>
+            </column>
+            <column name="comments_id" type="UUID">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="pavelklecansky (generated)" id="1693504069810-5">
+        <createTable tableName="tasks_comments">
+            <column name="task_entity_id" type="UUID">
+                <constraints nullable="false"/>
+            </column>
+            <column name="comments_id" type="UUID">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="pavelklecansky (generated)" id="1693504069810-6">
+        <addUniqueConstraint columnNames="email" constraintName="uk_6dotkott2kjsp8vw4d0m25fb7" tableName="users"/>
+    </changeSet>
+    <changeSet author="pavelklecansky (generated)" id="1693504069810-7">
+        <addUniqueConstraint columnNames="comments_id" constraintName="uk_6qull017f4fkvoblrbornjuif" tableName="projects_comments"/>
+    </changeSet>
+    <changeSet author="pavelklecansky (generated)" id="1693504069810-8">
+        <addUniqueConstraint columnNames="comments_id" constraintName="uk_e9fae5jnhkkfoj3c7bwxct39a" tableName="tasks_comments"/>
+    </changeSet>
+    <changeSet author="pavelklecansky (generated)" id="1693504069810-9">
+        <createTable tableName="budget_categoryies">
+            <column name="id" type="UUID">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="budget_categoryies_pkey"/>
+            </column>
+            <column name="budget" type="FLOAT8">
+                <constraints nullable="false"/>
+            </column>
+            <column name="label" type="VARCHAR(255)"/>
+            <column name="budget_id" type="UUID"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="pavelklecansky (generated)" id="1693504069810-10">
+        <createTable tableName="budget_items">
+            <column name="id" type="UUID">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="budget_items_pkey"/>
+            </column>
+            <column name="budget" type="FLOAT8">
+                <constraints nullable="false"/>
+            </column>
+            <column name="label" type="VARCHAR(255)"/>
+            <column name="budget_category_id" type="UUID"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="pavelklecansky (generated)" id="1693504069810-11">
+        <createTable tableName="budgets">
+            <column name="id" type="UUID">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="budgets_pkey"/>
+            </column>
+            <column name="project_id" type="UUID"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="pavelklecansky (generated)" id="1693504069810-12">
+        <createTable tableName="comments">
+            <column name="id" type="UUID">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="comments_pkey"/>
+            </column>
+            <column name="created_date" type="TIMESTAMP WITH TIME ZONE">
+                <constraints nullable="false"/>
+            </column>
+            <column name="text" type="VARCHAR(1000)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="users_id" type="UUID">
+                <constraints nullable="false"/>
+            </column>
+            <column name="task_id" type="UUID"/>
+            <column name="project_id" type="UUID"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="pavelklecansky (generated)" id="1693504069810-13">
+        <createTable tableName="group_members">
+            <column name="id" type="UUID">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="group_members_pkey"/>
+            </column>
+            <column name="position" type="VARCHAR(255)"/>
+            <column name="user_id" type="UUID">
+                <constraints nullable="false"/>
+            </column>
+            <column name="group_id" type="UUID"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="pavelklecansky (generated)" id="1693504069810-14">
+        <createTable tableName="groups">
+            <column name="id" type="UUID">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="groups_pkey"/>
+            </column>
+            <column name="name" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="pavelklecansky (generated)" id="1693504069810-15">
+        <createTable tableName="organizations">
+            <column name="id" type="UUID">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="organizations_pkey"/>
+            </column>
+            <column name="email" type="VARCHAR(255)"/>
+            <column name="ico" type="VARCHAR(255)"/>
+            <column name="name" type="VARCHAR(50)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="note" type="VARCHAR(255)"/>
+            <column name="phone_number" type="VARCHAR(255)"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="pavelklecansky (generated)" id="1693504069810-16">
+        <createTable tableName="outcome_categories">
+            <column name="id" type="UUID">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="outcome_categories_pkey"/>
+            </column>
+            <column name="description" type="VARCHAR(255)"/>
+            <column name="name" type="VARCHAR(100)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="project_id" type="UUID"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="pavelklecansky (generated)" id="1693504069810-17">
+        <createTable tableName="outcomes">
+            <column name="id" type="UUID">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="outcomes_pkey"/>
+            </column>
+            <column name="description" type="VARCHAR(255)"/>
+            <column name="end_date" type="TIMESTAMP WITH TIME ZONE">
+                <constraints nullable="false"/>
+            </column>
+            <column name="name" type="VARCHAR(100)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="start_date" type="TIMESTAMP WITH TIME ZONE">
+                <constraints nullable="false"/>
+            </column>
+            <column name="outcome_category_id" type="UUID"/>
+            <column name="phases_id" type="UUID"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="pavelklecansky (generated)" id="1693504069810-18">
+        <createTable tableName="password_reset_tokens">
+            <column name="token" type="UUID">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="password_reset_tokens_pkey"/>
+            </column>
+            <column name="expiry_date" type="TIMESTAMP WITH TIME ZONE">
+                <constraints nullable="false"/>
+            </column>
+            <column name="users_id" type="UUID">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="pavelklecansky (generated)" id="1693504069810-19">
+        <createTable tableName="phases">
+            <column name="id" type="UUID">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="phases_pkey"/>
+            </column>
+            <column name="end_date" type="TIMESTAMP WITH TIME ZONE">
+                <constraints nullable="false"/>
+            </column>
+            <column name="name" type="VARCHAR(100)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="note" type="VARCHAR(255)"/>
+            <column name="start_date" type="TIMESTAMP WITH TIME ZONE">
+                <constraints nullable="false"/>
+            </column>
+            <column name="projects_id" type="UUID"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="pavelklecansky (generated)" id="1693504069810-20">
+        <createTable tableName="project_group_entities">
+            <column name="project_id" type="UUID">
+                <constraints nullable="false"/>
+            </column>
+            <column name="group_id" type="UUID">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="pavelklecansky (generated)" id="1693504069810-21">
+        <createTable tableName="project_user_entities">
+            <column name="project_id" type="UUID">
+                <constraints nullable="false"/>
+            </column>
+            <column name="user_id" type="UUID">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="pavelklecansky (generated)" id="1693504069810-22">
+        <createTable tableName="projects">
+            <column name="id" type="UUID">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="projects_pkey"/>
+            </column>
+            <column name="description" type="VARCHAR(255)"/>
+            <column name="end_date" type="TIMESTAMP WITH TIME ZONE"/>
+            <column name="name" type="VARCHAR(50)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="start_date" type="TIMESTAMP WITH TIME ZONE"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="pavelklecansky (generated)" id="1693504069810-23">
+        <createTable tableName="projects_schedule_entity">
+            <column name="schedule_entity_id" type="UUID"/>
+            <column name="project_entity_null" type="UUID">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="projects_schedule_entity_pkey"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="pavelklecansky (generated)" id="1693504069810-24">
+        <createTable tableName="results">
+            <column name="id" type="UUID">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="results_pkey"/>
+            </column>
+            <column name="description" type="VARCHAR(255)"/>
+            <column name="name" type="VARCHAR(100)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="outcome_id" type="UUID"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="pavelklecansky (generated)" id="1693504069810-25">
+        <createTable tableName="schedule_id">
+            <column name="schedule_entity_id" type="UUID"/>
+            <column name="project_entity_null" type="UUID">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="schedule_id_pkey"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="pavelklecansky (generated)" id="1693504069810-26">
+        <createTable tableName="schedule_rows">
+            <column name="real_id" type="UUID">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="schedule_rows_pkey"/>
+            </column>
+            <column name="id" type="INTEGER">
+                <constraints nullable="false"/>
+            </column>
+            <column name="label" type="VARCHAR(255)"/>
+            <column name="schedule_id" type="UUID"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="pavelklecansky (generated)" id="1693504069810-27">
+        <createTable tableName="schedule_tasks">
+            <column name="real_id" type="UUID">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="schedule_tasks_pkey"/>
+            </column>
+            <column name="from_date" type="TIMESTAMP WITH TIME ZONE"/>
+            <column name="id" type="INTEGER">
+                <constraints nullable="false"/>
+            </column>
+            <column name="label" type="VARCHAR(255)"/>
+            <column name="resource_id" type="INTEGER">
+                <constraints nullable="false"/>
+            </column>
+            <column name="to_date" type="TIMESTAMP WITH TIME ZONE"/>
+            <column name="schedule_id" type="UUID"/>
+            <column name="row_id" type="UUID"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="pavelklecansky (generated)" id="1693504069810-28">
+        <createTable tableName="schedules">
+            <column name="id" type="UUID">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="schedules_pkey"/>
+            </column>
+            <column name="project_id" type="UUID"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="pavelklecansky (generated)" id="1693504069810-29">
+        <createTable tableName="user_entity_roles">
+            <column name="user_entity_id" type="UUID">
+                <constraints nullable="false"/>
+            </column>
+            <column name="roles" type="SMALLINT"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="pavelklecansky (generated)" id="1693504069810-30">
+        <createTable tableName="users_group_member_entity">
+            <column name="group_member_entity_id" type="UUID"/>
+            <column name="user_entity_null" type="UUID">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="users_group_member_entity_pkey"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="pavelklecansky (generated)" id="1693504069810-31">
+        <createTable tableName="users_organization_entities">
+            <column name="user_entity" type="UUID">
+                <constraints nullable="false"/>
+            </column>
+            <column name="organization_entities" type="UUID">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="pavelklecansky (generated)" id="1693504069810-32">
+        <createTable tableName="verification_tokens">
+            <column name="token" type="UUID">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="verification_tokens_pkey"/>
+            </column>
+            <column name="created_date" type="TIMESTAMP WITH TIME ZONE">
+                <constraints nullable="false"/>
+            </column>
+            <column name="expiry_date" type="TIMESTAMP WITH TIME ZONE">
+                <constraints nullable="false"/>
+            </column>
+            <column name="users_id" type="UUID">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="pavelklecansky (generated)" id="1693504069810-33">
+        <addForeignKeyConstraint baseColumnNames="outcome_category_id" baseTableName="outcomes" constraintName="fk1wywv1gg31t2lb81b6c51pgxu" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="outcome_categories" validate="true"/>
+    </changeSet>
+    <changeSet author="pavelklecansky (generated)" id="1693504069810-34">
+        <addForeignKeyConstraint baseColumnNames="user_id" baseTableName="project_user_entities" constraintName="fk240mvwqigai26utsd4omc2im7" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="users" validate="true"/>
+    </changeSet>
+    <changeSet author="pavelklecansky (generated)" id="1693504069810-35">
+        <addForeignKeyConstraint baseColumnNames="phases_id" baseTableName="tasks" constraintName="fk2dybre10rygqa2116adnnxvlw" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="phases" validate="true"/>
+    </changeSet>
+    <changeSet author="pavelklecansky (generated)" id="1693504069810-36">
+        <addForeignKeyConstraint baseColumnNames="project_entity_null" baseTableName="schedule_id" constraintName="fk2q6s6m4hv102acasefjtmgvtg" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="projects" validate="true"/>
+    </changeSet>
+    <changeSet author="pavelklecansky (generated)" id="1693504069810-37">
+        <addForeignKeyConstraint baseColumnNames="users_id" baseTableName="verification_tokens" constraintName="fk2xr5ng15l1yklhfi03thhfufy" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="users" validate="true"/>
+    </changeSet>
+    <changeSet author="pavelklecansky (generated)" id="1693504069810-38">
+        <addForeignKeyConstraint baseColumnNames="groups_id" baseTableName="tasks" constraintName="fk4fpfpay1iio0u0h2i7nxm94m1" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="groups" validate="true"/>
+    </changeSet>
+    <changeSet author="pavelklecansky (generated)" id="1693504069810-39">
+        <addForeignKeyConstraint baseColumnNames="users_id" baseTableName="password_reset_tokens" constraintName="fk52orwg09uutvs35oup693qjae" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="users" validate="true"/>
+    </changeSet>
+    <changeSet author="pavelklecansky (generated)" id="1693504069810-40">
+        <addForeignKeyConstraint baseColumnNames="organization_entities" baseTableName="users_organization_entities" constraintName="fk5s4kqyvegg6undf4ibjtb1c3u" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="organizations" validate="true"/>
+    </changeSet>
+    <changeSet author="pavelklecansky (generated)" id="1693504069810-41">
+        <addForeignKeyConstraint baseColumnNames="project_id" baseTableName="schedules" constraintName="fk6mu7v3088u6koha8kolxocotn" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="projects" validate="true"/>
+    </changeSet>
+    <changeSet author="pavelklecansky (generated)" id="1693504069810-42">
+        <addForeignKeyConstraint baseColumnNames="projects_id" baseTableName="tasks" constraintName="fk70c7y10p6iogjxyegw50m6tdm" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="projects" validate="true"/>
+    </changeSet>
+    <changeSet author="pavelklecansky (generated)" id="1693504069810-43">
+        <addForeignKeyConstraint baseColumnNames="projects_id" baseTableName="phases" constraintName="fk7x3i6pjvpsf2lhowefsesm1nn" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="projects" validate="true"/>
+    </changeSet>
+    <changeSet author="pavelklecansky (generated)" id="1693504069810-44">
+        <addForeignKeyConstraint baseColumnNames="user_entity_id" baseTableName="user_entity_roles" constraintName="fk80w28k99mayei90r6mycds2em" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="users" validate="true"/>
+    </changeSet>
+    <changeSet author="pavelklecansky (generated)" id="1693504069810-45">
+        <addForeignKeyConstraint baseColumnNames="outcome_id" baseTableName="results" constraintName="fk9d6j55vbr55jd96aja828vvtl" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="outcomes" validate="true"/>
+    </changeSet>
+    <changeSet author="pavelklecansky (generated)" id="1693504069810-46">
+        <addForeignKeyConstraint baseColumnNames="project_id" baseTableName="outcome_categories" constraintName="fk9dn4mfwg4ijwt11cnj6vo5gk7" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="projects" validate="true"/>
+    </changeSet>
+    <changeSet author="pavelklecansky (generated)" id="1693504069810-47">
+        <addForeignKeyConstraint baseColumnNames="project_entity_null" baseTableName="projects_schedule_entity" constraintName="fka6rda9ijqnig83goclun9xdok" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="projects" validate="true"/>
+    </changeSet>
+    <changeSet author="pavelklecansky (generated)" id="1693504069810-48">
+        <addForeignKeyConstraint baseColumnNames="user_entity" baseTableName="users_organization_entities" constraintName="fkam3872bvq2akmsvmi01yrkcfl" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="users" validate="true"/>
+    </changeSet>
+    <changeSet author="pavelklecansky (generated)" id="1693504069810-49">
+        <addForeignKeyConstraint baseColumnNames="schedule_id" baseTableName="schedule_tasks" constraintName="fkdc28koa67mhs9spi35efwu1ct" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="schedules" validate="true"/>
+    </changeSet>
+    <changeSet author="pavelklecansky (generated)" id="1693504069810-50">
+        <addForeignKeyConstraint baseColumnNames="project_id" baseTableName="comments" constraintName="fkgkoamotsfr3mc0pwa1qrrmwhi" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="projects" validate="true"/>
+    </changeSet>
+    <changeSet author="pavelklecansky (generated)" id="1693504069810-51">
+        <addForeignKeyConstraint baseColumnNames="users_id" baseTableName="tasks" constraintName="fkgv5kftowjl0g49sk17alufjon" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="users" validate="true"/>
+    </changeSet>
+    <changeSet author="pavelklecansky (generated)" id="1693504069810-52">
+        <addForeignKeyConstraint baseColumnNames="row_id" baseTableName="schedule_tasks" constraintName="fkgw0l6xttse0owj6ynpvlq4tbo" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="real_id" referencedTableName="schedule_rows" validate="true"/>
+    </changeSet>
+    <changeSet author="pavelklecansky (generated)" id="1693504069810-53">
+        <addForeignKeyConstraint baseColumnNames="task_id" baseTableName="comments" constraintName="fki7pp0331nbiwd2844kg78kfwb" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="tasks" validate="true"/>
+    </changeSet>
+    <changeSet author="pavelklecansky (generated)" id="1693504069810-54">
+        <addForeignKeyConstraint baseColumnNames="group_id" baseTableName="project_group_entities" constraintName="fkijp5e26sjonybij5en9sp83tp" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="groups" validate="true"/>
+    </changeSet>
+    <changeSet author="pavelklecansky (generated)" id="1693504069810-55">
+        <addForeignKeyConstraint baseColumnNames="group_id" baseTableName="group_members" constraintName="fkkv9vlrye4rmhqjq4qohy2n5a6" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="groups" validate="true"/>
+    </changeSet>
+    <changeSet author="pavelklecansky (generated)" id="1693504069810-56">
+        <addForeignKeyConstraint baseColumnNames="project_id" baseTableName="budgets" constraintName="fknqpic8mas0n2piiw5trkdswe9" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="projects" validate="true"/>
+    </changeSet>
+    <changeSet author="pavelklecansky (generated)" id="1693504069810-57">
+        <addForeignKeyConstraint baseColumnNames="user_id" baseTableName="group_members" constraintName="fknr9qg33qt2ovmv29g4vc3gtdx" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="users" validate="true"/>
+    </changeSet>
+    <changeSet author="pavelklecansky (generated)" id="1693504069810-58">
+        <addForeignKeyConstraint baseColumnNames="project_id" baseTableName="project_group_entities" constraintName="fknrosm945q2i3b1k2infslf6b1" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="projects" validate="true"/>
+    </changeSet>
+    <changeSet author="pavelklecansky (generated)" id="1693504069810-59">
+        <addForeignKeyConstraint baseColumnNames="schedule_id" baseTableName="schedule_rows" constraintName="fkohlygy94dp5edusfvv92xhfv5" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="schedules" validate="true"/>
+    </changeSet>
+    <changeSet author="pavelklecansky (generated)" id="1693504069810-60">
+        <addForeignKeyConstraint baseColumnNames="budget_id" baseTableName="budget_categoryies" constraintName="fkphlrn2ty1ol3n2fp22lill5wt" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="budgets" validate="true"/>
+    </changeSet>
+    <changeSet author="pavelklecansky (generated)" id="1693504069810-61">
+        <addForeignKeyConstraint baseColumnNames="project_id" baseTableName="project_user_entities" constraintName="fkpi9f6fyu00g21uklb9bshi04h" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="projects" validate="true"/>
+    </changeSet>
+    <changeSet author="pavelklecansky (generated)" id="1693504069810-62">
+        <addForeignKeyConstraint baseColumnNames="phases_id" baseTableName="outcomes" constraintName="fkrmny7dt75spkwguso9ob3vs26" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="phases" validate="true"/>
+    </changeSet>
+    <changeSet author="pavelklecansky (generated)" id="1693504069810-63">
+        <addForeignKeyConstraint baseColumnNames="budget_category_id" baseTableName="budget_items" constraintName="fkrru47fg4iqodl9c2rv29jecyk" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="budget_categoryies" validate="true"/>
+    </changeSet>
+    <changeSet author="pavelklecansky (generated)" id="1693504069810-64">
+        <addForeignKeyConstraint baseColumnNames="users_id" baseTableName="comments" constraintName="fkt55y2infwbbw3o942o2mhm0v4" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="users" validate="true"/>
+    </changeSet>
+</databaseChangeLog>
