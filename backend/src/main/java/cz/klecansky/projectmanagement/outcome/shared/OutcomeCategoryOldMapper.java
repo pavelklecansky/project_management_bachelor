@@ -1,7 +1,7 @@
 package cz.klecansky.projectmanagement.outcome.shared;
 
 import cz.klecansky.projectmanagement.outcome.io.OutcomeCategoryEntity;
-import cz.klecansky.projectmanagement.outcome.ui.request.OutcomeCategoryRequest;
+import cz.klecansky.projectmanagement.outcome.ui.request.OutcomeCategoryUpsertRequest;
 import cz.klecansky.projectmanagement.outcome.ui.response.OutcomeCategoryResponse;
 import lombok.AccessLevel;
 import lombok.NonNull;
@@ -13,15 +13,11 @@ import org.springframework.stereotype.Component;
 @Component
 @FieldDefaults(makeFinal = true, level = AccessLevel.PRIVATE)
 @RequiredArgsConstructor
-public class OutcomeCategoryMapper {
+@Deprecated
+public class OutcomeCategoryOldMapper {
 
     @NonNull
     ModelMapper modelMapper;
-
-    public OutcomeCategoryEntity outcomeCategoryCommandToOutcomeCategoryEntity(
-            OutcomeCategoryCommand outcomeCategoryCommand) {
-        return modelMapper.map(outcomeCategoryCommand, OutcomeCategoryEntity.class);
-    }
 
     public OutcomeCategoryCommand outcomeCategoryEntityToOutcomeCategoryCommand(
             OutcomeCategoryEntity outcomeCategoryEntity) {
@@ -29,8 +25,8 @@ public class OutcomeCategoryMapper {
     }
 
     public OutcomeCategoryCommand outcomeCategoryRequestToOutcomeCategoryCommand(
-            OutcomeCategoryRequest outcomeCategoryRequest) {
-        return modelMapper.map(outcomeCategoryRequest, OutcomeCategoryCommand.class);
+            OutcomeCategoryUpsertRequest outcomeCategoryUpsertRequest) {
+        return modelMapper.map(outcomeCategoryUpsertRequest, OutcomeCategoryCommand.class);
     }
 
     public OutcomeCategoryResponse outcomeCategoryCommandToOutcomeCategoryResponse(

@@ -7,40 +7,44 @@ import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
+import lombok.experimental.FieldDefaults;
 
 @Entity
 @Table(name = "outcomes")
 @Getter
 @Setter
+@FieldDefaults(level = AccessLevel.PRIVATE)
+@NoArgsConstructor(access = AccessLevel.PROTECTED, force = true)
+@AllArgsConstructor
+@With
 public class OutcomeEntity {
 
     @Id
-    private UUID id;
+    UUID id;
 
     @Column(nullable = false, length = 100)
-    private String name;
+    String name;
 
     @Column(nullable = false)
-    private Instant startDate;
+    Instant startDate;
 
     @Column(nullable = false)
-    private Instant endDate;
+    Instant endDate;
 
-    private String description;
+    String description;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "outcome_category_id")
-    private OutcomeCategoryEntity outcomeCategory;
+    OutcomeCategoryEntity outcomeCategory;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "phases_id")
-    private PhaseEntity phase;
+    PhaseEntity phase;
 
     @OneToMany
     @JoinColumn(name = "outcome_id")
-    private List<ResultEntity> results = new ArrayList<>();
+    List<ResultEntity> results = new ArrayList<>();
 
     @Override
     public boolean equals(Object o) {
