@@ -4,7 +4,7 @@ import static cz.klecansky.projectmanagement.core.WebConstants.TASKS_API;
 
 import cz.klecansky.projectmanagement.comment.shared.CommentCommand;
 import cz.klecansky.projectmanagement.comment.shared.CommentMapper;
-import cz.klecansky.projectmanagement.comment.ui.request.CommentRequest;
+import cz.klecansky.projectmanagement.comment.ui.request.CommentCreationRequest;
 import cz.klecansky.projectmanagement.core.exception.NoSuchElementFoundException;
 import cz.klecansky.projectmanagement.core.response.SuccessResponse;
 import cz.klecansky.projectmanagement.group.shared.GroupCommand;
@@ -166,7 +166,7 @@ public class TaskController {
     @PreAuthorize("isAuthenticated()")
     public ResponseEntity<SuccessResponse> addComment(
             @PathVariable UUID id,
-            @Valid @RequestBody CommentRequest request,
+            @Valid @RequestBody CommentCreationRequest request,
             @CurrentSecurityContext(expression = "authentication.principal") UserPrincipal userPrincipal) {
         CommentCommand commentCommand = commentMapper.commentRequestToCommentCommand(request);
         commentCommand.setId(UUID.randomUUID());

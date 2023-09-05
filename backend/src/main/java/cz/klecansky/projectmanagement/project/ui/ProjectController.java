@@ -2,9 +2,6 @@ package cz.klecansky.projectmanagement.project.ui;
 
 import static cz.klecansky.projectmanagement.core.WebConstants.PROJECTS_API;
 
-import cz.klecansky.projectmanagement.comment.shared.CommentCommand;
-import cz.klecansky.projectmanagement.comment.shared.CommentMapper;
-import cz.klecansky.projectmanagement.comment.ui.request.CommentRequest;
 import cz.klecansky.projectmanagement.core.exception.NoSuchElementFoundException;
 import cz.klecansky.projectmanagement.core.response.SuccessResponse;
 import cz.klecansky.projectmanagement.group.service.GroupService;
@@ -53,9 +50,6 @@ public class ProjectController {
 
     @NonNull
     ProjectMapper projectMapper;
-
-    @NonNull
-    CommentMapper commentMapper;
 
     @NonNull
     StorageService storageService;
@@ -156,33 +150,6 @@ public class ProjectController {
         ProjectCommand updatedProject = projectService.deleteGroupMember(id, idMember);
         return ResponseEntity.ok(SuccessResponse.builder()
                 .message("Group member was successfully deleted.")
-                .data(projectMapper.projectCommandToProjectResponse(updatedProject))
-                .build());
-    }
-
-    @PostMapping(path = "{id}/comment")
-    @PreAuthorize("isAuthenticated()")
-    public ResponseEntity<SuccessResponse> addComment(
-            @PathVariable UUID id,
-            @Valid @RequestBody CommentRequest request,
-            @CurrentSecurityContext(expression = "authentication.principal") UserPrincipal userPrincipal) {
-        CommentCommand commentCommand = commentMapper.commentRequestToCommentCommand(request);
-        commentCommand.setId(UUID.randomUUID());
-        commentCommand.setUser(
-                userService.getUser(userPrincipal.getUser().getId()).orElseThrow());
-        ProjectCommand updatedProject = projectService.addComment(id, commentCommand);
-        return ResponseEntity.ok(SuccessResponse.builder()
-                .message("Comment was successfully added.")
-                .data(projectMapper.projectCommandToProjectResponse(updatedProject))
-                .build());
-    }
-
-    @DeleteMapping(path = "{id}/comment/{idComment}")
-    @PreAuthorize("hasAnyRole('ADMIN','SUPER_ADMIN')")
-    public ResponseEntity<SuccessResponse> deleteComment(@PathVariable UUID id, @PathVariable UUID idComment) {
-        ProjectCommand updatedProject = projectService.deleteComment(id, idComment);
-        return ResponseEntity.ok(SuccessResponse.builder()
-                .message("Comment was successfully deleted.")
                 .data(projectMapper.projectCommandToProjectResponse(updatedProject))
                 .build());
     }

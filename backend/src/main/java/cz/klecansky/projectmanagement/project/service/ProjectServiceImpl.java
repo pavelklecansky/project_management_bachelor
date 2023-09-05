@@ -2,8 +2,6 @@ package cz.klecansky.projectmanagement.project.service;
 
 import cz.klecansky.projectmanagement.budget.io.BudgetEntity;
 import cz.klecansky.projectmanagement.budget.io.BudgetRepository;
-import cz.klecansky.projectmanagement.comment.shared.CommentCommand;
-import cz.klecansky.projectmanagement.comment.shared.CommentMapper;
 import cz.klecansky.projectmanagement.core.exception.NoSuchElementFoundException;
 import cz.klecansky.projectmanagement.group.io.entity.GroupEntity;
 import cz.klecansky.projectmanagement.group.shared.GroupCommand;
@@ -37,9 +35,6 @@ public class ProjectServiceImpl implements ProjectService {
 
     @NonNull
     ProjectMapper projectMapper;
-
-    @NonNull
-    CommentMapper commentMapper;
 
     @NonNull
     GroupMapper groupMapper;
@@ -107,20 +102,6 @@ public class ProjectServiceImpl implements ProjectService {
         projectEntity.setName(projectCommand.getName());
         projectEntity.setStartDate(projectCommand.getStartDate());
         projectEntity.setEndDate(projectCommand.getEndDate());
-        return projectMapper.projectEntityToProjectCommand(projectRepository.save(projectEntity));
-    }
-
-    @Override
-    public ProjectCommand addComment(UUID id, CommentCommand commentCommand) {
-        ProjectEntity projectEntity = projectRepository.findById(id).orElseThrow(NoSuchElementFoundException::new);
-        projectEntity.getComments().add(commentMapper.commentCommandToCommentEntity(commentCommand));
-        return projectMapper.projectEntityToProjectCommand(projectRepository.save(projectEntity));
-    }
-
-    @Override
-    public ProjectCommand deleteComment(UUID id, UUID idComment) {
-        ProjectEntity projectEntity = projectRepository.findById(id).orElseThrow(NoSuchElementFoundException::new);
-        projectEntity.getComments().removeIf(comment -> comment.getId().equals(idComment));
         return projectMapper.projectEntityToProjectCommand(projectRepository.save(projectEntity));
     }
 
