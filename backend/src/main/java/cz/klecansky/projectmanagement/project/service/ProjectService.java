@@ -1,6 +1,5 @@
 package cz.klecansky.projectmanagement.project.service;
 
-import cz.klecansky.projectmanagement.comment.shared.CommentCommand;
 import cz.klecansky.projectmanagement.core.exception.NoSuchElementFoundException;
 import cz.klecansky.projectmanagement.group.shared.GroupCommand;
 import cz.klecansky.projectmanagement.project.shared.ProjectCommand;
@@ -24,10 +23,6 @@ public interface ProjectService {
     void delete(UUID id);
 
     ProjectCommand update(UUID id, ProjectCommand projectCommand);
-
-    ProjectCommand addComment(UUID id, CommentCommand commentCommand);
-
-    ProjectCommand deleteComment(UUID id, UUID idComment);
 
     ProjectCommand addMember(UUID id, UserCommand userCommand);
 
