@@ -14,6 +14,7 @@ import org.springframework.stereotype.Component;
 @FieldDefaults(makeFinal = true, level = AccessLevel.PRIVATE)
 @RequiredArgsConstructor
 @Component
+@Deprecated
 public class UUIDToOutcomeConverter implements Converter<UUID, OutcomeCommand> {
 
     @NonNull

@@ -1,7 +1,7 @@
 package cz.klecansky.projectmanagement.result.service;
 
 import cz.klecansky.projectmanagement.core.exception.NoSuchElementFoundException;
-import cz.klecansky.projectmanagement.outcome.shared.OutcomeMapper;
+import cz.klecansky.projectmanagement.outcome.shared.OutcomeMapperOld;
 import cz.klecansky.projectmanagement.result.io.ResultEntity;
 import cz.klecansky.projectmanagement.result.io.ResultRepository;
 import cz.klecansky.projectmanagement.result.shared.ResultCommand;
@@ -26,7 +26,7 @@ public class ResultServiceImpl implements ResultService {
     ResultMapper resultMapper;
 
     @NonNull
-    OutcomeMapper outcomeMapper;
+    OutcomeMapperOld outcomeMapperOld;
 
     @Override
     public ResultCommand create(ResultCommand resultCommand) {

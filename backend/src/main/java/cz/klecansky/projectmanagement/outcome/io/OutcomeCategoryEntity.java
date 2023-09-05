@@ -5,30 +5,34 @@ import jakarta.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
+import lombok.experimental.FieldDefaults;
 
 @Entity
 @Table(name = "outcome_categories")
+@FieldDefaults(level = AccessLevel.PRIVATE)
+@NoArgsConstructor(access = AccessLevel.PROTECTED, force = true)
+@AllArgsConstructor
+@With
 @Getter
 @Setter
 public class OutcomeCategoryEntity {
 
     @Id
-    private UUID id;
+    UUID id;
 
     @Column(nullable = false, length = 100)
-    private String name;
+    String name;
 
-    private String description;
+    String description;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "project_id")
-    private ProjectEntity project;
+    ProjectEntity project;
 
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
     @JoinColumn(name = "outcome_category_id")
-    private List<OutcomeEntity> outcomes = new ArrayList<>();
+    List<OutcomeEntity> outcomes = new ArrayList<>();
 
     @Override
     public boolean equals(Object o) {
