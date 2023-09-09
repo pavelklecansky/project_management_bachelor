@@ -1,9 +1,7 @@
 package cz.klecansky.projectmanagement.project.service;
 
 import cz.klecansky.projectmanagement.core.exception.NoSuchElementFoundException;
-import cz.klecansky.projectmanagement.group.shared.GroupCommand;
 import cz.klecansky.projectmanagement.project.shared.ProjectCommand;
-import cz.klecansky.projectmanagement.user.shared.UserCommand;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -23,12 +21,4 @@ public interface ProjectService {
     void delete(UUID id);
 
     ProjectCommand update(UUID id, ProjectCommand projectCommand);
-
-    ProjectCommand addMember(UUID id, UserCommand userCommand);
-
-    ProjectCommand deleteMember(UUID id, UUID memberId);
-
-    ProjectCommand addGroupMember(UUID id, GroupCommand groupCommand);
-
-    ProjectCommand deleteGroupMember(UUID id, UUID memberId);
 }

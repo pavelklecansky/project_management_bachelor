@@ -4,21 +4,15 @@ import static cz.klecansky.projectmanagement.core.WebConstants.PROJECTS_API;
 
 import cz.klecansky.projectmanagement.core.exception.NoSuchElementFoundException;
 import cz.klecansky.projectmanagement.core.response.SuccessResponse;
-import cz.klecansky.projectmanagement.group.service.GroupService;
-import cz.klecansky.projectmanagement.group.shared.GroupCommand;
 import cz.klecansky.projectmanagement.project.service.ProjectService;
 import cz.klecansky.projectmanagement.project.shared.ProjectCommand;
 import cz.klecansky.projectmanagement.project.shared.ProjectMapper;
-import cz.klecansky.projectmanagement.project.ui.request.AddGroupMemberRequest;
-import cz.klecansky.projectmanagement.project.ui.request.AddMemberRequest;
 import cz.klecansky.projectmanagement.project.ui.request.ProjectRequest;
 import cz.klecansky.projectmanagement.project.ui.response.ProjectResponse;
-import cz.klecansky.projectmanagement.project.utils.ProjectUtils;
+import cz.klecansky.projectmanagement.projectmember.utils.MemberUtils;
 import cz.klecansky.projectmanagement.security.SecurityUtils;
 import cz.klecansky.projectmanagement.security.UserPrincipal;
 import cz.klecansky.projectmanagement.storage.service.StorageService;
-import cz.klecansky.projectmanagement.user.service.UserService;
-import cz.klecansky.projectmanagement.user.shared.UserCommand;
 import jakarta.validation.Valid;
 import java.net.URI;
 import java.util.List;
@@ -43,12 +37,6 @@ public class ProjectController {
     ProjectService projectService;
 
     @NonNull
-    UserService userService;
-
-    @NonNull
-    GroupService groupService;
-
-    @NonNull
     ProjectMapper projectMapper;
 
     @NonNull
@@ -69,7 +57,7 @@ public class ProjectController {
             @CurrentSecurityContext(expression = "authentication.principal") UserPrincipal userPrincipal) {
         List<ProjectResponse> projectResponses = projectService.getAll().stream()
                 .filter(projectCommand -> SecurityUtils.isAdmin(userPrincipal)
-                        || ProjectUtils.memberOfProject(projectCommand, userPrincipal))
+                        || MemberUtils.memberOfProject(projectCommand, userPrincipal))
                 .map(projectMapper::projectCommandToProjectResponse)
                 .toList();
         return ResponseEntity.ok(projectResponses);
@@ -107,50 +95,6 @@ public class ProjectController {
         return ResponseEntity.ok(SuccessResponse.builder()
                 .message("Project was successfully updated.")
                 .data(projectMapper.projectCommandToProjectResponse(update))
-                .build());
-    }
-
-    @PostMapping(path = "{id}/member")
-    @PreAuthorize("isAuthenticated()")
-    public ResponseEntity<SuccessResponse> addMember(
-            @PathVariable UUID id, @Valid @RequestBody AddMemberRequest request) {
-        UserCommand userCommand = userService.getUser(request.getUser()).orElseThrow();
-        ProjectCommand updatedProject = projectService.addMember(id, userCommand);
-        return ResponseEntity.ok(SuccessResponse.builder()
-                .message("Member was successfully added.")
-                .data(projectMapper.projectCommandToProjectResponse(updatedProject))
-                .build());
-    }
-
-    @DeleteMapping(path = "{id}/member/{idMember}")
-    @PreAuthorize("isAuthenticated()")
-    public ResponseEntity<SuccessResponse> deleteMember(@PathVariable UUID id, @PathVariable UUID idMember) {
-        ProjectCommand updatedProject = projectService.deleteMember(id, idMember);
-        return ResponseEntity.ok(SuccessResponse.builder()
-                .message("Member was successfully deleted.")
-                .data(projectMapper.projectCommandToProjectResponse(updatedProject))
-                .build());
-    }
-
-    @PostMapping(path = "{id}/group-member")
-    @PreAuthorize("isAuthenticated()")
-    public ResponseEntity<SuccessResponse> addGroupMember(
-            @PathVariable UUID id, @Valid @RequestBody AddGroupMemberRequest request) {
-        GroupCommand groupCommand = groupService.getGroup(request.getGroup()).orElseThrow();
-        ProjectCommand updatedProject = projectService.addGroupMember(id, groupCommand);
-        return ResponseEntity.ok(SuccessResponse.builder()
-                .message("Group member was successfully added.")
-                .data(projectMapper.projectCommandToProjectResponse(updatedProject))
-                .build());
-    }
-
-    @DeleteMapping(path = "{id}/group-member/{idMember}")
-    @PreAuthorize("isAuthenticated()")
-    public ResponseEntity<SuccessResponse> deleteGroupMember(@PathVariable UUID id, @PathVariable UUID idMember) {
-        ProjectCommand updatedProject = projectService.deleteGroupMember(id, idMember);
-        return ResponseEntity.ok(SuccessResponse.builder()
-                .message("Group member was successfully deleted.")
-                .data(projectMapper.projectCommandToProjectResponse(updatedProject))
                 .build());
     }
 }

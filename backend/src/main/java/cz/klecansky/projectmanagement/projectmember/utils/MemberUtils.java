@@ -1,4 +1,4 @@
-package cz.klecansky.projectmanagement.project.utils;
+package cz.klecansky.projectmanagement.projectmember.utils;
 
 import cz.klecansky.projectmanagement.group.shared.GroupCommand;
 import cz.klecansky.projectmanagement.project.shared.ProjectCommand;
@@ -6,7 +6,7 @@ import cz.klecansky.projectmanagement.security.UserPrincipal;
 import lombok.experimental.UtilityClass;
 
 @UtilityClass
-public class ProjectUtils {
+public class MemberUtils {
 
     public static boolean memberOfProject(ProjectCommand projectCommand, UserPrincipal userPrincipal) {
         return isMember(projectCommand, userPrincipal) || isGroupMember(projectCommand, userPrincipal);
