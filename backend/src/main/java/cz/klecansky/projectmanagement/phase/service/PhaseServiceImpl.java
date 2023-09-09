@@ -6,8 +6,8 @@ import cz.klecansky.projectmanagement.phase.io.PhaseRepository;
 import cz.klecansky.projectmanagement.phase.shared.PhaseCommand;
 import cz.klecansky.projectmanagement.phase.shared.PhaseMapper;
 import cz.klecansky.projectmanagement.project.io.ProjectRepository;
+import cz.klecansky.projectmanagement.project.shared.OldProjectMapper;
 import cz.klecansky.projectmanagement.project.shared.ProjectCommand;
-import cz.klecansky.projectmanagement.project.shared.ProjectMapper;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -32,13 +32,13 @@ public class PhaseServiceImpl implements PhaseService {
     PhaseMapper phaseMapper;
 
     @NonNull
-    ProjectMapper projectMapper;
+    OldProjectMapper oldProjectMapper;
 
     @Override
     public PhaseCommand create(ProjectCommand projectCommand, PhaseCommand phaseCommand) {
         phaseCommand.setId(UUID.randomUUID());
         projectCommand.getPhases().add(phaseCommand);
-        projectRepository.save(projectMapper.projectCommandToProjectEntity(projectCommand));
+        projectRepository.save(oldProjectMapper.projectCommandToProjectEntity(projectCommand));
         return phaseCommand;
     }
 

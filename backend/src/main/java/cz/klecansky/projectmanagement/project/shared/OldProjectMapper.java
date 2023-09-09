@@ -1,7 +1,6 @@
 package cz.klecansky.projectmanagement.project.shared;
 
 import cz.klecansky.projectmanagement.project.io.ProjectEntity;
-import cz.klecansky.projectmanagement.project.ui.request.ProjectRequest;
 import cz.klecansky.projectmanagement.project.ui.response.ProjectResponse;
 import lombok.AccessLevel;
 import lombok.NonNull;
@@ -13,7 +12,8 @@ import org.springframework.stereotype.Component;
 @Component
 @FieldDefaults(makeFinal = true, level = AccessLevel.PRIVATE)
 @RequiredArgsConstructor
-public class ProjectMapper {
+@Deprecated
+public class OldProjectMapper {
 
     @NonNull
     ModelMapper modelMapper;
@@ -24,10 +24,6 @@ public class ProjectMapper {
 
     public ProjectCommand projectEntityToProjectCommand(ProjectEntity projectEntity) {
         return modelMapper.map(projectEntity, ProjectCommand.class);
-    }
-
-    public ProjectCommand projectRequestToProjectCommand(ProjectRequest projectRequest) {
-        return modelMapper.map(projectRequest, ProjectCommand.class);
     }
 
     public ProjectResponse projectCommandToProjectResponse(ProjectCommand projectCommand) {

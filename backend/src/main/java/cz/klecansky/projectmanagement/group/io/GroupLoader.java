@@ -3,6 +3,7 @@ package cz.klecansky.projectmanagement.group.io;
 import cz.klecansky.projectmanagement.core.ByIdLoader;
 import cz.klecansky.projectmanagement.core.exception.NoSuchElementFoundException;
 import cz.klecansky.projectmanagement.group.io.entity.GroupEntity;
+import java.util.Optional;
 import java.util.UUID;
 import lombok.AccessLevel;
 import lombok.NonNull;
@@ -19,9 +20,12 @@ public class GroupLoader implements ByIdLoader<UUID, GroupEntity> {
     GroupRepository groupRepository;
 
     @Override
-    public GroupEntity getById(@NonNull UUID uuid) throws NoSuchElementFoundException {
-        return groupRepository
-                .findById(uuid)
-                .orElseThrow(() -> new NoSuchElementFoundException("Group was not found."));
+    public GroupEntity getById(@NonNull UUID id) throws NoSuchElementFoundException {
+        return findById(id).orElseThrow(() -> new NoSuchElementFoundException("Group was not found."));
+    }
+
+    @Override
+    public Optional<GroupEntity> findById(@NonNull UUID id) throws NoSuchElementFoundException {
+        return groupRepository.findById(id);
     }
 }

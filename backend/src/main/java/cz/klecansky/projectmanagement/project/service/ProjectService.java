@@ -1,24 +1,27 @@
 package cz.klecansky.projectmanagement.project.service;
 
-import cz.klecansky.projectmanagement.core.exception.NoSuchElementFoundException;
 import cz.klecansky.projectmanagement.project.shared.ProjectCommand;
+import cz.klecansky.projectmanagement.project.shared.ProjectUpsertCommand;
+import cz.klecansky.projectmanagement.security.UserPrincipal;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
 public interface ProjectService {
 
-    ProjectCommand create(ProjectCommand projectCommand);
+    ProjectCommand create(ProjectUpsertCommand projectCommand);
 
     List<ProjectCommand> getAll();
 
-    Optional<ProjectCommand> get(UUID id) throws NoSuchElementFoundException;
+    Optional<ProjectCommand> get(UUID id);
 
-    Optional<ProjectCommand> getByPhaseId(UUID id) throws NoSuchElementFoundException;
+    Optional<ProjectCommand> getByPhaseId(UUID id);
 
-    Optional<ProjectCommand> getByTasksId(UUID id) throws NoSuchElementFoundException;
+    Optional<ProjectCommand> getByTasksId(UUID id);
 
     void delete(UUID id);
 
-    ProjectCommand update(UUID id, ProjectCommand projectCommand);
+    ProjectCommand update(ProjectUpsertCommand upsertCommand);
+
+    List<ProjectCommand> getUsersProjects(UserPrincipal userPrincipal);
 }

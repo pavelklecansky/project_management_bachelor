@@ -7,7 +7,7 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface ProjectRepository extends JpaRepository<ProjectEntity, UUID> {
-    Optional<ProjectEntity> findByPhases_Id(UUID id);
+    Optional<ProjectEntity> findByPhasesId(UUID id);
 
-    Optional<ProjectEntity> findByTasks_Id(UUID id);
+    Optional<ProjectEntity> findByTasksId(UUID id);
 }

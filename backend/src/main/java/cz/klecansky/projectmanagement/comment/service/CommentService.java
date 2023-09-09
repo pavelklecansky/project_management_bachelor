@@ -6,8 +6,8 @@ import cz.klecansky.projectmanagement.core.ByIdLoader;
 import cz.klecansky.projectmanagement.core.exception.NoSuchElementFoundException;
 import cz.klecansky.projectmanagement.project.io.ProjectEntity;
 import cz.klecansky.projectmanagement.project.io.ProjectRepository;
+import cz.klecansky.projectmanagement.project.shared.OldProjectMapper;
 import cz.klecansky.projectmanagement.project.shared.ProjectCommand;
-import cz.klecansky.projectmanagement.project.shared.ProjectMapper;
 import cz.klecansky.projectmanagement.user.io.entity.UserEntity;
 import java.time.Instant;
 import java.util.UUID;
@@ -29,20 +29,20 @@ public class CommentService {
     ByIdLoader<UUID, UserEntity> userLoader;
 
     @NonNull
-    ProjectMapper projectMapper;
+    OldProjectMapper oldProjectMapper;
 
     public ProjectCommand addComment(CommentCreationCommand command) {
         ProjectEntity projectEntity =
                 projectRepository.findById(command.projectId()).orElseThrow(NoSuchElementFoundException::new);
         projectEntity.getComments().add(createComment(command));
-        return projectMapper.projectEntityToProjectCommand(projectRepository.save(projectEntity));
+        return oldProjectMapper.projectEntityToProjectCommand(projectRepository.save(projectEntity));
     }
 
     public ProjectCommand deleteComment(UUID projectId, UUID commentId) {
         ProjectEntity projectEntity =
                 projectRepository.findById(projectId).orElseThrow(NoSuchElementFoundException::new);
         projectEntity.getComments().removeIf(comment -> comment.getId().equals(commentId));
-        return projectMapper.projectEntityToProjectCommand(projectRepository.save(projectEntity));
+        return oldProjectMapper.projectEntityToProjectCommand(projectRepository.save(projectEntity));
     }
 
     private CommentEntity createComment(CommentCreationCommand command) {
