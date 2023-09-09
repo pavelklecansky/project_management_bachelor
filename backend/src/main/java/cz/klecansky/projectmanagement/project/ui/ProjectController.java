@@ -5,16 +5,14 @@ import static cz.klecansky.projectmanagement.core.WebConstants.PROJECTS_API;
 import cz.klecansky.projectmanagement.core.exception.NoSuchElementFoundException;
 import cz.klecansky.projectmanagement.core.response.SuccessResponse;
 import cz.klecansky.projectmanagement.project.service.ProjectService;
+import cz.klecansky.projectmanagement.project.shared.OldProjectMapper;
 import cz.klecansky.projectmanagement.project.shared.ProjectCommand;
-import cz.klecansky.projectmanagement.project.shared.ProjectMapper;
-import cz.klecansky.projectmanagement.project.ui.request.ProjectRequest;
+import cz.klecansky.projectmanagement.project.shared.ProjectUpsertCommand;
+import cz.klecansky.projectmanagement.project.ui.request.ProjectUpsertRequest;
 import cz.klecansky.projectmanagement.project.ui.response.ProjectResponse;
-import cz.klecansky.projectmanagement.projectmember.utils.MemberUtils;
-import cz.klecansky.projectmanagement.security.SecurityUtils;
 import cz.klecansky.projectmanagement.security.UserPrincipal;
-import cz.klecansky.projectmanagement.storage.service.StorageService;
+import io.jsonwebtoken.lang.Assert;
 import jakarta.validation.Valid;
-import java.net.URI;
 import java.util.List;
 import java.util.UUID;
 import lombok.AccessLevel;
@@ -25,7 +23,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.CurrentSecurityContext;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 @RestController
 @RequestMapping(PROJECTS_API)
@@ -37,51 +34,40 @@ public class ProjectController {
     ProjectService projectService;
 
     @NonNull
-    ProjectMapper projectMapper;
-
-    @NonNull
-    StorageService storageService;
+    OldProjectMapper oldProjectMapper;
 
     @GetMapping(path = "{id}")
     @PreAuthorize("isAuthenticated()")
     public ResponseEntity<?> getProject(@PathVariable UUID id) throws NoSuchElementFoundException {
         return projectService
                 .get(id)
-                .map(projectCommand -> ResponseEntity.ok(projectMapper.projectCommandToProjectResponse(projectCommand)))
+                .map(projectCommand ->
+                        ResponseEntity.ok(oldProjectMapper.projectCommandToProjectResponse(projectCommand)))
                 .orElseThrow(NoSuchElementFoundException::new);
     }
 
     @GetMapping
     @PreAuthorize("isAuthenticated()")
-    public ResponseEntity<?> getProjects(
+    public List<ProjectResponse> getProjects(
             @CurrentSecurityContext(expression = "authentication.principal") UserPrincipal userPrincipal) {
-        List<ProjectResponse> projectResponses = projectService.getAll().stream()
-                .filter(projectCommand -> SecurityUtils.isAdmin(userPrincipal)
-                        || MemberUtils.memberOfProject(projectCommand, userPrincipal))
-                .map(projectMapper::projectCommandToProjectResponse)
+        return projectService.getUsersProjects(userPrincipal).stream()
+                .map(oldProjectMapper::projectCommandToProjectResponse)
                 .toList();
-        return ResponseEntity.ok(projectResponses);
     }
 
     @PostMapping
     @PreAuthorize("isAuthenticated()")
-    public ResponseEntity<SuccessResponse> createProject(@RequestBody @Valid ProjectRequest request) {
-        ProjectCommand createdProject = projectService.create(projectMapper.projectRequestToProjectCommand(request));
-        storageService.createDictionaryInRoot(createdProject.getId());
-        URI location = ServletUriComponentsBuilder.fromCurrentContextPath()
-                .path("/projects/{id}")
-                .buildAndExpand(createdProject.getId())
-                .toUri();
-        return ResponseEntity.created(location)
-                .body(SuccessResponse.builder()
-                        .message("Project was successfully created.")
-                        .data(projectMapper.projectCommandToProjectResponse(createdProject))
-                        .build());
+    public ResponseEntity<SuccessResponse<?>> createProject(@RequestBody @Valid ProjectUpsertRequest request) {
+        ProjectCommand createdProject = projectService.create(createUpsertCommand(request));
+        return ResponseEntity.ok(SuccessResponse.builder()
+                .message("Project was successfully created.")
+                .data(oldProjectMapper.projectCommandToProjectResponse(createdProject))
+                .build());
     }
 
     @DeleteMapping(path = "{id}")
     @PreAuthorize("isAuthenticated()")
-    public ResponseEntity<SuccessResponse> deleteProject(@PathVariable UUID id) {
+    public ResponseEntity<SuccessResponse<?>> deleteProject(@PathVariable UUID id) {
         projectService.delete(id);
         return ResponseEntity.ok(SuccessResponse.builder()
                 .message("Project was successfully deleted.")
@@ -90,11 +76,19 @@ public class ProjectController {
 
     @PutMapping(path = "{id}")
     @PreAuthorize("isAuthenticated()")
-    public ResponseEntity<SuccessResponse> updateProject(@PathVariable UUID id, @RequestBody ProjectRequest request) {
-        ProjectCommand update = projectService.update(id, projectMapper.projectRequestToProjectCommand(request));
+    public ResponseEntity<SuccessResponse<?>> updateProject(
+            @PathVariable UUID id, @RequestBody ProjectUpsertRequest request) {
+        Assert.state(id.equals(request.id()), "Path variable and body ids of outcome should equal.");
+        ProjectCommand update = projectService.update(createUpsertCommand(request));
         return ResponseEntity.ok(SuccessResponse.builder()
                 .message("Project was successfully updated.")
-                .data(projectMapper.projectCommandToProjectResponse(update))
+                .data(oldProjectMapper.projectCommandToProjectResponse(update))
                 .build());
+    }
+
+    private ProjectUpsertCommand createUpsertCommand(ProjectUpsertRequest request) {
+        UUID projectId = request.id() == null ? UUID.randomUUID() : request.id();
+        return new ProjectUpsertCommand(
+                projectId, request.name(), request.description(), request.startDate(), request.endDate());
     }
 }

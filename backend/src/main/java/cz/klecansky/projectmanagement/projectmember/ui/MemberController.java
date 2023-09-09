@@ -3,8 +3,8 @@ package cz.klecansky.projectmanagement.projectmember.ui;
 import static cz.klecansky.projectmanagement.core.WebConstants.PROJECTS_API;
 
 import cz.klecansky.projectmanagement.core.response.SuccessResponse;
+import cz.klecansky.projectmanagement.project.shared.OldProjectMapper;
 import cz.klecansky.projectmanagement.project.shared.ProjectCommand;
-import cz.klecansky.projectmanagement.project.shared.ProjectMapper;
 import cz.klecansky.projectmanagement.projectmember.service.ProjectMemberService;
 import cz.klecansky.projectmanagement.projectmember.ui.request.AddGroupMemberRequest;
 import cz.klecansky.projectmanagement.projectmember.ui.request.AddMemberRequest;
@@ -28,7 +28,7 @@ public class MemberController {
     ProjectMemberService projectMemberService;
 
     @NonNull
-    ProjectMapper projectMapper;
+    OldProjectMapper oldProjectMapper;
 
     @PostMapping(path = "{id}/member")
     @PreAuthorize("isAuthenticated()")
@@ -37,7 +37,7 @@ public class MemberController {
         ProjectCommand updatedProject = projectMemberService.addMember(id, request.user());
         return ResponseEntity.ok(SuccessResponse.builder()
                 .message("Member was successfully added.")
-                .data(projectMapper.projectCommandToProjectResponse(updatedProject))
+                .data(oldProjectMapper.projectCommandToProjectResponse(updatedProject))
                 .build());
     }
 
@@ -47,7 +47,7 @@ public class MemberController {
         ProjectCommand updatedProject = projectMemberService.deleteMember(id, idMember);
         return ResponseEntity.ok(SuccessResponse.builder()
                 .message("Member was successfully deleted.")
-                .data(projectMapper.projectCommandToProjectResponse(updatedProject))
+                .data(oldProjectMapper.projectCommandToProjectResponse(updatedProject))
                 .build());
     }
 
@@ -58,7 +58,7 @@ public class MemberController {
         ProjectCommand updatedProject = projectMemberService.addGroupMember(id, request.group());
         return ResponseEntity.ok(SuccessResponse.builder()
                 .message("Group member was successfully added.")
-                .data(projectMapper.projectCommandToProjectResponse(updatedProject))
+                .data(oldProjectMapper.projectCommandToProjectResponse(updatedProject))
                 .build());
     }
 
@@ -68,7 +68,7 @@ public class MemberController {
         ProjectCommand updatedProject = projectMemberService.deleteGroupMember(id, idMember);
         return ResponseEntity.ok(SuccessResponse.builder()
                 .message("Group member was successfully deleted.")
-                .data(projectMapper.projectCommandToProjectResponse(updatedProject))
+                .data(oldProjectMapper.projectCommandToProjectResponse(updatedProject))
                 .build());
     }
 }

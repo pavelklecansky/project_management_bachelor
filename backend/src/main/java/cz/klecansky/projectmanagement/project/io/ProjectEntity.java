@@ -21,12 +21,13 @@ import lombok.experimental.FieldDefaults;
 @FieldDefaults(level = AccessLevel.PRIVATE)
 @NoArgsConstructor(access = AccessLevel.PROTECTED, force = true)
 @AllArgsConstructor
+@With
 @Getter
 @Setter
 public class ProjectEntity {
 
     @Id
-    private UUID id;
+    UUID id;
 
     @Column(nullable = false, length = 50)
     String name;

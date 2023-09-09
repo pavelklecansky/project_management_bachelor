@@ -6,8 +6,8 @@ import cz.klecansky.projectmanagement.comment.service.CommentService;
 import cz.klecansky.projectmanagement.comment.shared.CommentCreationCommand;
 import cz.klecansky.projectmanagement.comment.ui.request.CommentCreationRequest;
 import cz.klecansky.projectmanagement.core.response.SuccessResponse;
+import cz.klecansky.projectmanagement.project.shared.OldProjectMapper;
 import cz.klecansky.projectmanagement.project.shared.ProjectCommand;
-import cz.klecansky.projectmanagement.project.shared.ProjectMapper;
 import cz.klecansky.projectmanagement.security.UserPrincipal;
 import jakarta.validation.Valid;
 import java.util.UUID;
@@ -30,7 +30,7 @@ public class CommentController {
     CommentService commentService;
 
     @NonNull
-    ProjectMapper projectMapper;
+    OldProjectMapper oldProjectMapper;
 
     @PostMapping(path = "{id}/comment")
     @PreAuthorize("isAuthenticated()")
@@ -43,7 +43,7 @@ public class CommentController {
         ProjectCommand updatedProject = commentService.addComment(command);
         return ResponseEntity.ok(SuccessResponse.builder()
                 .message("Comment was successfully added.")
-                .data(projectMapper.projectCommandToProjectResponse(updatedProject))
+                .data(oldProjectMapper.projectCommandToProjectResponse(updatedProject))
                 .build());
     }
 
@@ -54,7 +54,7 @@ public class CommentController {
         ProjectCommand updatedProject = commentService.deleteComment(projectId, commentId);
         return ResponseEntity.ok(SuccessResponse.builder()
                 .message("Comment was successfully deleted.")
-                .data(projectMapper.projectCommandToProjectResponse(updatedProject))
+                .data(oldProjectMapper.projectCommandToProjectResponse(updatedProject))
                 .build());
     }
 
