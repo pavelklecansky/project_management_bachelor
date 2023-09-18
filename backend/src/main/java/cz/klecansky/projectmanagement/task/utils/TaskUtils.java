@@ -1,30 +1,26 @@
 package cz.klecansky.projectmanagement.task.utils;
 
-import cz.klecansky.projectmanagement.security.UserPrincipal;
 import cz.klecansky.projectmanagement.task.shared.TaskCommand;
 import java.util.Objects;
+import java.util.UUID;
 import lombok.experimental.UtilityClass;
 
 @UtilityClass
 public class TaskUtils {
 
-    public static boolean assignedToTask(TaskCommand taskCommand, UserPrincipal userPrincipal) {
-        return isAssigned(taskCommand, userPrincipal) || isAssignedForGroup(taskCommand, userPrincipal);
+    public static boolean isAssignedToTask(TaskCommand taskCommand, UUID userId) {
+        return isAssigned(taskCommand, userId) || isAssignedForGroup(taskCommand, userId);
     }
 
-    private static boolean isAssigned(TaskCommand taskCommand, UserPrincipal userPrincipal) {
+    private static boolean isAssigned(TaskCommand taskCommand, UUID userId) {
         return !Objects.isNull(taskCommand.getAssigned())
-                && taskCommand
-                        .getAssigned()
-                        .getId()
-                        .equals(userPrincipal.getUser().getId());
+                && taskCommand.getAssigned().getId().equals(userId);
     }
 
-    private static boolean isAssignedForGroup(TaskCommand taskCommand, UserPrincipal userPrincipal) {
+    private static boolean isAssignedForGroup(TaskCommand taskCommand, UUID userId) {
         return !Objects.isNull(taskCommand.getAssignedForGroup())
-                && taskCommand.getAssignedForGroup().getMembers().stream().anyMatch(memberCommand -> memberCommand
-                        .getUser()
-                        .getId()
-                        .equals(userPrincipal.getUser().getId()));
+                && taskCommand.getAssignedForGroup().getMembers().stream()
+                        .anyMatch(
+                                memberCommand -> memberCommand.getUser().getId().equals(userId));
     }
 }

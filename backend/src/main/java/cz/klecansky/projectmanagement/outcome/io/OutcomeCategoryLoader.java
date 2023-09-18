@@ -13,7 +13,7 @@ import org.springframework.stereotype.Component;
 @Component
 @FieldDefaults(makeFinal = true, level = AccessLevel.PRIVATE)
 @RequiredArgsConstructor
-public class OutcomeCategoryLoader implements ByIdLoader<UUID, OutcomeCategoryEntity> {
+public class OutcomeCategoryLoader implements ByIdLoader<OutcomeCategoryEntity, UUID> {
 
     @NonNull
     OutcomeCategoryRepository repository;
@@ -24,7 +24,7 @@ public class OutcomeCategoryLoader implements ByIdLoader<UUID, OutcomeCategoryEn
     }
 
     @Override
-    public Optional<OutcomeCategoryEntity> findById(@NonNull UUID id) throws NoSuchElementFoundException {
+    public Optional<OutcomeCategoryEntity> findById(@NonNull UUID id) {
         return repository.findById(id);
     }
 }

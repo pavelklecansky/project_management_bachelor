@@ -8,40 +8,43 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import java.time.Instant;
 import java.util.UUID;
-import lombok.Data;
+import lombok.Value;
 import org.springframework.lang.Nullable;
 
-@Data
+@Value
 public class TaskRequest {
 
+    @Nullable
+    UUID id;
+
     @NotBlank
-    private String name;
+    String name;
 
-    private String description;
+    String description;
 
-    private Instant startDate;
+    Instant startDate;
 
-    private Instant endDate;
+    Instant endDate;
 
     @NotNull
-    private Priority priority = Priority.NORMAL;
+    Priority priority = Priority.NORMAL;
 
-    private Status status = Status.NEW;
+    Status status = Status.NEW;
 
     @Min(0)
     @Max(100)
     @NotNull
-    private Integer progress = 0;
+    Integer progress = 0;
+
+    @NotNull
+    UUID project;
 
     @Nullable
-    private UUID project;
+    UUID assigned;
 
     @Nullable
-    private UUID assigned;
+    UUID assignedForGroup;
 
     @Nullable
-    private UUID assignedForGroup;
-
-    @Nullable
-    private UUID phase;
+    UUID phase;
 }

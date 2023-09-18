@@ -34,7 +34,7 @@ public class OutcomeCategoryServiceImpl implements OutcomeCategoryService {
     ProjectService projectService;
 
     @NonNull
-    ByIdLoader<UUID, ProjectEntity> projectLoader;
+    ByIdLoader<ProjectEntity, UUID> projectLoader;
 
     @Override
     public List<OutcomeCategoryCommand> getOutcomesCategoryByProjectId(UUID id) {

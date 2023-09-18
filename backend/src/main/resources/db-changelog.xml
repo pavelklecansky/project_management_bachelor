@@ -513,4 +513,21 @@
             <column name="user_entity_id" value="5c3ed006-4639-4fff-b554-0901b50e0116"/>
         </insert>
     </changeSet>
+    <changeSet id="1695056584749-1" author="pavelklecansky">
+        <createTable tableName="scheduled_tasks">
+            <column name="task_name" type="varchar(100)"/>
+            <column name="task_instance" type="varchar(100)"/>
+            <column name="task_data" type="bytea"/>
+            <column name="execution_time" type="timestamp with time zone"/>
+            <column name="picked" type="boolean"/>
+            <column name="picked_by" type="varchar(50)"/>
+            <column name="last_success" type="timestamp with time zone"/>
+            <column name="last_failure" type="timestamp with time zone"/>
+            <column name="consecutive_failures" type="int"/>
+            <column name="last_heartbeat" type="timestamp with time zone"/>
+            <column name="version" type="bigint"/>
+        </createTable>
+        <addPrimaryKey tableName="scheduled_tasks" columnNames="task_name,task_instance"/>
+    </changeSet>
+
 </databaseChangeLog>

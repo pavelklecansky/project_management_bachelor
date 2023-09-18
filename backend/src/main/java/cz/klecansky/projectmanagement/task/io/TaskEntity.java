@@ -12,56 +12,60 @@ import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
+import lombok.experimental.FieldDefaults;
 
 @Entity
 @Table(name = "tasks")
+@FieldDefaults(level = AccessLevel.PRIVATE)
+@NoArgsConstructor(access = AccessLevel.PROTECTED, force = true)
+@AllArgsConstructor
+@With
 @Getter
 @Setter
 public class TaskEntity {
 
     @Id
-    private UUID id;
+    UUID id;
 
     @Column(nullable = false, length = 50)
-    private String name;
+    String name;
 
-    private String description;
+    String description;
 
-    private Instant startDate;
+    Instant startDate;
 
-    private Instant endDate;
+    Instant endDate;
 
     @Column(nullable = false)
-    private Priority priority;
+    Priority priority;
 
-    private Status status;
+    Status status;
 
     @Column(nullable = false, columnDefinition = "integer default 0")
-    private Integer progress;
+    Integer progress;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "users_id")
-    private UserEntity assigned;
+    UserEntity assigned;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "groups_id")
-    private GroupEntity assignedForGroup;
+    GroupEntity assignedForGroup;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "phases_id")
-    private PhaseEntity phase;
+    PhaseEntity phase;
 
     @ManyToOne(
             fetch = FetchType.LAZY,
             cascade = {CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
     @JoinColumn(name = "projects_id", nullable = false)
-    private ProjectEntity project;
+    ProjectEntity project;
 
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
     @JoinColumn(name = "task_id")
-    private List<CommentEntity> comments = new ArrayList<>();
+    List<CommentEntity> comments = new ArrayList<>();
 
     @Override
     public boolean equals(Object o) {

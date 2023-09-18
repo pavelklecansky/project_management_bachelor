@@ -13,7 +13,7 @@ import org.springframework.stereotype.Component;
 @Component
 @FieldDefaults(makeFinal = true, level = AccessLevel.PRIVATE)
 @RequiredArgsConstructor
-public class PhaseLoader implements ByIdLoader<UUID, PhaseEntity> {
+public class PhaseLoader implements ByIdLoader<PhaseEntity, UUID> {
 
     @NonNull
     PhaseRepository repository;
@@ -24,7 +24,7 @@ public class PhaseLoader implements ByIdLoader<UUID, PhaseEntity> {
     }
 
     @Override
-    public Optional<PhaseEntity> findById(@NonNull UUID id) throws NoSuchElementFoundException {
+    public Optional<PhaseEntity> findById(@NonNull UUID id) {
         return repository.findById(id);
     }
 }

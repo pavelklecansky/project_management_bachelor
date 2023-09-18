@@ -14,7 +14,7 @@ import org.springframework.stereotype.Component;
 @Component
 @FieldDefaults(makeFinal = true, level = AccessLevel.PRIVATE)
 @RequiredArgsConstructor
-public class GroupLoader implements ByIdLoader<UUID, GroupEntity> {
+public class GroupLoader implements ByIdLoader<GroupEntity, UUID> {
 
     @NonNull
     GroupRepository groupRepository;
@@ -25,7 +25,7 @@ public class GroupLoader implements ByIdLoader<UUID, GroupEntity> {
     }
 
     @Override
-    public Optional<GroupEntity> findById(@NonNull UUID id) throws NoSuchElementFoundException {
+    public Optional<GroupEntity> findById(@NonNull UUID id) {
         return groupRepository.findById(id);
     }
 }

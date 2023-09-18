@@ -8,4 +8,8 @@ public class SmtpErrorException extends RuntimeException {
     public SmtpErrorException(String message) {
         super(message);
     }
+
+    public SmtpErrorException(String message, Throwable cause) {
+        super(message, cause);
+    }
 }
