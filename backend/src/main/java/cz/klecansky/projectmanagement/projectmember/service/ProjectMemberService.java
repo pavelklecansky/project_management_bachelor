@@ -27,10 +27,10 @@ public class ProjectMemberService {
     OldProjectMapper oldProjectMapper;
 
     @NonNull
-    ByIdLoader<UUID, UserEntity> userLoader;
+    ByIdLoader<UserEntity, UUID> userLoader;
 
     @NonNull
-    ByIdLoader<UUID, GroupEntity> groupLoader;
+    ByIdLoader<GroupEntity, UUID> groupLoader;
 
     public ProjectCommand addMember(UUID id, UUID userId) {
         ProjectEntity projectEntity = projectRepository.findById(id).orElseThrow(NoSuchElementFoundException::new);

@@ -38,7 +38,7 @@ public class OutcomeServiceImpl implements OutcomeService {
     OutcomeCategoryService outcomeCategoryService;
 
     @NonNull
-    ByIdLoader<UUID, PhaseEntity> phaseLoader;
+    ByIdLoader<PhaseEntity, UUID> phaseLoader;
 
     @NonNull
     OutcomeCategoryLoader outcomeCategoryLoader;

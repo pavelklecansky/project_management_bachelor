@@ -13,7 +13,7 @@ import org.springframework.stereotype.Component;
 @Component
 @FieldDefaults(makeFinal = true, level = AccessLevel.PRIVATE)
 @RequiredArgsConstructor
-public class ProjectLoader implements ByIdLoader<UUID, ProjectEntity> {
+public class ProjectLoader implements ByIdLoader<ProjectEntity, UUID> {
 
     @NonNull
     ProjectRepository repository;

@@ -2,23 +2,33 @@ package cz.klecansky.projectmanagement.user.config;
 
 import static cz.klecansky.projectmanagement.user.EmailConstants.*;
 
+import cz.klecansky.projectmanagement.core.config.SmtpProperties;
 import java.util.Properties;
+import lombok.AccessLevel;
+import lombok.NonNull;
+import lombok.RequiredArgsConstructor;
+import lombok.experimental.FieldDefaults;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
 
 @Configuration
+@FieldDefaults(makeFinal = true, level = AccessLevel.PRIVATE)
+@RequiredArgsConstructor
 public class UserConfig {
+
+    @NonNull
+    SmtpProperties smtpProperties;
 
     @Bean
     public JavaMailSender getJavaMailSender() {
         JavaMailSenderImpl mailSender = new JavaMailSenderImpl();
-        mailSender.setHost(SMTP_SERVER);
-        mailSender.setPort(SMTP_PORT);
+        mailSender.setHost(smtpProperties.server());
+        mailSender.setPort(smtpProperties.port());
 
-        mailSender.setUsername(SMTP_USERNAME);
-        mailSender.setPassword(SMTP_PASSWORD);
+        mailSender.setUsername(smtpProperties.username());
+        mailSender.setPassword(smtpProperties.password());
 
         Properties props = mailSender.getJavaMailProperties();
         props.put("mail.transport.protocol", SIMPLE_MAIL_TRANSFER_PROTOCOL);

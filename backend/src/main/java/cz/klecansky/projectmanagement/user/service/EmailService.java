@@ -2,9 +2,8 @@ package cz.klecansky.projectmanagement.user.service;
 
 import static cz.klecansky.projectmanagement.user.EmailConstants.*;
 
-import cz.klecansky.projectmanagement.group.shared.GroupCommand;
-import cz.klecansky.projectmanagement.group.shared.GroupMemberCommand;
-import cz.klecansky.projectmanagement.task.shared.TaskCommand;
+import cz.klecansky.projectmanagement.task.shared.GroupAssignToTaskCommand;
+import cz.klecansky.projectmanagement.task.shared.UserAssignToTaskCommand;
 import cz.klecansky.projectmanagement.user.exception.SmtpErrorException;
 import cz.klecansky.projectmanagement.user.io.entity.PasswordResetTokenEntity;
 import cz.klecansky.projectmanagement.user.io.entity.UserEntity;
@@ -94,34 +93,23 @@ public class EmailService {
         }
     }
 
-    public void sendAssignToTaskEmail(TaskCommand taskCommand) {
+    public void sendAssignToTaskEmail(UserAssignToTaskCommand command) {
         MimeMessage mimeMessage = javaMailSender.createMimeMessage();
         try {
             MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, "utf-8");
             helper.setFrom(FROM_EMAIL);
-            helper.setTo(taskCommand.getAssigned().getEmail());
+            helper.setTo(command.toEmail());
             helper.setSubject(ASSIGNED_TO_TASK_SUBJECT);
-            helper.setText(getAssignToTaskEmailHTMLText(taskCommand), true);
+            helper.setText(getAssignToTaskEmailHTMLText(command.taskId(), command.taskName()), true);
             javaMailSender.send(mimeMessage);
         } catch (Exception e) {
-            throw new SmtpErrorException("Application cannot send email.");
+            throw new SmtpErrorException("Application cannot send email.", e);
         }
     }
 
-    public void sendAssignToGroupTaskEmail(TaskCommand taskCommand) {
-        GroupCommand assignedForGroup = taskCommand.getAssignedForGroup();
-        for (GroupMemberCommand member : assignedForGroup.getMembers()) {
-            MimeMessage mimeMessage = javaMailSender.createMimeMessage();
-            try {
-                MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, "utf-8");
-                helper.setFrom(FROM_EMAIL);
-                helper.setTo(member.getUser().getEmail());
-                helper.setSubject(ASSIGNED_TO_TASK_SUBJECT);
-                helper.setText(getAssignToTaskEmailHTMLText(taskCommand), true);
-                javaMailSender.send(mimeMessage);
-            } catch (Exception e) {
-                throw new SmtpErrorException("Application cannot send email.");
-            }
+    public void sendAssignToGroupTaskEmail(GroupAssignToTaskCommand command) {
+        for (UserAssignToTaskCommand member : command.userAssignToTaskCommandList()) {
+            sendAssignToTaskEmail(member);
         }
     }
 
@@ -137,10 +125,10 @@ public class EmailService {
                 "http://" + serverUrl + "/authentication/new-password/" + passwordResetTokenEntity.getToken());
     }
 
-    private String getAssignToTaskEmailHTMLText(TaskCommand taskCommand) {
+    private String getAssignToTaskEmailHTMLText(UUID taskId, String taskName) {
         return ASSIGN_TO_TASK_BODY
-                .replace("$address", "http://" + serverUrl + "/task/" + taskCommand.getId())
-                .replace("$taskName", taskCommand.getName());
+                .replace("$address", "http://" + serverUrl + "/task/" + taskId)
+                .replace("$taskName", taskName);
     }
 
     private VerificationTokenEntity createVerificationToken(UserCommand userCommand) {

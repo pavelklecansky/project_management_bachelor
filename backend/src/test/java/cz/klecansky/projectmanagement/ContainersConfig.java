@@ -18,8 +18,8 @@ public class ContainersConfig {
     }
 
     @Bean
-    public GenericContainer mailhogContainer(DynamicPropertyRegistry registry) {
-        GenericContainer container = new GenericContainer("mailhog/mailhog").withExposedPorts(1025);
+    public GenericContainer<?> mailhogContainer(DynamicPropertyRegistry registry) {
+        GenericContainer<?> container = new GenericContainer<>("mailhog/mailhog").withExposedPorts(1025);
         registry.add("smtp.server", container::getHost);
         registry.add("smtp.port", container::getFirstMappedPort);
         registry.add("smtp.username", () -> "test@test.com");

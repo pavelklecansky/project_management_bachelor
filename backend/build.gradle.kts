@@ -25,6 +25,7 @@ dependencies {
     implementation("org.modelmapper:modelmapper:2.4.4")
     implementation("org.liquibase:liquibase-core")
     implementation("org.mapstruct:mapstruct:${mapstructVersion}")
+    implementation("com.github.kagkarlsson:db-scheduler-spring-boot-starter:12.1.0")
     annotationProcessor("org.mapstruct:mapstruct-processor:${mapstructVersion}")
     implementation("org.mapstruct.extensions.spring:mapstruct-spring-annotations:${mapstructSpringExtensionsVersion}")
     annotationProcessor("org.mapstruct.extensions.spring:mapstruct-spring-extensions:${mapstructSpringExtensionsVersion}")
