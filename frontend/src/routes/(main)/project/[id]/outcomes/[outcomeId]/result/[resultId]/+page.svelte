@@ -25,7 +25,7 @@
 		const [success, errorMessage] = await getResult(id);
 		if (!success || errorMessage) {
 			error(errorMessage);
-			goto(`./../`);
+			await goto(`./../`);
 		} else {
 			result = success!;
 			await loadFilesInfo();

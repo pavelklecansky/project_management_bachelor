@@ -29,10 +29,10 @@
 			const [createdSuccess, createdError] = await createGroup(values.group);
 			if (createdError) {
 				error(createdError);
-				goto(previousPage);
+				await goto(previousPage);
 			} else {
 				success(createdSuccess);
-				goto(previousPage);
+				await goto(previousPage);
 			}
 		}
 	});

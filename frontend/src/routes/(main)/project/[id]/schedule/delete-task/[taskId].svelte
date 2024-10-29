@@ -11,9 +11,9 @@
 		const [successMessage, errorMessage] = await deleteTask(taskId);
 		if (!successMessage || errorMessage) {
 			error(errorMessage);
-			goto(`/project/schedule/${id}`);
+			await goto(`/project/schedule/${id}`);
 		}
 		success(successMessage);
-		goto(`/project/schedule/${id}`);
+		await goto(`/project/schedule/${id}`);
 	});
 </script>

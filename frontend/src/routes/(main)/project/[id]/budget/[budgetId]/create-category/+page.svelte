@@ -23,10 +23,10 @@
 			const [createdSuccess, createdError] = await createBudgetCategory(budgetId, values.category);
 			if (createdError) {
 				error(createdError);
-				goto(`/project/${id}/budget`);
+				await goto(`/project/${id}/budget`);
 			} else {
 				success(createdSuccess);
-				goto(`/project/${id}/budget`);
+				await goto(`/project/${id}/budget`);
 			}
 		}
 	});

@@ -60,11 +60,11 @@
 			const [createdSuccess, createdError] = await updateTask(transferify(values.task));
 			if (createdError) {
 				error(createdError);
-				goto(`./../${$form.task.id}`);
+				await goto(`./../${$form.task.id}`);
 			} else {
 				success(createdSuccess);
-				load();
-				goto(`./../${$form.task.id}`);
+				await load();
+				await goto(`./../${$form.task.id}`);
 			}
 		}
 	});
@@ -74,7 +74,7 @@
 		const [success, errorMessage] = await getTask(id);
 		if (!success || errorMessage) {
 			error(errorMessage);
-			goto(`./../`);
+			await goto(`./../`);
 		} else {
 			$form.task = success!;
 			$form.endDate = dateISOFormat(success.endDate);

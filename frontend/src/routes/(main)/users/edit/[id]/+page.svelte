@@ -27,11 +27,11 @@
 			const [editSuccess, editError] = await updateUser(values.user);
 			if (editError) {
 				error(editError);
-				goto('./../');
+				await goto('./../');
 			} else {
 				success(editSuccess);
-				load();
-				goto('./../');
+				await load();
+				await goto('./../');
 			}
 		}
 	});

@@ -21,10 +21,10 @@
 			const [createdSuccess, createdError] = await addGroupMember(id, values.member);
 			if (createdError) {
 				error(createdError);
-				goto(`../${id}`);
+				await goto(`../${id}`);
 			} else {
 				success(createdSuccess);
-				goto(`../${id}`);
+				await goto(`../${id}`);
 			}
 		}
 	});

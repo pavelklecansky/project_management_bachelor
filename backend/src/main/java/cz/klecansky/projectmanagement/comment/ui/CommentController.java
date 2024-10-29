@@ -37,7 +37,7 @@ public class CommentController {
     @NonNull
     TaskMapper taskMapper;
 
-    @PostMapping(path = PROJECTS_API + "{id}/comment")
+    @PostMapping(path = PROJECTS_API + "/{id}/comment")
     @PreAuthorize("isAuthenticated()")
     public ResponseEntity<SuccessResponse<?>> addProjectComment(
             @PathVariable("id") UUID projectId,
@@ -52,7 +52,7 @@ public class CommentController {
                 .build());
     }
 
-    @DeleteMapping(path = PROJECTS_API + "{id}/comment/{commentId}")
+    @DeleteMapping(path = PROJECTS_API + "/{id}/comment/{commentId}")
     @PreAuthorize("hasAnyRole('ADMIN','SUPER_ADMIN')")
     public ResponseEntity<SuccessResponse<?>> deleteProjectComment(
             @PathVariable("id") UUID projectId, @PathVariable("commentId") UUID commentId) {
@@ -63,7 +63,7 @@ public class CommentController {
                 .build());
     }
 
-    @PostMapping(path = TASKS_API + "{id}/comment")
+    @PostMapping(path = TASKS_API + "/{id}/comment")
     @PreAuthorize("isAuthenticated()")
     public ResponseEntity<SuccessResponse<?>> addTaskComment(
             @PathVariable("id") UUID taskId,
@@ -78,7 +78,7 @@ public class CommentController {
                 .build());
     }
 
-    @DeleteMapping(path = TASKS_API + "{id}/comment/{commentId}")
+    @DeleteMapping(path = TASKS_API + "/{id}/comment/{commentId}")
     @PreAuthorize("hasAnyRole('ADMIN','SUPER_ADMIN')")
     public ResponseEntity<SuccessResponse<?>> deleteTaskComment(
             @PathVariable("id") UUID taskId, @PathVariable("commentId") UUID idComment) {

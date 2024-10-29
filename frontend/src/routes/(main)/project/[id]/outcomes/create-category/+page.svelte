@@ -23,10 +23,10 @@
 			const [createdSuccess, createdError] = await createOutcomeCategory(values.outcomeCategory);
 			if (createdError) {
 				error(createdError);
-				goto(`./../${id}`);
+				await goto(`./../${id}`);
 			} else {
 				success(createdSuccess);
-				goto(`./../${id}`);
+				await goto(`./../${id}`);
 			}
 		}
 	});

@@ -1,7 +1,5 @@
 package cz.klecansky.projectmanagement.security.config;
 
-import static cz.klecansky.projectmanagement.security.SecurityConstants.PUBLIC_URLS;
-
 import cz.klecansky.projectmanagement.security.jwt.*;
 import lombok.AccessLevel;
 import lombok.NonNull;
@@ -47,11 +45,6 @@ public class SecurityFilterConfig {
                     exceptionHandling.accessDeniedHandler(jwtAccessDeniedHandler);
                     exceptionHandling.authenticationEntryPoint(jwtAuthenticationEntryPoint);
                 })
-                .authorizeHttpRequests((authorize) -> authorize
-                        .requestMatchers(PUBLIC_URLS)
-                        .permitAll()
-                        .anyRequest()
-                        .authenticated())
                 .sessionManagement((session) -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);
         return http.build();

@@ -32,17 +32,17 @@
 		loaded = true;
 	});
 
-	const download = async (name) => {
+	const download = async (name: string) => {
 		await downloadFileInBrowser(id, name, queryParams);
 	};
 
-	const copyFileUrlToClipboard = async (name) => {
+	const copyFileUrlToClipboard = async (name: string) => {
 		const url = `${window.location.href}/download?path=${queryParams}&name=${name}`;
 		await navigator.clipboard.writeText(url);
 		success('File url was copied to clipboard');
 	};
 
-	const deleteF = async (name) => {
+	const deleteF = async (name: string) => {
 		const [successMessage, errorMessage] = await deleteFile(id, name, queryParams);
 		if (!successMessage || errorMessage) {
 			error(errorMessage);
@@ -52,7 +52,7 @@
 		await loadFilesInfo();
 	};
 
-	const deleteDir = async (name) => {
+	const deleteDir = async (name: string) => {
 		const [successMessage, errorMessage] = await deleteFolder(id, name, queryParams);
 		if (!successMessage || errorMessage) {
 			error(errorMessage);

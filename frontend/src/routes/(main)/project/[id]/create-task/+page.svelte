@@ -64,11 +64,11 @@
 			const [createdSuccess, createdError] = await createTask(transferify(values.task));
 			if (createdError) {
 				error(createdError);
-				goto(previousPage);
+				await goto(previousPage);
 			} else {
 				success(createdSuccess);
-				load();
-				goto(previousPage);
+				await load();
+				await goto(previousPage);
 			}
 		}
 	});

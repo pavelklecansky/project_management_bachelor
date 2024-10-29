@@ -35,10 +35,10 @@
 				const [createdSuccess, createdError] = await updateItem(values.item.id, values.item);
 				if (createdError) {
 					error(createdError);
-					goto(`/project/${id}/budget`);
+					await goto(`/project/${id}/budget`);
 				} else {
 					success(createdSuccess);
-					goto(`/project/${id}/budget`);
+					await goto(`/project/${id}/budget`);
 				}
 			}
 		}
@@ -48,7 +48,7 @@
 		const [success, errorMessage] = await getItem(itemId);
 		if (!success || errorMessage) {
 			error(errorMessage);
-			goto(`/project/${id}/budget`);
+			await goto(`/project/${id}/budget`);
 		} else {
 			$form.item = success!;
 			const [successCategory, errorMessageCategory] = await getItemCategory(itemId);

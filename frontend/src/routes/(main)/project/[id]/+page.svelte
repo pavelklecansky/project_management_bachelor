@@ -75,15 +75,15 @@
 				</div>
 				<div class="w-1/5 flex flex-col text-center">
 					<h3 class="text-1xl font-bold">Actions</h3>
-					<a class="mt-2" href={`/project/${project.id}/delete`}
-						><DeleteButton text={'Delete project'} full={true} /></a
-					>
-					<a class="mt-2" href={`/project/${project.id}/edit`}
-						><EditButton text={'Edit project'} full={true} /></a
-					>
-					<a class="mt-2" href={`/project/${project.id}/create-task`}
-						><CreateButton text={'New task'} full={true} /></a
-					>
+					<a class="mt-2" href={`/project/${project.id}/delete`}>
+						<DeleteButton text={'Delete project'} full={true} />
+					</a>
+					<a class="mt-2" href={`/project/${project.id}/edit`}>
+						<EditButton text={'Edit project'} full={true} />
+					</a>
+					<a class="mt-2" href={`/project/${project.id}/create-task`}>
+						<CreateButton text={'New task'} full={true} />
+					</a>
 				</div>
 			</div>
 		</div>
@@ -102,7 +102,6 @@
 					<div class="flex justify-end mt-2">
 						<SubmitButton text="Add new comment" />
 					</div>
-
 					{#each project.comments as comment}
 						<div class="rounded-lg p-3 flex flex-col shadow-lg mb-4 relative">
 							<div class="flex justify-between mr-2">
@@ -127,8 +126,8 @@
 									{comment.text}
 								</p>
 								{#if isAdmin()}
-									<div class="text-red-500">
-										<TrashCan on:click={() => deleteCommentOnClick(comment.id)} />
+									<div class="text-red-500" on:click={() => deleteCommentOnClick(comment.id)}>
+										<TrashCan class="cursor-pointer" />
 									</div>
 								{/if}
 							</div>

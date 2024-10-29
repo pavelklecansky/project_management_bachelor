@@ -36,10 +36,10 @@
 			const [createdSuccess, createdError] = await createOutcome(transferify(values.outcome));
 			if (createdError) {
 				error(createdError);
-				goto(`./../${id}`);
+				await goto(`./../${id}`);
 			} else {
 				success(createdSuccess);
-				goto(`./../${id}`);
+				await goto(`./../${id}`);
 			}
 		}
 	});

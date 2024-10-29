@@ -27,10 +27,10 @@
 			const [createdSuccess, createdError] = await createOrganization(values.organization);
 			if (createdError) {
 				error(createdError);
-				goto(previousPage);
+				await goto(previousPage);
 			} else {
 				success(createdSuccess);
-				goto(previousPage);
+				await goto(previousPage);
 			}
 		}
 	});

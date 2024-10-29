@@ -11,9 +11,9 @@
 		const [successMessage, errorMessage] = await deleteBudgetCategory(categoryId);
 		if (!successMessage || errorMessage) {
 			error(errorMessage);
-			goto(`/project/${id}/budget`);
+			await goto(`/project/${id}/budget`);
 		}
 		success(successMessage);
-		goto(`/project/${id}/budget`);
+		await goto(`/project/${id}/budget`);
 	});
 </script>

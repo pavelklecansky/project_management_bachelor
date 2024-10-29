@@ -12,11 +12,7 @@
 	$: outerWidth = 0;
 
 	onMount(() => {
-		if (outerWidth < 1024) {
-			$hidden = true;
-		} else {
-			$hidden = false;
-		}
+		$hidden = outerWidth < 1024;
 	});
 
 	$: if ($hidden) {
