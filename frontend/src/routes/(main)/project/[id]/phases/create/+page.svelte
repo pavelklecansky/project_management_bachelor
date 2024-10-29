@@ -17,7 +17,7 @@
 	import { getProject } from '$lib/project.service';
 
 	let id = $page.params.id;
-	let project = {} as Project;
+	let project = $state({} as Project);
 
 	onMount(async () => {
 		let id = $page.params.id;
@@ -56,7 +56,7 @@
 			| End date:
 			{new Date(project.endDate).toLocaleDateString('cs')}
 		</p>
-		<p />
+		<p></p>
 		<div class="w-full mt-4">
 			<p class="text-left text-sm font-medium text-gray-900 block mb-2">
 				Name<span class="text-red-600">*</span>

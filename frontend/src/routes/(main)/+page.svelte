@@ -5,7 +5,7 @@
 	import TaskList from '$lib/components/task/TaskList.svelte';
 	import { getAllUserTasks } from '$lib/task.service';
 
-	$: tasks = [];
+	let tasks = $state([]);
 
 	onMount(async () => {
 		const [success, error] = await getAllUserTasks();

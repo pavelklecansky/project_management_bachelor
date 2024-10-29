@@ -11,7 +11,7 @@
 
 	let id = $page.params.id;
 	const urlSearchParams = new URLSearchParams(window.location.search);
-	$: queryParams = urlSearchParams.get('path') || '';
+	let queryParams = $derived(urlSearchParams.get('path') || '');
 
 	const { form, handleSubmit } = createForm({
 		initialValues: {

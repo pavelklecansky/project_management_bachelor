@@ -1,7 +1,11 @@
 <script lang="ts">
 	import type { Project } from '$lib/types/core.type';
 
-	export let project = {} as Project;
+	interface Props {
+		project?: any;
+	}
+
+	let { project = {} as Project }: Props = $props();
 	let hidden = true;
 </script>
 

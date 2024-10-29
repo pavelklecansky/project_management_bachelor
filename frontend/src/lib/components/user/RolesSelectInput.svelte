@@ -1,14 +1,20 @@
 <script lang="ts">
+	import { run } from 'svelte/legacy';
+
 	import { onMount } from 'svelte';
 	import Select from 'svelte-select';
 	import type { User } from '$lib/types/authentication.type';
 	import { Role } from '$lib/types/role.enum';
 
-	export let value = {} as User;
+	interface Props {
+		value?: any;
+	}
 
-	let roles = [];
-	let items = [];
-	let defaultValue = [];
+	let { value = $bindable({} as User) }: Props = $props();
+
+	let roles = $state([]);
+	let items = $state([]);
+	let defaultValue = $state([]);
 
 	function handleSelect(event) {
 		const userRoles = event?.detail?.map((item) => {
@@ -21,7 +27,7 @@
 		value.roles = [] as Role[];
 	}
 
-	$: {
+	run(() => {
 		if (roles) {
 			items = roles.map((role) => {
 				return {
@@ -30,7 +36,7 @@
 				};
 			});
 		}
-	}
+	});
 
 	onMount(async () => {
 		roles = Object.keys(Role) as Array<keyof typeof Role>;

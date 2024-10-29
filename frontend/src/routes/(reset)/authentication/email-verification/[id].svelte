@@ -5,7 +5,7 @@
 	import { apiRequest } from '$lib/utils';
 	import { CheckCircleIcon } from 'svelte-feather-icons';
 
-	let ready = false;
+	let ready = $state(false);
 
 	onMount(async () => {
 		let endpointName = `users/register/token/${$page.params.id}`;

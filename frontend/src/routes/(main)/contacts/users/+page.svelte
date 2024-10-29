@@ -3,8 +3,8 @@
 	import { Datatable, DataHandler, Th, ThFilter } from '@vincjo/datatables';
 	import { afterNavigate } from '$app/navigation';
 
-	let handler;
-	let rows;
+	let handler = $state();
+	let rows = $state();
 
 	afterNavigate(async () => {
 		handler = new DataHandler($users, { rowsPerPage: 50 });

@@ -31,9 +31,9 @@
 	import GroupSelectInput from '$lib/components/group/GroupSelectInput.svelte';
 	import PhaseSelectInput from '$lib/components/phase/PhaseSelectInput.svelte';
 
-	let priorityValueSelect = getDefaultPriorityType();
-	let statusValueSelect = getDefaultStatusType();
-	let loaded = false;
+	let priorityValueSelect = $state(getDefaultPriorityType());
+	let statusValueSelect = $state(getDefaultStatusType());
+	let loaded = $state(false);
 
 	function handlePrioritySelect(event) {
 		$form.task.priority = event.detail.value;

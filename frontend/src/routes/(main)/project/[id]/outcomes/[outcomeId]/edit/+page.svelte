@@ -18,7 +18,7 @@
 
 	let id = $page.params.outcomeId;
 	let projectId = $page.params.id;
-	let loaded = false;
+	let loaded = $state(false);
 
 	const { form, handleSubmit } = createForm({
 		initialValues: {

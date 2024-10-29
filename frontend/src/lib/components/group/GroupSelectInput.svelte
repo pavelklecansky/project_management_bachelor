@@ -1,15 +1,21 @@
 <script lang="ts">
+	import { run } from 'svelte/legacy';
+
 	import { onMount } from 'svelte';
 	import Select from 'svelte-select';
 	import { getGroups } from '$lib/groups.service';
 	import { getDataFromResponse, isEmptyObjectOrNull } from '$lib/utils';
 	import type { Group } from '$lib/types/core.type';
 
-	export let value = {} as Group;
-	export let disable = false;
+	interface Props {
+		value?: any;
+		disable?: boolean;
+	}
 
-	let groups = [] as Group[];
-	let loaded = false;
+	let { value = $bindable({} as Group), disable = false }: Props = $props();
+
+	let groups = $state([] as Group[]);
+	let loaded = $state(false);
 
 	onMount(async () => {
 		const [successResponse, errorResponse] = await getGroups();
@@ -17,11 +23,11 @@
 		loaded = true;
 	});
 
-	let items = [];
-	let defaultValue = {
+	let items = $state([]);
+	let defaultValue = $state({
 		value: '',
 		label: ''
-	};
+	});
 
 	function handleSelect(event) {
 		const groupId = event.detail.value;
@@ -32,7 +38,7 @@
 		value = {} as Group;
 	}
 
-	$: {
+	run(() => {
 		if (loaded) {
 			items = groups.map((group) => {
 				return {
@@ -47,7 +53,7 @@
 				label: value.name || ''
 			};
 		}
-	}
+	});
 </script>
 
 {#if loaded}

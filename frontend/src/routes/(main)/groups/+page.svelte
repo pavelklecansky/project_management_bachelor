@@ -7,8 +7,8 @@
 	import { getDataFromResponse } from '$lib/utils';
 	import CreateButton from '$lib/components/core/CreateButton.svelte';
 
-	let handler;
-	let rows;
+	let handler = $state();
+	let rows = $state();
 
 	afterNavigate(async () => {
 		const [successResponse, errorResponse] = await getGroups();
@@ -19,7 +19,7 @@
 </script>
 
 <div class="flex justify-between m-2">
-	<h1 class="text-2xl" />
+	<h1 class="text-2xl"></h1>
 	<a href={'/groups/create'}>
 		<CreateButton text={'Create new group'} />
 	</a>

@@ -1,4 +1,6 @@
 <script lang="ts">
+	import { preventDefault } from 'svelte/legacy';
+
 	import { signIn } from '$lib/auth';
 	import { error } from '$lib/notification';
 	import { goto } from '$app/navigation';
@@ -6,8 +8,8 @@
 	import EmailInput from '$lib/components/core/EmailInput.svelte';
 	import SubmitButton from '$lib/components/core/SubmitButton.svelte';
 
-	let email = '';
-	let password = '';
+	let email = $state('');
+	let password = $state('');
 	const handleSubmit = async () => {
 		const [_, errorMessage] = await signIn(email, password);
 		console.log(errorMessage);
@@ -24,7 +26,7 @@
 
 	<p class="mt-1 text-center text-gray-500">Login or create account</p>
 
-	<form on:submit|preventDefault={handleSubmit}>
+	<form onsubmit={preventDefault(handleSubmit)}>
 		<div class="w-full mt-4">
 			<EmailInput placeholder="Email Address" bind:value={email} />
 		</div>

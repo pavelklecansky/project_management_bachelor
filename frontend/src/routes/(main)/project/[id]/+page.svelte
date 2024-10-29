@@ -1,4 +1,6 @@
 <script lang="ts">
+	import { preventDefault } from 'svelte/legacy';
+
 	import { afterNavigate } from '$app/navigation';
 	import { addComment, deleteComment, getProject } from '$lib/project.service';
 	import type { Project } from '$lib/types/core.type';
@@ -15,9 +17,9 @@
 	import TrashCan from 'carbon-icons-svelte/lib/TrashCan.svelte';
 	import { page } from '$app/stores';
 
-	let project = {} as Project;
-	let loaded = false;
-	let commentText = '';
+	let project = $state({} as Project);
+	let loaded = $state(false);
+	let commentText = $state('');
 
 	afterNavigate(async () => {
 		let id = $page.params.id;
@@ -97,7 +99,7 @@
 		<div class="mt-2">
 			<h2 class="text-3xl font-bold">Comments</h2>
 			<div class="mt-2">
-				<form on:submit|preventDefault={handleSubmit}>
+				<form onsubmit={preventDefault(handleSubmit)}>
 					<TextArea placeholder="Add comment" bind:value={commentText} />
 					<div class="flex justify-end mt-2">
 						<SubmitButton text="Add new comment" />
@@ -126,7 +128,7 @@
 									{comment.text}
 								</p>
 								{#if isAdmin()}
-									<div class="text-red-500" on:click={() => deleteCommentOnClick(comment.id)}>
+									<div class="text-red-500" onclick={() => deleteCommentOnClick(comment.id)}>
 										<TrashCan class="cursor-pointer" />
 									</div>
 								{/if}

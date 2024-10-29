@@ -4,6 +4,8 @@
 	import CreateButton from '$lib/components/core/CreateButton.svelte';
 	import ProjectList from '$lib/components/project/ProjectList.svelte';
 	import { load } from '$lib/projects.store';
+	/** @type {{children?: import('svelte').Snippet}} */
+	let { children } = $props();
 
 	afterNavigate(() => {
 		load();
@@ -21,4 +23,4 @@
 	<ProjectList allProjects={true} />
 </div>
 
-<slot />
+{@render children?.()}

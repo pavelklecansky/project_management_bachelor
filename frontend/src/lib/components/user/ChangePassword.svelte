@@ -1,4 +1,6 @@
 <script lang="ts">
+	import { run, preventDefault } from 'svelte/legacy';
+
 	import PasswordInput from '$lib/components/core/PasswordInput.svelte';
 	import SubmitButton from '$lib/components/core/SubmitButton.svelte';
 	import { createForm } from 'svelte-forms-lib';
@@ -41,9 +43,11 @@
 		}
 	});
 
-	$: if ($errors.confirmPassword) {
-		error($errors.confirmPassword);
-	}
+	run(() => {
+		if ($errors.confirmPassword) {
+			error($errors.confirmPassword);
+		}
+	});
 </script>
 
 <div class="bg-white border border-gray-100 rounded">
@@ -51,7 +55,7 @@
 		<p class="flex items-center py-3 px-4 flex-grow font-bold">Change Password</p>
 	</header>
 	<div class="p-6">
-		<form on:submit|preventDefault={handleSubmit}>
+		<form onsubmit={preventDefault(handleSubmit)}>
 			<div class="mb-3">
 				<p class="block font-bold mb-2">Current password</p>
 				<div class="control">

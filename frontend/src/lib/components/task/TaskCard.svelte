@@ -1,8 +1,12 @@
 <script lang="ts">
 	import type { Task } from '$lib/types/core.type';
 
-	export let projectId: string;
-	export let task = {} as Task;
+	interface Props {
+		projectId: string;
+		task?: any;
+	}
+
+	let { projectId, task = {} as Task }: Props = $props();
 </script>
 
 <div class="md:w-1/4 w-full max-w-sm px-4 py-3 bg-white rounded-md shadow-md flex-grow box-border">

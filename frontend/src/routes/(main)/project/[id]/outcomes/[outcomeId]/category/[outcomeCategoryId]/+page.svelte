@@ -9,9 +9,9 @@
 	import type { Outcome, OutcomeCategory } from '$lib/types/core.type';
 	import { getOutcomesOfCategory } from '$lib/outcomes.service';
 
-	let outcomeCategory = {} as OutcomeCategory;
-	let outcomesOfCategory = [] as Outcome[];
-	let loaded = false;
+	let outcomeCategory = $state({} as OutcomeCategory);
+	let outcomesOfCategory = $state([] as Outcome[]);
+	let loaded = $state(false);
 
 	onMount(async () => {
 		let id = $page.params.outcomeCategoryId;

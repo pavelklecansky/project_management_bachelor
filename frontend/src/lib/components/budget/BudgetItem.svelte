@@ -2,8 +2,12 @@
 	import type { BudgetItem } from '$lib/types/core.type';
 	import { EditIcon, Trash2Icon } from 'svelte-feather-icons';
 
-	export let item: BudgetItem;
-	export let id;
+	interface Props {
+		item: BudgetItem;
+		id: any;
+	}
+
+	let { item, id }: Props = $props();
 </script>
 
 <div class="ml-10">

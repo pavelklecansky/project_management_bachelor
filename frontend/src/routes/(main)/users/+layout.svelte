@@ -10,11 +10,16 @@
 	import { error } from '$lib/notification';
 	import { getDataFromResponse } from '$lib/utils';
 	import type { User } from '$lib/types/authentication.type';
+	interface Props {
+		children?: import('svelte').Snippet;
+	}
+
+	let { children }: Props = $props();
 
 	const { open } = getContext('simple-modal');
 
-	let handler;
-	let rows;
+	let handler = $state();
+	let rows = $state();
 
 	afterNavigate(async () => {
 		handler = new DataHandler<User>($users, { rowsPerPage: 50 });
@@ -77,7 +82,7 @@
 	</Datatable>
 {/if}
 
-<slot />
+{@render children?.()}
 
 <style>
 	td {

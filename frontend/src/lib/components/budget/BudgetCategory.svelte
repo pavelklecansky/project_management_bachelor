@@ -5,8 +5,12 @@
 	import CreateButton from '$lib/components/core/CreateButton.svelte';
 	import { getItemsSum } from '$lib/utils';
 
-	export let budgetCategory: BudgetCategory;
-	export let id;
+	interface Props {
+		budgetCategory: BudgetCategory;
+		id: any;
+	}
+
+	let { budgetCategory, id }: Props = $props();
 
 	function calcTotal() {
 		const budgetMax = budgetCategory.budget;

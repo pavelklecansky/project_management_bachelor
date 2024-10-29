@@ -12,12 +12,12 @@
 	import TrashCan from 'carbon-icons-svelte/lib/TrashCan.svelte';
 
 	let project = {} as Project;
-	let id;
+	let id = $state();
 
-	let memberRows;
-	let groupMemberRows;
-	let memberHandler;
-	let groupMemberHandler;
+	let memberRows = $state();
+	let groupMemberRows = $state();
+	let memberHandler = $state();
+	let groupMemberHandler = $state();
 
 	onMount(async () => {
 		id = $page.params.id;

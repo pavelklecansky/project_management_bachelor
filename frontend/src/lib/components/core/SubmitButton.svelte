@@ -1,7 +1,11 @@
 <script lang="ts">
-	export let text = 'OK';
-	export let full = false;
-	export let color = 'green';
+	interface Props {
+		text?: string;
+		full?: boolean;
+		color?: string;
+	}
+
+	let { text = 'OK', full = false, color = 'green' }: Props = $props();
 </script>
 
 <button

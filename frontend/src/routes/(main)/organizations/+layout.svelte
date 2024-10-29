@@ -5,9 +5,11 @@
 	import CreateButton from '$lib/components/core/CreateButton.svelte';
 	import { getAllOrganizations } from '$lib/organization.service';
 	import { getDataFromResponse } from '$lib/utils';
+	/** @type {{children?: import('svelte').Snippet}} */
+	let { children } = $props();
 
-	let handler;
-	let rows;
+	let handler = $state();
+	let rows = $state();
 
 	afterNavigate(async () => {
 		const [successResponse, errorResponse] = await getAllOrganizations();
@@ -67,7 +69,7 @@
 	</Datatable>
 {/if}
 
-<slot />
+{@render children?.()}
 
 <style>
 	td {

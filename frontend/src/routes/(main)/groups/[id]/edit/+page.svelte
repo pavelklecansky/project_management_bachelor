@@ -1,4 +1,6 @@
 <script lang="ts">
+	import { preventDefault } from 'svelte/legacy';
+
 	import ModalWindow from '$lib/components/modal/ModalWindow.svelte';
 	import type { Group, GroupMember } from '$lib/types/core.type';
 	import { createForm } from 'svelte-forms-lib';
@@ -14,7 +16,7 @@
 	import { onMount } from 'svelte';
 	import { base } from '$app/paths';
 
-	let previousPage: string = base;
+	let previousPage: string = $state(base);
 
 	afterNavigate(({ from }) => {
 		previousPage = from?.url.pathname || previousPage;
@@ -100,7 +102,7 @@
 											<td class="px-6 py-4">{member.position}</td>
 											<td
 												class="px-6 py-4 text-red-500"
-												on:click={() => removeMemberFromArray(member.user.id)}
+												onclick={() => removeMemberFromArray(member.user.id)}
 											>
 												<Trash2Icon size="1.5x" />
 											</td>
@@ -114,7 +116,7 @@
 			{/if}
 			<div class="w-full mt-4">
 				<p class="text-left text-sm font-medium text-gray-900 block mb-2">Add member</p>
-				<form on:submit|preventDefault={addNewMemberHandle}>
+				<form onsubmit={preventDefault(addNewMemberHandle)}>
 					<UserSelectInput bind:value={$addNewMemberForm.groupMember.user} />
 					<TextInput placeholder="Position" bind:value={$addNewMemberForm.groupMember.position} />
 					<div class="mt-2">

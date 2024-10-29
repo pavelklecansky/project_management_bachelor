@@ -1,20 +1,26 @@
 <script lang="ts">
+	import { run } from 'svelte/legacy';
+
 	import { onMount } from 'svelte';
 	import Select from 'svelte-select';
 	import { isEmptyObjectOrNull } from '$lib/utils';
 	import type { OutcomeCategory } from '$lib/types/core.type';
 	import { getOutcomeCategoriesOfProject } from '$lib/outcome-categories.service';
 
-	export let value = {} as OutcomeCategory;
-	export let projectId;
+	interface Props {
+		value?: any;
+		projectId: any;
+	}
 
-	let outcomeCategories = [] as OutcomeCategory[];
-	let items = [];
-	let defaultValue = {
+	let { value = $bindable({} as OutcomeCategory), projectId }: Props = $props();
+
+	let outcomeCategories = $state([] as OutcomeCategory[]);
+	let items = $state([]);
+	let defaultValue = $state({
 		value: '',
 		label: ''
-	};
-	let loaded = false;
+	});
+	let loaded = $state(false);
 
 	onMount(async () => {
 		const [successResponse, errorResponse] = await getOutcomeCategoriesOfProject(projectId);
@@ -31,7 +37,7 @@
 		value = {} as OutcomeCategory;
 	}
 
-	$: {
+	run(() => {
 		if (loaded) {
 			items = outcomeCategories.map((outcomeCategory) => {
 				return {
@@ -46,7 +52,7 @@
 				label: value.name || ''
 			};
 		}
-	}
+	});
 </script>
 
 {#if loaded}

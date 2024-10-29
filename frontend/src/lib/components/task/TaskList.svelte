@@ -1,13 +1,21 @@
 <script lang="ts">
+	import { run } from 'svelte/legacy';
+
 	import type { Task } from '$lib/types/core.type';
 	import TaskCard from './TaskCard.svelte';
-	export let projectId: string;
-	export let allTasks = false;
-	export let tasks: Task[] = [];
-
-	$: if (!allTasks) {
-		tasks = tasks.slice(0, 6);
+	interface Props {
+		projectId: string;
+		allTasks?: boolean;
+		tasks?: Task[];
 	}
+
+	let { projectId, allTasks = false, tasks = $bindable([]) }: Props = $props();
+
+	run(() => {
+		if (!allTasks) {
+			tasks = tasks.slice(0, 6);
+		}
+	});
 </script>
 
 <div class="flex md:justify-start justify-center flex-wrap gap-5">

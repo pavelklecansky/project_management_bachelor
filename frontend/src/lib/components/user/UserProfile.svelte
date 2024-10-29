@@ -2,8 +2,8 @@
 	import { authState } from '$lib/auth';
 	import { getAvatarUrl } from '$lib/avatar';
 
-	$: user = $authState.user;
-	$: fullName = $authState.user.firstName + ' ' + $authState.user.lastName;
+	let user = $derived($authState.user);
+	let fullName = $derived($authState.user.firstName + ' ' + $authState.user.lastName);
 </script>
 
 <div class="bg-white border border-gray-100 rounded">

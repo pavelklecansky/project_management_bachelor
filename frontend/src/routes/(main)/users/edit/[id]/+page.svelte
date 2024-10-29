@@ -16,7 +16,7 @@
 	import { isSuperAdmin } from '$lib/auth';
 	import RolesSelectInput from '$lib/components/user/RolesSelectInput.svelte';
 
-	let ready = false;
+	let ready = $state(false);
 
 	const { form, handleSubmit } = createForm({
 		initialValues: {

@@ -1,4 +1,6 @@
 <script lang="ts">
+	import { run, stopPropagation } from 'svelte/legacy';
+
 	import { page } from '$app/stores';
 	import { goto } from '$app/navigation';
 	import { getContext, onMount } from 'svelte';
@@ -14,10 +16,10 @@
 	import EditFilePopup from '$lib/components/storage/EditFilePopup.svelte';
 
 	let id = $page.params.resultId;
-	let result = {} as Result;
-	let filesInfo = [];
-	let files = [];
-	let loaded = false;
+	let result = $state({} as Result);
+	let filesInfo = $state([]);
+	let files = $state([]);
+	let loaded = $state(false);
 
 	const { open } = getContext('simple-modal');
 
@@ -71,23 +73,25 @@
 		);
 	};
 
-	$: if (files.length === 1) {
-		const formData = new FormData();
-		formData.append('file', files[0]);
-		uploadFile(id, formData)
-			.then((response) => {
-				const [successMessage, errorMessage] = response;
-				if (!successMessage || errorMessage) {
-					error(errorMessage);
-				} else {
-					success(successMessage);
-				}
-			})
-			.finally(async () => {
-				files = [];
-				await loadFilesInfo();
-			});
-	}
+	run(() => {
+		if (files.length === 1) {
+			const formData = new FormData();
+			formData.append('file', files[0]);
+			uploadFile(id, formData)
+				.then((response) => {
+					const [successMessage, errorMessage] = response;
+					if (!successMessage || errorMessage) {
+						error(errorMessage);
+					} else {
+						success(successMessage);
+					}
+				})
+				.finally(async () => {
+					files = [];
+					await loadFilesInfo();
+				});
+		}
+	});
 </script>
 
 <div>
@@ -122,21 +126,21 @@
 			{#each filesInfo as file}
 				<div
 					class="w-1/2 sm:w-1/3 lg:w-1/5 relative rounded-md pt-8 pb-5 text-center max-w-sm px-4 py-3 bg-white shadow-md box-border flex flex-col items-center cursor-pointer"
-					on:click={() => download(file.name)}
+					onclick={() => download(file.name)}
 					title={file.name}
 				>
-					<div on:click|stopPropagation={() => {}}>
+					<div onclick={stopPropagation(() => {})}>
 						<OveflowMenu bind:hidden={file.hidden}>
 							<span
 								class="block cursor-pointer px-4 py-2 text-sm leading-5 text-red-600 font-bold hover:bg-gray-100 hover:text-red-700"
-								on:click={() => {
+								onclick={() => {
 									deleteF(file.name);
 									file.hidden = true;
 								}}>DELETE FILE</span
 							>
 							<span
 								class="block cursor-pointer px-4 py-2 text-sm leading-5 text-green-600 font-bold hover:bg-gray-100 hover:text-green-700"
-								on:click={() => {
+								onclick={() => {
 									renameFileModal(file.name);
 									file.hidden = true;
 								}}>EDIT FILE NAME</span

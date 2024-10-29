@@ -1,5 +1,6 @@
 <script>
-	export let message;
+	/** @type {{message: any}} */
+	let { message } = $props();
 </script>
 
 <div class="text-center m-4 text-3xl">

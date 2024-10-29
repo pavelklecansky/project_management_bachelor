@@ -1,16 +1,18 @@
 <script>
+	import { run } from 'svelte/legacy';
+
 	import { createEventDispatcher, getContext } from 'svelte';
 
-	export let options;
-
-	$: {
-		dispatch('change', options);
-	}
+	/** @type {{options: any}} */
+	let { options } = $props();
 
 	const dispatch = createEventDispatcher();
 
 	let { optionsStream } = getContext('options');
-	$: {
+	run(() => {
+		dispatch('change', options);
+	});
+	run(() => {
 		dispatch('change', $optionsStream);
-	}
+	});
 </script>

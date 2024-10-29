@@ -3,9 +3,14 @@
 	import { afterNavigate } from '$app/navigation';
 	import { getAllOrganizations } from '$lib/organization.service';
 	import { getDataFromResponse } from '$lib/utils';
+	interface Props {
+		children?: import('svelte').Snippet;
+	}
 
-	let handler;
-	let rows;
+	let { children }: Props = $props();
+
+	let handler = $state();
+	let rows = $state();
 
 	afterNavigate(async () => {
 		const [successResponse, errorResponse] = await getAllOrganizations();
@@ -52,7 +57,7 @@
 	{/if}
 </div>
 
-<slot />
+{@render children?.()}
 
 <style>
 	td {

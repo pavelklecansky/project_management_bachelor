@@ -1,7 +1,11 @@
 <script lang="ts">
-	export let value = '';
-	export let required = true;
-	export let title = '';
+	interface Props {
+		value?: string;
+		required?: boolean;
+		title?: string;
+	}
+
+	let { value = $bindable(''), required = true, title = '' }: Props = $props();
 </script>
 
 <input

@@ -3,10 +3,8 @@
 	import { time } from '$lib/utils';
 	import CreateButton from '../core/CreateButton.svelte';
 
-	export let currentStart = time('06:00');
-	export let currentEnd = time('18:00');
-	export let scheduleId;
-	export let id;
+	/** @type {{currentStart?: any, currentEnd?: any, scheduleId: any, id: any}} */
+	let { currentStart = time('06:00'), currentEnd = time('18:00'), scheduleId, id } = $props();
 	const dispatch = createEventDispatcher();
 
 	function onUpdateOptions(options) {

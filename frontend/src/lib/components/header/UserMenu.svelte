@@ -3,10 +3,10 @@
 	import { goto } from '$app/navigation';
 	import { getAvatarUrl } from '$lib/avatar';
 
-	let hidden = true;
+	let hidden = $state(true);
 
-	$: user = $authState.user;
-	$: fullName = $authState.user.firstName + ' ' + $authState.user.lastName;
+	let user = $derived($authState.user);
+	let fullName = $derived($authState.user.firstName + ' ' + $authState.user.lastName);
 
 	const userSignout = async () => {
 		const [_, error] = await signout();
@@ -17,7 +17,7 @@
 </script>
 
 <li class="inline-block relative text-left">
-	<span class="flex items-center mx-2 cursor-pointer" on:click={() => (hidden = !hidden)}>
+	<span class="flex items-center mx-2 cursor-pointer" onclick={() => (hidden = !hidden)}>
 		<img
 			class="w-8 h-8 mr-3 rounded-full object-cover"
 			src={getAvatarUrl(user.firstName, user.lastName)}
@@ -38,7 +38,7 @@
 					>User account</a
 				>
 				<span
-					on:click={userSignout}
+					onclick={userSignout}
 					class="block cursor-pointer px-4 py-2 text-sm leading-5 text-gray-700 hover:bg-gray-100 hover:text-gray-900 focus:outline-none focus:bg-gray-100 focus:text-gray-900"
 					>Logout</span
 				>
