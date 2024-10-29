@@ -1,12 +1,12 @@
 import { AUTH_STATE_KEY } from './consts';
 import { get as getStoreValue } from 'svelte/store';
-import { writable } from 'svelte-local-storage-store';
+import { persisted } from 'svelte-local-storage-store';
 import { apiRequest, getDataFromResponse } from './utils';
 import type { User } from '$lib/types/authentication.type';
 import { Role } from '$lib/types/role.enum';
 import { updateUser } from './user';
 
-export const authState = writable(AUTH_STATE_KEY, {
+export const authState = persisted(AUTH_STATE_KEY, {
 	accessToken: '',
 	refreshToken: '',
 	isSignedIn: false,

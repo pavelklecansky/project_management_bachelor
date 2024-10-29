@@ -31,10 +31,10 @@
 			const [editSuccess, editError] = await updateOrganization(values.organization);
 			if (editError) {
 				error(editError);
-				goto(previousPage);
+				await goto(previousPage);
 			} else {
 				success(editSuccess);
-				goto(previousPage);
+				await goto(previousPage);
 			}
 		}
 	});

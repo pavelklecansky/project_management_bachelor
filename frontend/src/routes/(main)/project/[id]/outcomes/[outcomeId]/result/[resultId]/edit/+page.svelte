@@ -24,10 +24,10 @@
 			const [createdSuccess, createdError] = await updateResult(values.result);
 			if (createdError) {
 				error(createdError);
-				goto(`./../${id}`);
+				await goto(`./../${id}`);
 			} else {
 				success(createdSuccess);
-				goto(`./../${id}`);
+				await goto(`./../${id}`);
 			}
 		}
 	});

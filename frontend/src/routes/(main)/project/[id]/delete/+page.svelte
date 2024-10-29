@@ -11,10 +11,10 @@
 		const [successMessage, errorMessage] = await deleteProject(id);
 		if (!successMessage || errorMessage) {
 			error(errorMessage);
-			goto('/projects');
+			await goto('/projects');
 		}
 		success(successMessage);
-		load();
-		goto('/projects');
+		await load();
+		await goto('/projects');
 	});
 </script>

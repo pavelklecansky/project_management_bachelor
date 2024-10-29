@@ -1,4 +1,3 @@
-import com.github.gradle.node.npm.task.NpmTask
 import com.github.gradle.node.pnpm.task.PnpmTask
 
 
@@ -38,17 +37,6 @@ val testTask = tasks.register<PnpmTask>("testFrontend") {
     dependsOn(tasks.pnpmInstall, lintTask)
     inputs.dir("src")
     outputs.upToDateWhen { true }
-}
-
-sourceSets {
-    java {
-        main {
-            resources {
-                // This makes the processResources task automatically depend on the buildWebapp one
-                srcDir(buildTask)
-            }
-        }
-    }
 }
 
 tasks.test {

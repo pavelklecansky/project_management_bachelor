@@ -24,7 +24,7 @@
 		const [success, errorMessage] = await getProject(id);
 		if (!success || errorMessage) {
 			error(errorMessage);
-			goto(`/`);
+			await goto(`/`);
 		} else {
 			project = success!;
 			memberHandler = new DataHandler(project.members, { rowsPerPage: 50 });

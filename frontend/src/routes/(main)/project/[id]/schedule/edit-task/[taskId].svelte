@@ -32,10 +32,10 @@
 			const [createdSuccess, createdError] = await updateTask(values.task.realId, values.task);
 			if (createdError) {
 				error(createdError);
-				goto(`/project/schedule/${id}`);
+				await goto(`/project/schedule/${id}`);
 			} else {
 				success(createdSuccess);
-				goto(`/project/schedule/${id}`);
+				await goto(`/project/schedule/${id}`);
 			}
 		}
 	});

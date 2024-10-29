@@ -35,10 +35,10 @@
 				const [createdSuccess, createdError] = await createBudgetItem(categoryId, values.item);
 				if (createdError) {
 					error(createdError);
-					goto(`/project/${id}/budget`);
+					await goto(`/project/${id}/budget`);
 				} else {
 					success(createdSuccess);
-					goto(`/project/${id}/budget`);
+					await goto(`/project/${id}/budget`);
 				}
 			}
 		}
@@ -48,7 +48,7 @@
 		const [success, errorMessage] = await getCategory(categoryId);
 		if (!success || errorMessage) {
 			error(errorMessage);
-			goto(`/project/${id}/budget`);
+			await goto(`/project/${id}/budget`);
 		} else {
 			category = success!;
 		}

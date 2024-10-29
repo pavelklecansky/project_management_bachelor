@@ -13,6 +13,6 @@
 
 	onMount(async () => {
 		await downloadFileInBrowser(id, queryParamsName, queryParams);
-		goto(`/project/files/${id}?path=${queryParams}`);
+		await goto(`/project/files/${id}?path=${queryParams}`);
 	});
 </script>

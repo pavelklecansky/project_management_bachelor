@@ -23,11 +23,9 @@
 </script>
 
 <div>
-	<h2 class="text-3xl font-bold text-center text-gray-700 dark:text-white">Forgotten Password?</h2>
+	<h2 class="text-3xl font-bold text-center text-gray-700">Forgotten Password?</h2>
 
-	<p class="mt-1 text-center text-gray-500 dark:text-gray-400">
-		Please enter your login email address.
-	</p>
+	<p class="mt-1 text-center text-gray-500">Please enter your login email address.</p>
 
 	<form on:submit|preventDefault={handleSubmit}>
 		<div class="w-full mt-4">
@@ -35,17 +33,14 @@
 		</div>
 
 		<div class="flex items-center justify-between mt-4 mb-2">
-			<span class="text-sm text-gray-600 dark:text-gray-200 hover:text-gray-500" />
+			<span class="text-sm text-gray-600 hover:text-gray-500" />
 			<SubmitButton text="Continue" />
 		</div>
 	</form>
 
-	<div class="flex items-center justify-center py-4 text-center bg-gray-50 dark:bg-gray-700">
-		<span class="text-sm text-gray-600 dark:text-gray-200">Don't have an account? </span>
+	<div class="flex items-center justify-center py-4 text-center bg-gray-50">
+		<span class="text-sm text-gray-600">Don't have an account? </span>
 
-		<a
-			href={'./register'}
-			class="mx-2 text-sm font-bold text-blue-500 dark:text-blue-400 hover:underline">Register</a
-		>
+		<a href={'./register'} class="mx-2 text-sm font-bold text-blue-500 hover:underline">Register</a>
 	</div>
 </div>

@@ -22,10 +22,10 @@
 			const [createdSuccess, createdError] = await deleteRow(values.row.realId);
 			if (createdError) {
 				error(createdError);
-				goto(`/project/schedule/${id}`);
+				await goto(`/project/schedule/${id}`);
 			} else {
 				success(createdSuccess);
-				goto(`/project/schedule/${id}`);
+				await goto(`/project/schedule/${id}`);
 			}
 		}
 	});

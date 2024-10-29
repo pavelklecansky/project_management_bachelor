@@ -22,10 +22,10 @@
 			const [createdSuccess, createdError] = await createFolder(id, values.name, queryParams);
 			if (createdError) {
 				error(createdError);
-				goto(`../?path=${queryParams}`);
+				await goto(`../?path=${queryParams}`);
 			} else {
 				success(createdSuccess);
-				goto(`../?path=${queryParams}`);
+				await goto(`../?path=${queryParams}`);
 			}
 		}
 	});

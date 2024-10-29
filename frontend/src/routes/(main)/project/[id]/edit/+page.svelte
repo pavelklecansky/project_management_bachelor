@@ -35,11 +35,11 @@
 			const [createdSuccess, createdError] = await updateProject(values.project);
 			if (createdError) {
 				error(createdError);
-				goto(previousPage);
+				await goto(previousPage);
 			} else {
 				success(createdSuccess);
-				load();
-				goto(previousPage);
+				await load();
+				await goto(previousPage);
 			}
 		}
 	});
@@ -48,7 +48,7 @@
 		const [success, errorMessage] = await getProject(id);
 		if (!success || errorMessage) {
 			error(errorMessage);
-			goto(previousPage);
+			await goto(previousPage);
 		} else {
 			$form.project = success!;
 			$form.endDate = dateISOFormat(success.endDate);

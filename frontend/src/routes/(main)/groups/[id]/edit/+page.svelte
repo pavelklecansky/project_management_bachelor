@@ -31,10 +31,10 @@
 			const [createdSuccess, createdError] = await updateGroup(values.group);
 			if (createdError) {
 				error(createdError);
-				goto(previousPage);
+				await goto(previousPage);
 			} else {
 				success(createdSuccess);
-				goto(previousPage);
+				await goto(previousPage);
 			}
 		}
 	});
@@ -62,7 +62,7 @@
 		const [success, errorMessage] = await getGroup(id);
 		if (!success || errorMessage) {
 			error(errorMessage);
-			goto(previousPage);
+			await goto(previousPage);
 		} else {
 			$form.group = success!;
 		}

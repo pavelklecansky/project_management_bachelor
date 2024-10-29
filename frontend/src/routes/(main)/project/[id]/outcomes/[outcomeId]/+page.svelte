@@ -17,7 +17,7 @@
 		const [success, errorMessage] = await getOutcome(id);
 		if (!success || errorMessage) {
 			error(errorMessage);
-			goto(`./../`);
+			await goto(`./../`);
 		} else {
 			outcome = success!;
 			loaded = true;

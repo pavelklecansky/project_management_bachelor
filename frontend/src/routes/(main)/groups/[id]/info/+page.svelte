@@ -23,7 +23,7 @@
 		const [success, errorMessage] = await getGroup(id);
 		if (!success || errorMessage) {
 			error(errorMessage);
-			goto(previousPage);
+			await goto(previousPage);
 		}
 		group = getDataFromResponse(success);
 		loaded = true;

@@ -22,10 +22,10 @@
 			const [createdSuccess, createdError] = await createRow(scheduleId, values.row);
 			if (createdError) {
 				error(createdError);
-				goto(`/project/schedule/${id}`);
+				await goto(`/project/schedule/${id}`);
 			} else {
 				success(createdSuccess);
-				goto(`/project/schedule/${id}`);
+				await goto(`/project/schedule/${id}`);
 			}
 		}
 	});

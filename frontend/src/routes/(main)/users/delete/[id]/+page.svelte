@@ -11,10 +11,10 @@
 		const [successMessage, errorMessage] = await deleteUser(id);
 		if (!successMessage || errorMessage) {
 			error(errorMessage);
-			goto('./../');
+			await goto('./../');
 		}
 		success(successMessage);
-		load();
-		goto('./../');
+		await load();
+		await goto('./../');
 	});
 </script>

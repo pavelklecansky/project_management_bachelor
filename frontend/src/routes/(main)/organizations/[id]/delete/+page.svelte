@@ -16,9 +16,9 @@
 		const [successMessage, errorMessage] = await deleteOrganization(id);
 		if (!successMessage || errorMessage) {
 			error(errorMessage);
-			goto(previousPage);
+			await goto(previousPage);
 		}
 		success(successMessage);
-		goto(previousPage);
+		await goto(previousPage);
 	});
 </script>

@@ -25,7 +25,6 @@ spotless {
 }
 
 subprojects {
-
     tasks.withType<Test> {
         useJUnitPlatform()
     }

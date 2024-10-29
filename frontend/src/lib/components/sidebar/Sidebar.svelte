@@ -30,7 +30,7 @@
 	bind:this={sidebar}
 	class="z-50 w-64 overflow-y-auto bg-gray-50 border-l flex-shrink-0 inset-y-0 left-0 transform transition duration-200 ease-in-out absolute lg:relative h-full"
 >
-	<div class="py-4 dark:text-gray-400">
+	<div class="py-4">
 		<a href={'/'} class="ml-6 text-lg font-bold text-gray-800"> Project managment </a>
 		<Navigation />
 	</div>

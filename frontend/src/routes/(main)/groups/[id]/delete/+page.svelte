@@ -17,10 +17,10 @@
 		const [successMessage, errorMessage] = await deleteGroup(id);
 		if (!successMessage || errorMessage) {
 			error(errorMessage);
-			goto(previousPage);
+			await goto(previousPage);
 		} else {
 			success(successMessage);
-			goto(previousPage);
+			await goto(previousPage);
 		}
 	});
 </script>
