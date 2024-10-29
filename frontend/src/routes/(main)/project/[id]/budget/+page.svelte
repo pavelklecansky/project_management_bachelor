@@ -6,8 +6,8 @@
 	import { getBudgetByProject } from '$lib/budget.service';
 	import BudgetCategory from '$lib/components/budget/BudgetCategory.svelte';
 
-	let budget = {} as Budget;
-	let loaded = false;
+	let budget = $state({} as Budget);
+	let loaded = $state(false);
 	let id = $page.params.id;
 
 	onMount(async () => {

@@ -1,4 +1,6 @@
 <script lang="ts">
+	import { run, preventDefault } from 'svelte/legacy';
+
 	import { afterNavigate } from '$app/navigation';
 	import { addComment, completeTask, deleteComment, getTask } from '$lib/task.service';
 	import type { Task } from '$lib/types/core.type';
@@ -14,9 +16,12 @@
 	import TrashCan from 'carbon-icons-svelte/lib/TrashCan.svelte';
 	import { page } from '$app/stores';
 
-	$: task = {} as Task;
-	let loaded = false;
-	let commentText = '';
+	let task;
+	run(() => {
+		task = {} as Task;
+	});
+	let loaded = $state(false);
+	let commentText = $state('');
 
 	const taskCompleted = async () => {
 		const [successMessage, errorMessage] = await completeTask(task);
@@ -149,7 +154,7 @@
 		<div class="mt-2">
 			<h2 class="text-3xl font-bold">Comments</h2>
 			<div class="mt-2">
-				<form on:submit|preventDefault={handleSubmit}>
+				<form onsubmit={preventDefault(handleSubmit)}>
 					<TextArea placeholder="Add comment" bind:value={commentText} />
 					<div class="flex justify-end mt-2">
 						<SubmitButton text="Add new comment" />

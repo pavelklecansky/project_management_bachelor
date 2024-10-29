@@ -1,7 +1,12 @@
 <script lang="ts">
-	export let title: string;
-	export let url: string;
-	export let active: any;
+	interface Props {
+		title: string;
+		url: string;
+		active: any;
+		children?: import('svelte').Snippet;
+	}
+
+	let { title, url, active, children }: Props = $props();
 </script>
 
 <li class="relative hover:bg-gray-100 hover:text-gray-900">
@@ -9,7 +14,7 @@
 		class="px-6 py-3 inline-flex items-center w-full text-sm font-semibold text-gray-800 transition-colors duration-150 hover:text-gray-800"
 		href={url}
 	>
-		<slot />
+		{@render children?.()}
 		<span class="ml-4" class:font-bold={active}>{title}</span>
 	</a>
 </li>

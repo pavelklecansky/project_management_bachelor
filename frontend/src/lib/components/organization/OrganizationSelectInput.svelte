@@ -1,4 +1,6 @@
 <script lang="ts">
+	import { run } from 'svelte/legacy';
+
 	import { onMount } from 'svelte';
 	import Select from 'svelte-select';
 	import { getAllOrganizations } from '$lib/organization.service';
@@ -6,11 +8,15 @@
 	import type { User } from '$lib/types/authentication.type';
 	import type { Organization } from '$lib/types/core.type';
 
-	export let value = {} as User;
+	interface Props {
+		value?: any;
+	}
 
-	let organizations = [];
-	let items = [];
-	let defaultValue = [];
+	let { value = $bindable({} as User) }: Props = $props();
+
+	let organizations = $state([]);
+	let items = $state([]);
+	let defaultValue = $state([]);
 
 	function handleSelect(event) {
 		const userOrganizations = event?.detail?.map((item) => {
@@ -24,7 +30,7 @@
 		value.organizations = [] as Organization[];
 	}
 
-	$: {
+	run(() => {
 		if (organizations) {
 			items = organizations.map((organizations) => {
 				return {
@@ -33,7 +39,7 @@
 				};
 			});
 		}
-	}
+	});
 
 	onMount(async () => {
 		const [successResponse, errorResponse] = await getAllOrganizations();

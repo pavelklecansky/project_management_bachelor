@@ -1,7 +1,11 @@
 <script lang="ts">
-	export let placeholder = '';
-	export let value = '';
-	export let disabled = false;
+	interface Props {
+		placeholder?: string;
+		value?: string;
+		disabled?: boolean;
+	}
+
+	let { placeholder = '', value = $bindable(''), disabled = false }: Props = $props();
 </script>
 
 <input

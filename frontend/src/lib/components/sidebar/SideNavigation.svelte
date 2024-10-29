@@ -1,4 +1,6 @@
 <script>
+	import { run } from 'svelte/legacy';
+
 	import Item from './SidebarItem.svelte';
 	import Building from 'carbon-icons-svelte/lib/Building.svelte';
 	import UserMultiple from 'carbon-icons-svelte/lib/UserMultiple.svelte';
@@ -10,33 +12,37 @@
 	import { isAdmin } from '$lib/auth';
 	import { page } from '$app/stores';
 
-	let userLinks = [];
-	let adminLinks = [];
+	let userLinks = $state([]);
+	let adminLinks = $state([]);
 
-	$: adminLinks = [
-		['/users', 'Users', UserMultiple],
-		['/groups', 'Groups', Group],
-		['/organizations', 'Organizations', Building]
-	].map(([path, name, icon]) => {
-		return {
-			name,
-			href: path,
-			active: isActive($page, path),
-			icon
-		};
+	run(() => {
+		adminLinks = [
+			['/users', 'Users', UserMultiple],
+			['/groups', 'Groups', Group],
+			['/organizations', 'Organizations', Building]
+		].map(([path, name, icon]) => {
+			return {
+				name,
+				href: path,
+				active: isActive($page, path),
+				icon
+			};
+		});
 	});
 
-	$: userLinks = [
-		['/', 'Dashboard', Dashboard],
-		['/projects', 'Projects', WatsonHealthStackedScrolling_1],
-		['/contacts', 'Contacts', Phone]
-	].map(([path, name, icon]) => {
-		return {
-			name,
-			href: path,
-			active: isActive($page, path),
-			icon
-		};
+	run(() => {
+		userLinks = [
+			['/', 'Dashboard', Dashboard],
+			['/projects', 'Projects', WatsonHealthStackedScrolling_1],
+			['/contacts', 'Contacts', Phone]
+		].map(([path, name, icon]) => {
+			return {
+				name,
+				href: path,
+				active: isActive($page, path),
+				icon
+			};
+		});
 	});
 </script>
 
@@ -48,7 +54,8 @@
 			</h3>
 			{#each adminLinks as { name, href, active, icon }}
 				<Item title={name} url={href} {active}>
-					<svelte:component this={icon} />
+					{@const SvelteComponent = icon}
+					<SvelteComponent />
 				</Item>
 			{/each}
 		</div>
@@ -60,7 +67,8 @@
 		</h3>
 		{#each userLinks as { name, href, active, icon }}
 			<Item title={name} url={href} {active}>
-				<svelte:component this={icon} />
+				{@const SvelteComponent_1 = icon}
+				<SvelteComponent_1 />
 			</Item>
 		{/each}
 	</div>

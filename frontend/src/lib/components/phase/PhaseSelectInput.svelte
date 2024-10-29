@@ -1,22 +1,28 @@
 <script lang="ts">
+	import { run } from 'svelte/legacy';
+
 	import { onMount } from 'svelte';
 	import Select from 'svelte-select';
 	import { isEmptyObjectOrNull } from '$lib/utils';
 	import type { Phase } from '$lib/types/core.type';
 	import { getAllPhasesOfProject, getAllPhasesOfProjectByTask } from '$lib/phase.service';
 
-	export let value = {} as Phase;
-	export let projectId;
-	export let taskId;
-	export let title = '';
+	interface Props {
+		value?: any;
+		projectId: any;
+		taskId: any;
+		title?: string;
+	}
 
-	let phases = [] as Phase[];
-	let items = [];
-	let defaultValue = {
+	let { value = $bindable({} as Phase), projectId, taskId, title = '' }: Props = $props();
+
+	let phases = $state([] as Phase[]);
+	let items = $state([]);
+	let defaultValue = $state({
 		value: '',
 		label: ''
-	};
-	let loaded = false;
+	});
+	let loaded = $state(false);
 
 	onMount(async () => {
 		if (projectId) {
@@ -39,7 +45,7 @@
 		value = {} as Phase;
 	}
 
-	$: {
+	run(() => {
 		if (loaded) {
 			items = phases.map((phase) => {
 				return {
@@ -54,7 +60,7 @@
 				label: value.name || ''
 			};
 		}
-	}
+	});
 </script>
 
 {#if loaded}

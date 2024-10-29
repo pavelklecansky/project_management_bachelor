@@ -1,8 +1,12 @@
 <script lang="ts">
-	export let placeholder = '';
-	export let value = '';
-	export let required = true;
-	export let full = true;
+	interface Props {
+		placeholder?: string;
+		value?: string;
+		required?: boolean;
+		full?: boolean;
+	}
+
+	let { placeholder = '', value = $bindable(''), required = true, full = true }: Props = $props();
 </script>
 
 <input

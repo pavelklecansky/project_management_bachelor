@@ -1,21 +1,27 @@
 <script lang="ts">
+	import { run } from 'svelte/legacy';
+
 	import { onMount } from 'svelte';
 	import Select from 'svelte-select';
 	import { isEmptyObjectOrNull } from '$lib/utils';
 	import type { Row } from '$lib/types/core.type';
 	import { getScheduleByProject } from '$lib/schedule.service';
 
-	export let value = {} as Row;
-	export let projectId;
-	export let rowId = null;
+	interface Props {
+		value?: any;
+		projectId: any;
+		rowId?: any;
+	}
 
-	let rows = [] as Row[];
-	let items = [];
-	let defaultValue = {
+	let { value = $bindable({} as Row), projectId, rowId = null }: Props = $props();
+
+	let rows = $state([] as Row[]);
+	let items = $state([]);
+	let defaultValue = $state({
 		value: '',
 		label: ''
-	};
-	let loaded = false;
+	});
+	let loaded = $state(false);
 
 	onMount(async () => {
 		const [successResponse, errorResponse] = await getScheduleByProject(projectId);
@@ -35,7 +41,7 @@
 		value = {} as Row;
 	}
 
-	$: {
+	run(() => {
 		if (loaded) {
 			items = rows.map((row) => {
 				return {
@@ -50,7 +56,7 @@
 				label: value.label || ''
 			};
 		}
-	}
+	});
 </script>
 
 {#if loaded}

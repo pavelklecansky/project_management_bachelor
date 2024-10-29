@@ -9,10 +9,10 @@
 	import { getDataFromResponse } from '$lib/utils';
 	import { base } from '$app/paths';
 
-	let group = {} as Group;
-	let loaded = false;
+	let group = $state({} as Group);
+	let loaded = $state(false);
 
-	let previousPage: string = base;
+	let previousPage: string = $state(base);
 
 	afterNavigate(({ from }) => {
 		previousPage = from?.url.pathname || previousPage;

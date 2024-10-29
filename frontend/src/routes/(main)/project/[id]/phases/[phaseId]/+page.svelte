@@ -9,9 +9,9 @@
 	import { error } from '$lib/notification';
 	import TaskList from '$lib/components/task/TaskList.svelte';
 
-	let phase = {} as Phase;
+	let phase = $state({} as Phase);
 	let tasks = [] as Task[];
-	let loaded = false;
+	let loaded = $state(false);
 
 	let id = $page.params.id;
 	let phaseId = $page.params.phaseId;

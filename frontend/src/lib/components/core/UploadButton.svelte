@@ -1,7 +1,11 @@
 <script lang="ts">
-	export let text = 'Create';
-	export let full = false;
-	export let files;
+	interface Props {
+		text?: string;
+		full?: boolean;
+		files: any;
+	}
+
+	let { text = 'Create', full = false, files = $bindable() }: Props = $props();
 </script>
 
 <label

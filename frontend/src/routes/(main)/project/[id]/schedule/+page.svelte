@@ -32,15 +32,15 @@
 	setContext('options', { optionsStream });
 
 	let id = $page.params.id;
-	let schedule = {
+	let schedule = $state({
 		rows: [],
 		tasks: []
-	} as Schedule;
+	} as Schedule);
 
 	const currentStart = time('08:00');
 	const currentEnd = time('18:00');
 
-	let options = {
+	let options = $state({
 		dateAdapter: new MomentSvelteGanttDateAdapter(moment),
 		rows: schedule.rows,
 		tasks: schedule.tasks,
@@ -64,7 +64,7 @@
 		tableWidth: 240,
 		ganttTableModules: [SvelteGanttTable],
 		ganttBodyModules: [SvelteGanttDependencies]
-	};
+	});
 
 	let gantt;
 	onMount(async () => {
@@ -92,7 +92,7 @@
 
 <ScheduleNav scheduleId={schedule.id} {id} on:updateOptions={onChangeOptionsNav} />
 <div class="container">
-	<div id="example-gantt-events" />
+	<div id="example-gantt-events"></div>
 	<GanttOptions {options} on:change={onChangeOptions} />
 </div>
 

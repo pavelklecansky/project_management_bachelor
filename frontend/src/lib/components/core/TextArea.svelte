@@ -1,8 +1,17 @@
 <script lang="ts">
-	export let placeholder = '';
-	export let value = '';
-	export let resize = false;
-	export let required = true;
+	interface Props {
+		placeholder?: string;
+		value?: string;
+		resize?: boolean;
+		required?: boolean;
+	}
+
+	let {
+		placeholder = '',
+		value = $bindable(''),
+		resize = false,
+		required = true
+	}: Props = $props();
 </script>
 
 <textarea
@@ -13,4 +22,4 @@
 	{required}
 	rows="3"
 	bind:value
-/>
+></textarea>

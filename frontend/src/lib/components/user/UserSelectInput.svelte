@@ -1,17 +1,23 @@
 <script lang="ts">
+	import { run } from 'svelte/legacy';
+
 	import Select from 'svelte-select';
 	import { users } from '$lib/users.store';
 	import { isEmptyObjectOrNull } from '$lib/utils';
 	import type { User } from '$lib/types/authentication.type';
 
-	export let value = {} as User;
-	export let disable = false;
+	interface Props {
+		value?: any;
+		disable?: boolean;
+	}
 
-	let items = [];
-	let defaultValue = {
+	let { value = $bindable({} as User), disable = false }: Props = $props();
+
+	let items = $state([]);
+	let defaultValue = $state({
 		value: '',
 		label: ''
-	};
+	});
 
 	function handleSelect(event) {
 		const userId = event.detail.value;
@@ -22,7 +28,7 @@
 		value = {} as User;
 	}
 
-	$: {
+	run(() => {
 		if ($users) {
 			items = $users.map((user) => {
 				return {
@@ -38,7 +44,7 @@
 				label: `${value.firstName || ''} ${value.lastName || ''}`
 			};
 		}
-	}
+	});
 </script>
 
 <Select

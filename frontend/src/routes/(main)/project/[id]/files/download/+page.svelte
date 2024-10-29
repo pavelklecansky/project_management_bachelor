@@ -8,8 +8,8 @@
 	const urlSearchParams = new URLSearchParams(window.location.search);
 	let id = $page.params.id;
 
-	$: queryParams = urlSearchParams.get('path') || '';
-	$: queryParamsName = urlSearchParams.get('name') || '';
+	let queryParams = $derived(urlSearchParams.get('path') || '');
+	let queryParamsName = $derived(urlSearchParams.get('name') || '');
 
 	onMount(async () => {
 		await downloadFileInBrowser(id, queryParamsName, queryParams);

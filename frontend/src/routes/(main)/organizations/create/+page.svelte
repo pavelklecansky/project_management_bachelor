@@ -12,7 +12,7 @@
 	import { createOrganization } from '$lib/organization.service';
 	import { base } from '$app/paths';
 
-	let previousPage: string = '/organizations';
+	let previousPage: string = $state('/organizations');
 
 	afterNavigate(({ from }) => {
 		previousPage = from?.url.pathname || previousPage;

@@ -1,18 +1,10 @@
 <script lang="ts">
+	import { run } from 'svelte/legacy';
+
 	import Navigation from './SideNavigation.svelte';
 	import { hidden } from '$lib/nav';
 
-	let sidebar;
-
-	$: if ($hidden) {
-		if (sidebar) {
-			openSidebar(sidebar);
-		}
-	} else {
-		if (sidebar) {
-			closeSidebar(sidebar);
-		}
-	}
+	let sidebar = $state();
 
 	function closeSidebar(sidebar) {
 		sidebar.classList.add('translate-x-0');
@@ -23,6 +15,17 @@
 		sidebar.classList.remove('translate-x-0');
 		sidebar.classList.add('-translate-x-full');
 	}
+	run(() => {
+		if ($hidden) {
+			if (sidebar) {
+				openSidebar(sidebar);
+			}
+		} else {
+			if (sidebar) {
+				closeSidebar(sidebar);
+			}
+		}
+	});
 </script>
 
 <aside

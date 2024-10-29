@@ -15,7 +15,7 @@
 	import { dateISOFormatFull } from '$lib/utils';
 
 	let id = $page.params.id;
-	let loaded = false;
+	let loaded = $state(false);
 
 	const { form, handleSubmit } = createForm({
 		initialValues: {

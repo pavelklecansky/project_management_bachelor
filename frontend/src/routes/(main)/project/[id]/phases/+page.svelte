@@ -5,7 +5,7 @@
 	import type { Phase } from '$lib/types/core.type';
 	import CreateButton from '$lib/components/core/CreateButton.svelte';
 
-	let phases = [] as Phase[];
+	let phases = $state([] as Phase[]);
 
 	onMount(async () => {
 		let id = $page.params.id;

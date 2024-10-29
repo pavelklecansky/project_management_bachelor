@@ -1,4 +1,6 @@
 <script>
+	import { preventDefault } from 'svelte/legacy';
+
 	import { createForm } from 'svelte-forms-lib';
 	import { error, success } from '$lib/notification';
 	import { renameFile } from '$lib/storage.service';
@@ -7,9 +9,8 @@
 	import CloseButton from '$lib/components/core/CloseButton.svelte';
 	import SubmitButton from '$lib/components/core/SubmitButton.svelte';
 
-	export let oldName;
-	export let id;
-	export let queryParams;
+	/** @type {{oldName: any, id: any, queryParams: any}} */
+	let { oldName, id, queryParams } = $props();
 
 	const { close } = getContext('simple-modal');
 
@@ -39,7 +40,7 @@
 	});
 </script>
 
-<form on:submit|preventDefault={handleSubmit}>
+<form onsubmit={preventDefault(handleSubmit)}>
 	<div class="px-4 mb-4">
 		<h2 class="text-3xl font-medium">Rename file</h2>
 		<p>Name: {$form.oldName}</p>

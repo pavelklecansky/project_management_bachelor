@@ -12,7 +12,7 @@
 	import { load } from '$lib/projects.store';
 	import ModalWindow from '$lib/components/modal/ModalWindow.svelte';
 
-	let previousPage: string = '/projects';
+	let previousPage: string = $state('/projects');
 
 	afterNavigate(({ from }) => {
 		previousPage = from?.url.pathname || previousPage;

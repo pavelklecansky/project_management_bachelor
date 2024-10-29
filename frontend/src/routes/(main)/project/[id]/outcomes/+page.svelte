@@ -6,8 +6,8 @@
 	import { getOutcomesOfProject } from '$lib/outcomes.service';
 	import { getOutcomeCategoriesOfProject } from '$lib/outcome-categories.service';
 
-	let outcomes = [] as Outcome[];
-	let outcomeCategories = [] as OutcomeCategory[];
+	let outcomes = $state([] as Outcome[]);
+	let outcomeCategories = $state([] as OutcomeCategory[]);
 
 	onMount(async () => {
 		let id = $page.params.id;

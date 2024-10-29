@@ -1,8 +1,12 @@
 <script lang="ts">
-	export let value = 0;
-	export let disabled = false;
-	export let min = 0;
-	export let max;
+	interface Props {
+		value?: number;
+		disabled?: boolean;
+		min?: number;
+		max: any;
+	}
+
+	let { value = $bindable(0), disabled = false, min = 0, max }: Props = $props();
 </script>
 
 <input

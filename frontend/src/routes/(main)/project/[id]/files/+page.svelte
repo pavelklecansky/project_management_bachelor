@@ -1,5 +1,7 @@
 <!-- routify:options query-params-is-page -->
 <script lang="ts">
+	import { run, stopPropagation } from 'svelte/legacy';
+
 	import { page } from '$app/stores';
 	import { goto } from '$app/navigation';
 	import { getContext, onMount } from 'svelte';
@@ -18,14 +20,14 @@
 	import EditFilePopup from '$lib/components/storage/EditFilePopup.svelte';
 	import CreateButton from '$lib/components/core/CreateButton.svelte';
 
-	let filesInfo = [];
-	let files = [];
+	let filesInfo = $state([]);
+	let files = $state([]);
 	const urlSearchParams = new URLSearchParams(window.location.search);
 	const { open } = getContext('simple-modal');
 	let id = $page.params.id;
-	let loaded = false;
+	let loaded = $state(false);
 
-	$: queryParams = urlSearchParams.get('path') || '';
+	let queryParams = $derived(urlSearchParams.get('path') || '');
 
 	onMount(async () => {
 		await loadFilesInfo();
@@ -86,23 +88,25 @@
 		);
 	};
 
-	$: if (files.length === 1) {
-		const formData = new FormData();
-		formData.append('file', files[0]);
-		uploadFile(id, formData, queryParams)
-			.then((response) => {
-				const [successMessage, errorMessage] = response;
-				if (!successMessage || errorMessage) {
-					error(errorMessage);
-				} else {
-					success(successMessage);
-				}
-			})
-			.finally(async () => {
-				files = [];
-				await loadFilesInfo();
-			});
-	}
+	run(() => {
+		if (files.length === 1) {
+			const formData = new FormData();
+			formData.append('file', files[0]);
+			uploadFile(id, formData, queryParams)
+				.then((response) => {
+					const [successMessage, errorMessage] = response;
+					if (!successMessage || errorMessage) {
+						error(errorMessage);
+					} else {
+						success(successMessage);
+					}
+				})
+				.finally(async () => {
+					files = [];
+					await loadFilesInfo();
+				});
+		}
+	});
 
 	function removeLastFolderPath(queryParams: string) {
 		return queryParams.substring(0, queryParams.lastIndexOf('/'));
@@ -139,22 +143,22 @@
 				<div
 					class="w-1/2 sm:w-1/3 lg:w-1/5 relative rounded-md pt-8 pb-5 text-center max-w-sm px-4 py-3 bg-white shadow-md box-border flex flex-col items-center cursor-pointer"
 					title={file.name}
-					on:click={() => {
+					onclick={() => {
 						goto(`${$page.path}?path=${queryParams + `/${file.name}`}`);
 					}}
 				>
-					<div on:click|stopPropagation={() => {}}>
+					<div onclick={stopPropagation(() => {})}>
 						<OveflowMenu bind:hidden={file.hidden}>
 							<span
 								class="block cursor-pointer px-4 py-2 text-sm leading-5 text-red-600 font-bold hover:bg-gray-100 hover:text-red-700"
-								on:click={() => {
+								onclick={() => {
 									deleteDir(file.name);
 									file.hidden = true;
 								}}>DELETE FOLDER</span
 							>
 							<span
 								class="block cursor-pointer px-4 py-2 text-sm leading-5 text-green-600 font-bold hover:bg-gray-100 hover:text-green-700"
-								on:click={() => {
+								onclick={() => {
 									renameFileModal(file.name);
 									file.hidden = true;
 								}}>EDIT FOLDER NAME</span
@@ -173,28 +177,28 @@
 			{:else}
 				<div
 					class="w-1/2 sm:w-1/3 lg:w-1/5 relative rounded-md pt-8 pb-5 text-center max-w-sm px-4 py-3 bg-white shadow-md box-border flex flex-col items-center cursor-pointer"
-					on:click={() => download(file.name)}
+					onclick={() => download(file.name)}
 					title={file.name}
 				>
-					<div on:click|stopPropagation={() => {}}>
+					<div onclick={stopPropagation(() => {})}>
 						<OveflowMenu bind:hidden={file.hidden}>
 							<span
 								class="block cursor-pointer px-4 py-2 text-sm leading-5 text-red-600 font-bold hover:bg-gray-100 hover:text-red-700"
-								on:click={() => {
+								onclick={() => {
 									deleteF(file.name);
 									file.hidden = true;
 								}}>DELETE FILE</span
 							>
 							<span
 								class="block cursor-pointer px-4 py-2 text-sm leading-5 text-green-600 font-bold hover:bg-gray-100 hover:text-green-700"
-								on:click={() => {
+								onclick={() => {
 									renameFileModal(file.name);
 									file.hidden = true;
 								}}>EDIT FILE NAME</span
 							>
 							<span
 								class="block cursor-pointer px-4 py-2 text-sm leading-5 text-green-600 font-bold hover:bg-gray-100 hover:text-green-700"
-								on:click={() => {
+								onclick={() => {
 									copyFileUrlToClipboard(file.name);
 									file.hidden = true;
 								}}>COPY FILE URL</span

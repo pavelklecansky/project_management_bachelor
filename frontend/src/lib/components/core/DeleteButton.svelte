@@ -1,6 +1,10 @@
 <script lang="ts">
-	export let text = 'Delete';
-	export let full = false;
+	interface Props {
+		text?: string;
+		full?: boolean;
+	}
+
+	let { text = 'Delete', full = false }: Props = $props();
 </script>
 
 <button

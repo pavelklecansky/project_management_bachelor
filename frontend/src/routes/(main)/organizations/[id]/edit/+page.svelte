@@ -14,9 +14,9 @@
 	import { getOrganization, updateOrganization } from '$lib/organization.service';
 	import { base } from '$app/paths';
 
-	let ready = false;
+	let ready = $state(false);
 
-	let previousPage: string = '/organizations';
+	let previousPage: string = $state('/organizations');
 
 	afterNavigate(({ from }) => {
 		previousPage = from?.url.pathname || previousPage;

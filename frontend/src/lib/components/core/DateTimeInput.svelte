@@ -1,6 +1,10 @@
 <script lang="ts">
-	export let value = '';
-	export let title = '';
+	interface Props {
+		value?: string;
+		title?: string;
+	}
+
+	let { value = $bindable(''), title = '' }: Props = $props();
 </script>
 
 <input

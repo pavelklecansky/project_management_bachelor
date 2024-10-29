@@ -16,7 +16,7 @@
 	import { dateISOFormat } from '$lib/utils';
 
 	let id = $page.params.id;
-	let previousPage: string = `/project/${id}`;
+	let previousPage: string = $state(`/project/${id}`);
 
 	afterNavigate(({ from }) => {
 		previousPage = from?.url.pathname || previousPage;

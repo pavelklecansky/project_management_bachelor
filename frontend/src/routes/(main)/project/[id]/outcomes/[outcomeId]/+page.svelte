@@ -9,8 +9,8 @@
 	import { getOutcome } from '$lib/outcomes.service';
 	import CreateButton from '$lib/components/core/CreateButton.svelte';
 
-	let outcome = {} as Outcome;
-	let loaded = false;
+	let outcome = $state({} as Outcome);
+	let loaded = $state(false);
 
 	onMount(async () => {
 		let id = $page.params.outcomeId;

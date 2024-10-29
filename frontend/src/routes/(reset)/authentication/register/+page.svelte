@@ -1,4 +1,6 @@
 <script lang="ts">
+	import { preventDefault } from 'svelte/legacy';
+
 	import { signup } from '$lib/auth';
 	import { error, success } from '$lib/notification';
 	import { goto } from '$app/navigation';
@@ -51,7 +53,7 @@
 
 	<p class="mt-1 text-center text-gray-500">Create new account</p>
 
-	<form on:submit|preventDefault={handleSubmit}>
+	<form onsubmit={preventDefault(handleSubmit)}>
 		<div class="w-full mt-4">
 			<TextInput placeholder="Firstname" bind:value={$form.firstName} />
 		</div>
@@ -83,7 +85,7 @@
 		</div>
 
 		<div class="flex items-center justify-between mt-4 mb-2">
-			<span class="text-sm text-gray-600 hover:text-gray-500" />
+			<span class="text-sm text-gray-600 hover:text-gray-500"></span>
 
 			<SubmitButton text="Register" />
 		</div>
