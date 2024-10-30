@@ -9,8 +9,8 @@ export const load = async () => {
 	projects.set(success);
 };
 
-authState.subscribe((value) => {
+authState.subscribe(async (value) => {
 	if (value.isSignedIn) {
-		load();
+		await load();
 	}
 });

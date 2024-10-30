@@ -10,8 +10,8 @@ export const load = async () => {
 	users.set(success!);
 };
 
-authState.subscribe((value) => {
+authState.subscribe(async (value) => {
 	if (value.isSignedIn) {
-		load();
+		await load();
 	}
 });

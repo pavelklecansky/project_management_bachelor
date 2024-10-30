@@ -1,60 +1,49 @@
 <script lang="ts">
-	import { Datatable, DataHandler, Th, ThFilter } from '@vincjo/datatables';
-	import { afterNavigate } from '$app/navigation';
-	import { getAllOrganizations } from '$lib/organization.service';
-	import { getDataFromResponse } from '$lib/utils';
+	import { Datatable, TableHandler, Th, ThFilter } from '@vincjo/datatables';
+	import type { Organization } from '$lib/types/core.type';
+
 	interface Props {
+		data: { organizations: Organization[] };
 		children?: import('svelte').Snippet;
 	}
 
-	let { children }: Props = $props();
+	let { data, children }: Props = $props();
 
-	let handler = $state();
-	let rows = $state();
-
-	afterNavigate(async () => {
-		const [successResponse, errorResponse] = await getAllOrganizations();
-		const data = getDataFromResponse(successResponse);
-
-		handler = new DataHandler(data, { rowsPerPage: 20 });
-		rows = handler.getRows();
-	});
+	let table = new TableHandler(data.organizations, { rowsPerPage: 20 });
 </script>
 
 <div class="h-full max-w-full">
-	{#if rows}
-		<Datatable {handler} pagination={true}>
-			<table>
-				<thead>
+	<Datatable {table} pagination={true}>
+		<table>
+			<thead>
+				<tr>
+					<Th {table} orderBy="name">Name</Th>
+					<Th {table} orderBy="email">Email</Th>
+					<Th {table} orderBy="ico">IČO</Th>
+					<Th {table} orderBy="phoneNumber">Phone number</Th>
+					<Th {table} orderBy="note">Note</Th>
+				</tr>
+				<tr>
+					<ThFilter {table} filterBy="name" />
+					<ThFilter {table} filterBy="email" />
+					<ThFilter {table} filterBy="ico" />
+					<ThFilter {table} filterBy="phoneNumber" />
+					<ThFilter {table} filterBy="note" />
+				</tr>
+			</thead>
+			<tbody>
+				{#each table.rows as row}
 					<tr>
-						<Th {handler} orderBy="name">Name</Th>
-						<Th {handler} orderBy="email">Email</Th>
-						<Th {handler} orderBy="ico">IČO</Th>
-						<Th {handler} orderBy="phoneNumber">Phone number</Th>
-						<Th {handler} orderBy="note">Note</Th>
+						<td>{row.name}</td>
+						<td>{row.email}</td>
+						<td>{row.ico}</td>
+						<td>{row.phoneNumber}</td>
+						<td>{row.note}</td>
 					</tr>
-					<tr>
-						<ThFilter {handler} filterBy="name" />
-						<ThFilter {handler} filterBy="email" />
-						<ThFilter {handler} filterBy="ico" />
-						<ThFilter {handler} filterBy="phoneNumber" />
-						<ThFilter {handler} filterBy="note" />
-					</tr>
-				</thead>
-				<tbody>
-					{#each $rows as row}
-						<tr>
-							<td>{row.name}</td>
-							<td>{row.email}</td>
-							<td>{row.ico}</td>
-							<td>{row.phoneNumber}</td>
-							<td>{row.note}</td>
-						</tr>
-					{/each}
-				</tbody>
-			</table>
-		</Datatable>
-	{/if}
+				{/each}
+			</tbody>
+		</table>
+	</Datatable>
 </div>
 
 {@render children?.()}

@@ -1,29 +1,16 @@
 <script lang="ts">
-	import { run } from 'svelte/legacy';
-
 	import ProjectCard from './ProjectCard.svelte';
-	import { projects } from '$lib/projects.store';
+	import type { Project } from '$lib/types/core.type';
 
 	interface Props {
-		allProjects?: boolean;
+		projects: Project[];
 	}
 
-	let { allProjects = false }: Props = $props();
-
-	let data;
-	run(() => {
-		data = $projects;
-	});
-
-	run(() => {
-		if (!allProjects) {
-			data = data.slice(0, 3);
-		}
-	});
+	let { projects }: Props = $props();
 </script>
 
 <div class="flex md:justify-start justify-center flex-wrap gap-5">
-	{#each data as project}
+	{#each projects as project}
 		<ProjectCard {project} />
 	{/each}
 </div>

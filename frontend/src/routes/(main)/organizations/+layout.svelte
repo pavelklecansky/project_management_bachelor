@@ -1,23 +1,18 @@
-<script>
-	import { afterNavigate } from '$app/navigation';
+<script lang="ts">
 	import { EditIcon, Trash2Icon } from 'svelte-feather-icons';
-	import { Datatable, DataHandler, Th, ThFilter } from '@vincjo/datatables';
+	import { Datatable, TableHandler, Th, ThFilter } from '@vincjo/datatables';
 	import CreateButton from '$lib/components/core/CreateButton.svelte';
-	import { getAllOrganizations } from '$lib/organization.service';
-	import { getDataFromResponse } from '$lib/utils';
-	/** @type {{children?: import('svelte').Snippet}} */
-	let { children } = $props();
 
-	let handler = $state();
-	let rows = $state();
+	interface Props {
+		data: { organizations: any[] };
+		children?: import('svelte').Snippet;
+	}
 
-	afterNavigate(async () => {
-		const [successResponse, errorResponse] = await getAllOrganizations();
-		const data = getDataFromResponse(successResponse);
+	let { data, children }: Props = $props();
 
-		handler = new DataHandler(data, { rowsPerPage: 20 });
-		rows = handler.getRows();
-	});
+	console.log(data);
+
+	let table = new TableHandler(data.organizations, { rowsPerPage: 20 });
 </script>
 
 <div class="flex justify-end w-full mb-2">
@@ -26,48 +21,46 @@
 	</a>
 </div>
 
-{#if rows}
-	<Datatable {handler} pagination={true}>
-		<table>
-			<thead>
+<Datatable {table} pagination={true}>
+	<table>
+		<thead>
+			<tr>
+				<Th {table} orderBy="name">Name</Th>
+				<Th {table} orderBy="email">Email</Th>
+				<Th {table} orderBy="ico">IČO</Th>
+				<Th {table} orderBy="phoneNumber">Phone number</Th>
+				<Th {table} orderBy="note">Note</Th>
+				<th>Actions</th>
+			</tr>
+			<tr>
+				<ThFilter {table} filterBy="name" />
+				<ThFilter {table} filterBy="email" />
+				<ThFilter {table} filterBy="ico" />
+				<ThFilter {table} filterBy="phoneNumber" />
+				<ThFilter {table} filterBy="note" />
+			</tr>
+		</thead>
+		<tbody>
+			{#each table.rows as row}
 				<tr>
-					<Th {handler} orderBy="name">Name</Th>
-					<Th {handler} orderBy="email">Email</Th>
-					<Th {handler} orderBy="ico">IČO</Th>
-					<Th {handler} orderBy="phoneNumber">Phone number</Th>
-					<Th {handler} orderBy="note">Note</Th>
-					<th>Actions</th>
+					<td>{row.name}</td>
+					<td>{row.email}</td>
+					<td>{row.ico}</td>
+					<td>{row.phoneNumber}</td>
+					<td>{row.note}</td>
+					<td class="flex justify-center">
+						<a href={`/organizations/${row.id}/edit`}>
+							<EditIcon size="1.5x" />
+						</a>
+						<a class="mr-4" href={`/organizations/${row.id}/delete`}>
+							<Trash2Icon size="1.5x" />
+						</a>
+					</td>
 				</tr>
-				<tr>
-					<ThFilter {handler} filterBy="name" />
-					<ThFilter {handler} filterBy="email" />
-					<ThFilter {handler} filterBy="ico" />
-					<ThFilter {handler} filterBy="phoneNumber" />
-					<ThFilter {handler} filterBy="note" />
-				</tr>
-			</thead>
-			<tbody>
-				{#each $rows as row}
-					<tr>
-						<td>{row.name}</td>
-						<td>{row.email}</td>
-						<td>{row.ico}</td>
-						<td>{row.phoneNumber}</td>
-						<td>{row.note}</td>
-						<td class="flex justify-center">
-							<a href={`/organizations/${row.id}/edit`}>
-								<EditIcon size="1.5x" />
-							</a>
-							<a class="mr-4" href={`/organizations/${row.id}/delete`}>
-								<Trash2Icon size="1.5x" />
-							</a>
-						</td>
-					</tr>
-				{/each}
-			</tbody>
-		</table>
-	</Datatable>
-{/if}
+			{/each}
+		</tbody>
+	</table>
+</Datatable>
 
 {@render children?.()}
 

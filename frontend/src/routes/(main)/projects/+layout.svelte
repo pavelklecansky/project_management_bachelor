@@ -1,15 +1,14 @@
-<script>
-	import { afterNavigate } from '$app/navigation';
-
+<script lang="ts">
 	import CreateButton from '$lib/components/core/CreateButton.svelte';
 	import ProjectList from '$lib/components/project/ProjectList.svelte';
-	import { load } from '$lib/projects.store';
-	/** @type {{children?: import('svelte').Snippet}} */
-	let { children } = $props();
+	import type { Project } from '$lib/types/core.type';
 
-	afterNavigate(() => {
-		load();
-	});
+	interface Props {
+		data: { projects: Project[] };
+		children?: import('svelte').Snippet;
+	}
+
+	let { data, children }: Props = $props();
 </script>
 
 <div>
@@ -20,7 +19,7 @@
 		</a>
 	</div>
 
-	<ProjectList allProjects={true} />
+	<ProjectList projects={data.projects} />
 </div>
 
 {@render children?.()}
