@@ -1,27 +1,24 @@
-<script>
-	import { onMount } from 'svelte';
-
+<script lang="ts">
 	import ProjectList from '$lib/components/project/ProjectList.svelte';
 	import TaskList from '$lib/components/task/TaskList.svelte';
-	import { getAllUserTasks } from '$lib/task.service';
+	import type { Project, Task } from '$lib/types/core.type.js';
 
-	let tasks = $state([]);
+	interface Props {
+		data: { projects: Project[]; tasks: Task[] };
+	}
 
-	onMount(async () => {
-		const [success, error] = await getAllUserTasks();
-		tasks = success;
-	});
+	let { data }: Props = $props();
 </script>
 
 <div>
 	<div>
 		<h1 class="text-2xl">My projects</h1>
-		<ProjectList class="mt-2" />
+		<ProjectList projects={data.projects} />
 	</div>
 	<div class="mt-6">
 		<h1 class="text-2xl">My tasks</h1>
 		<div class="mt-2">
-			<TaskList {tasks} />
+			<TaskList projectId="" tasks={data.tasks} />
 		</div>
 	</div>
 </div>

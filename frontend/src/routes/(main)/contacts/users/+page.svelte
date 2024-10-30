@@ -1,50 +1,41 @@
 <script>
 	import { users } from '$lib/users.store';
-	import { Datatable, DataHandler, Th, ThFilter } from '@vincjo/datatables';
-	import { afterNavigate } from '$app/navigation';
+	import { Datatable, TableHandler, Th, ThFilter } from '@vincjo/datatables';
 
-	let handler = $state();
-	let rows = $state();
-
-	afterNavigate(async () => {
-		handler = new DataHandler($users, { rowsPerPage: 50 });
-		rows = handler.getRows();
-	});
+	let table = new TableHandler($users, { rowsPerPage: 50 });
 </script>
 
-{#if rows}
-	<Datatable {handler} pagination={true}>
-		<table>
-			<thead>
+<Datatable {table} pagination={true}>
+	<table>
+		<thead>
+			<tr>
+				<Th {table} orderBy="firstName">First name</Th>
+				<Th {table} orderBy="lastName">Last name</Th>
+				<Th {table} orderBy="email">Email</Th>
+				<Th {table} orderBy="phoneNumber">Phone number</Th>
+				<Th {table} orderBy="note">Note</Th>
+			</tr>
+			<tr>
+				<ThFilter {table} filterBy="firstName" />
+				<ThFilter {table} filterBy="lastName" />
+				<ThFilter {table} filterBy="email" />
+				<ThFilter {table} filterBy="phoneNumber" />
+				<ThFilter {table} filterBy="note" />
+			</tr>
+		</thead>
+		<tbody>
+			{#each table.rows as row}
 				<tr>
-					<Th {handler} orderBy="firstName">First name</Th>
-					<Th {handler} orderBy="lastName">Last name</Th>
-					<Th {handler} orderBy="email">Email</Th>
-					<Th {handler} orderBy="phoneNumber">Phone number</Th>
-					<Th {handler} orderBy="note">Note</Th>
+					<td>{row.firstName}</td>
+					<td>{row.lastName}</td>
+					<td>{row.email}</td>
+					<td>{row.phoneNumber}</td>
+					<td>{row.note}</td>
 				</tr>
-				<tr>
-					<ThFilter {handler} filterBy="firstName" />
-					<ThFilter {handler} filterBy="lastName" />
-					<ThFilter {handler} filterBy="email" />
-					<ThFilter {handler} filterBy="phoneNumber" />
-					<ThFilter {handler} filterBy="note" />
-				</tr>
-			</thead>
-			<tbody>
-				{#each $rows as row}
-					<tr>
-						<td>{row.firstName}</td>
-						<td>{row.lastName}</td>
-						<td>{row.email}</td>
-						<td>{row.phoneNumber}</td>
-						<td>{row.note}</td>
-					</tr>
-				{/each}
-			</tbody>
-		</table>
-	</Datatable>
-{/if}
+			{/each}
+		</tbody>
+	</table>
+</Datatable>
 
 <style>
 	td {
